@@ -1,0 +1,29 @@
+# Workflow for buildning and testing .NET projects
+
+name: CI - Unit Test
+
+on: 
+  push:
+    branches:
+      - dev
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.x'
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+# Next up I will add build solution, run unit tests (with report) and upload test results
