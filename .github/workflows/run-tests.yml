@@ -14,6 +14,17 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    services:
+      mssql:
+        image: mcr.microsoft.com/mssql/server:2022-latest
+        options: --health-cmd="exit 0" --health-interval=10s --health-timeout=10s --health-retries=3
+        ports:
+          - 1433:1433
+        env:
+          SA_PASSWORD: "YourStrong!Passw0rd"
+          ACCEPT_EULA: "Y"
+          wait-for-service: true
+
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
@@ -26,4 +37,14 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore
 
-# Next up I will add build solution, run unit tests (with report) and upload test results
+      - name: Build the solution
+        run: dotnet build ./HealthCareAB.sln --configuration Release --no-restore
+
+      - name: Run unit tests with report
+        run: dotnet test ./UserService.Tests/UserService.Tests.csproj --configuration Release --no-build --logger "trx;LogFileName=TestResults.trx"
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        with:
+          name: TestResults
+          path: ./UserService.Tests/TestResults/TestResults.trx
