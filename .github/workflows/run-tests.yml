@@ -41,10 +41,10 @@ jobs:
         run: dotnet build ./HealthCareAB.sln --configuration Release --no-restore
 
       - name: Run unit tests with report
-        run: dotnet test ./UserService.Tests/UserService.Tests.csproj --configuration Release --no-build --logger "trx;LogFileName=TestResults.trx"
+        run: dotnet test ./Tests/UserService.Tests/UserService.Tests.csproj --configuration Release --no-build --logger "trx;LogFileName=TestResults.trx"
 
       - name: Upload test results
         uses: actions/upload-artifact@v4
         with:
           name: TestResults
-          path: ./UserService.Tests/TestResults/TestResults.trx
+          path: ./Tests/UserService.Tests/TestResults/TestResults.trx
