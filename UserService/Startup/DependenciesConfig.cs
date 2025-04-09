@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using UserService.Data;
 using UserService.Database;
 using UserService.Interfaces;
 using UserService.Repositories;
@@ -26,6 +27,8 @@ namespace UserService.Startup
             builder.Services.AddControllers();
 
             builder.Services.AddOpenApiServices();
+
+            builder.Services.AddTransient<UserData>();
         }
     }
 }
