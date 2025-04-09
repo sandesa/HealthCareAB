@@ -21,7 +21,7 @@ jobs:
         ports:
           - 1433:1433
         env:
-          SA_PASSWORD: "YourStrong!Passw0rd"
+          SA_PASSWORD: "A_s3cr3t_pswrd!"
           ACCEPT_EULA: "Y"
           wait-for-service: true
 
@@ -39,6 +39,10 @@ jobs:
 
       - name: Build the solution
         run: dotnet build ./HealthCareAB.sln --configuration Release --no-restore
+
+      - name: Create Database if Not Exists
+        run: |
+          docker exec mssql /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P "A_s3cr3t_pswrd!" -Q "IF NOT EXISTS (SELECT name FROM sys.databases WHERE name = 'HealthCareAbUserDb') CREATE DATABASE HealthCareAbUserDb"
 
       - name: Run unit tests with report
         run: dotnet test ./UserService.Tests/UserService.Tests.csproj --configuration Release --no-build --logger "trx;LogFileName=TestResults.trx"
