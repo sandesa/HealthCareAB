@@ -4,11 +4,11 @@ using UserService.Interfaces;
 
 namespace UserService.Repositories
 {
-    public class VerifyHashRepository : IVerifyHashRepository
+    public class ValidationRepository : IValidationRepository
     {
         private readonly IConfiguration _configuration;
 
-        public VerifyHashRepository(IConfiguration configuration)
+        public ValidationRepository(IConfiguration configuration)
         {
             _configuration = configuration;
         }

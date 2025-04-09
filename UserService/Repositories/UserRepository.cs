@@ -11,12 +11,14 @@ namespace UserService.Repositories
     {
         private readonly UserDbContext _context;
         private readonly IHashingRepository _hashing;
+        private readonly IValidationRepository _verify;
         private readonly UserMappingService _mapper;
 
-        public UserRepository(UserDbContext context, UserMappingService mapper, IHashingRepository hashing)
+        public UserRepository(UserDbContext context, UserMappingService mapper, IHashingRepository hashing, IValidationRepository verify)
         {
             _context = context;
             _hashing = hashing;
+            _verify = verify;
             _mapper = mapper;
         }
 
@@ -32,7 +34,7 @@ namespace UserService.Repositories
             return userDtos;
         }
 
-        public async Task<UserDTO> CreateUserAsync(UserCreation userCreation)
+        public async Task<UserDTO?> CreateUserAsync(UserCreation userCreation)
         {
             if (userCreation.PasswordHash == null)
             {
@@ -47,7 +49,7 @@ namespace UserService.Repositories
             return userDTO;
         }
 
-        public async Task<UserDTO> UpdateUserAsync(int id, UserUpdate userUpdate)
+        public async Task<UserDTO?> UpdateUserAsync(int id, UserUpdate userUpdate)
         {
             var existingUser = await _context.Users.FindAsync(id);
             if (existingUser == null)
@@ -66,7 +68,7 @@ namespace UserService.Repositories
             return userDTO;
         }
 
-        public async Task<UserDTO> DeleteUserAsync(int id)
+        public async Task<UserDTO?> DeleteUserAsync(int id)
         {
             var user = await _context.Users.FindAsync(id);
 
@@ -78,6 +80,27 @@ namespace UserService.Repositories
             await _context.SaveChangesAsync();
             var userDTO = _mapper.UserToDto(user);
             return userDTO;
+        }
+
+        public async Task<int?> ValidateUserAsync(string email, string password)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+            if (user == null)
+            {
+                Console.WriteLine($"Could not find user with username \"{email}\"");
+                return null;
+            }
+
+            bool isValid = user.PasswordHash != null && _verify.VerifyPassword(password, user.PasswordHash);
+
+            if (!isValid)
+            {
+                Console.WriteLine($"Failed to validate user with username \"{email}\" and password.");
+                return null;
+            }
+
+            Console.WriteLine($"User with username \"{email}\" and password validated.");
+            return user.Id;
         }
 
     }
