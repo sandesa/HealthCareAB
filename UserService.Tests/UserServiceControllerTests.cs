@@ -64,7 +64,7 @@ namespace UserService.Tests
                 PhoneNumber = "123456",
                 FirstName = "Test",
                 LastName = "Testsson",
-                DateOfBirth = new DateOnly(1998, 03, 02)
+                DateOfBirth = new DateTime(1998, 03, 02)
             };
 
             var content = new StringContent(
@@ -79,12 +79,12 @@ namespace UserService.Tests
             var jsonResponse = await response.Content.ReadFromJsonAsync<JsonElement>();
             var createdUser = jsonResponse.GetProperty("data");
 
-            Assert.Equal(newUser.Email, createdUser.GetProperty("email").GetString());
+            Assert.Equal("test", createdUser.GetProperty("email").GetString());
             //Assert.True(_verify.VerifyPassword(newUser.PasswordHash, createdUser.GetProperty("passwordHash").GetString()));
-            Assert.Equal(newUser.PhoneNumber, createdUser.GetProperty("phoneNumber").GetString());
-            Assert.Equal(newUser.FirstName, createdUser.GetProperty("firstName").GetString());
-            Assert.Equal(newUser.LastName, createdUser.GetProperty("lastName").GetString());
-            //Assert.Equal(newUser.DateOfBirth.ToString(), createdUser.GetProperty("dateOfBirth").GetString());
+            Assert.Equal("123456", createdUser.GetProperty("phoneNumber").GetString());
+            Assert.Equal("Test", createdUser.GetProperty("firstName").GetString());
+            Assert.Equal("Testsson", createdUser.GetProperty("lastName").GetString());
+            Assert.Equal("1998-03-02T00:00:00", createdUser.GetProperty("dateOfBirth").GetString());
         }
 
         [Fact]
@@ -98,7 +98,7 @@ namespace UserService.Tests
                 PhoneNumber = "123456",
                 FirstName = "Test",
                 LastName = "Testsson",
-                DateOfBirth = new DateOnly(1998, 03, 02),
+                DateOfBirth = new DateTime(1998, 03, 02),
                 UserType = [UserType.Doctor.ToString()],
                 UserAccountType = [UserAccountType.Developer.ToString()]
             };
@@ -116,14 +116,14 @@ namespace UserService.Tests
             var createdUser = jsonResponse.GetProperty("data");
 
             Assert.Equal(id, createdUser.GetProperty("id").GetInt32());
-            Assert.Equal(updatedUser.Email, createdUser.GetProperty("email").GetString());
+            Assert.Equal("test", createdUser.GetProperty("email").GetString());
             //Assert.True(_verify.VerifyPassword(newUser.PasswordHash, createdUser.GetProperty("passwordHash").GetString()));
-            Assert.Equal(updatedUser.PhoneNumber, createdUser.GetProperty("phoneNumber").GetString());
-            Assert.Equal(updatedUser.FirstName, createdUser.GetProperty("firstName").GetString());
-            Assert.Equal(updatedUser.LastName, createdUser.GetProperty("lastName").GetString());
-            //Assert.Equal(newUser.DateOfBirth.ToString(), createdUser.GetProperty("dateOfBirth").GetString());
-            Assert.Equal(updatedUser.UserType[0], createdUser.GetProperty("userType").EnumerateArray().First().GetString());
-            Assert.Equal(updatedUser.UserAccountType[0], createdUser.GetProperty("userAccountType").EnumerateArray().First().GetString());
+            Assert.Equal("123456", createdUser.GetProperty("phoneNumber").GetString());
+            Assert.Equal("Test", createdUser.GetProperty("firstName").GetString());
+            Assert.Equal("Testsson", createdUser.GetProperty("lastName").GetString());
+            Assert.Equal("1998-03-02T00:00:00", createdUser.GetProperty("dateOfBirth").GetString());
+            Assert.Equal("Doctor", createdUser.GetProperty("userType").EnumerateArray().First().GetString());
+            Assert.Equal("Developer", createdUser.GetProperty("userAccountType").EnumerateArray().First().GetString());
         }
 
         [Fact]

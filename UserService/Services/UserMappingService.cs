@@ -14,6 +14,7 @@ namespace UserService.Services
                 PhoneNumber = user.PhoneNumber,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
+                DateOfBirth = user.DateOfBirth,
                 UserType = user.UserType,
                 UserAccountType = user.UserAccountType,
                 CreatedAt = user.CreatedAt,
@@ -30,6 +31,7 @@ namespace UserService.Services
                 PhoneNumber = userDTO.PhoneNumber,
                 FirstName = userDTO.FirstName,
                 LastName = userDTO.LastName,
+                DateOfBirth = userDTO.DateOfBirth,
                 UserType = userDTO.UserType,
                 UserAccountType = userDTO.UserAccountType,
                 CreatedAt = userDTO.CreatedAt,
@@ -46,6 +48,7 @@ namespace UserService.Services
             existingUser.PhoneNumber = userUpdate.PhoneNumber ?? existingUser.PhoneNumber;
             existingUser.FirstName = userUpdate.FirstName ?? existingUser.FirstName;
             existingUser.LastName = userUpdate.LastName ?? existingUser.LastName;
+            existingUser.DateOfBirth = userUpdate.DateOfBirth ?? existingUser.DateOfBirth;
             existingUser.UserType = userUpdate.UserType ?? existingUser.UserType;
             existingUser.UserAccountType = userUpdate.UserAccountType ?? existingUser.UserAccountType;
             existingUser.CreatedAt = existingUser.CreatedAt;
