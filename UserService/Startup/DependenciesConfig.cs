@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using UserService.Data;
 using UserService.Database;
 using UserService.Interfaces;
 using UserService.Repositories;
@@ -18,6 +17,8 @@ namespace UserService.Startup
 
             builder.Services.AddScoped<IHashingRepository, HashingRepository>();
 
+            builder.Services.AddScoped<IValidationRepository, ValidationRepository>();
+
             builder.Services.AddScoped<IUserRepository, UserRepository>();
 
             builder.Services.AddScoped<Services.UserService>();
@@ -27,8 +28,6 @@ namespace UserService.Startup
             builder.Services.AddControllers();
 
             builder.Services.AddOpenApiServices();
-
-            builder.Services.AddTransient<UserData>();
         }
     }
 }

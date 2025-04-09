@@ -7,8 +7,9 @@ namespace UserService.Interfaces
     {
         Task<IEnumerable<User>> GetUsersDevAsync();
         Task<IEnumerable<UserDTO>> GetUsersAsync();
-        Task<UserDTO> CreateUserAsync(UserCreation userCreation);
-        Task<UserDTO> UpdateUserAsync(int id, UserUpdate userUpdate);
-        Task<UserDTO> DeleteUserAsync(int id);
+        Task<UserDTO?> CreateUserAsync(UserCreation userCreation);
+        Task<UserDTO?> UpdateUserAsync(int id, UserUpdate userUpdate);
+        Task<UserDTO?> DeleteUserAsync(int id);
+        Task<int?> ValidateUserAsync(string email, string password);
     }
 }
