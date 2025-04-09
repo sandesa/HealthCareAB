@@ -27,7 +27,7 @@ namespace UserService.Data
                         PhoneNumber = "1234567890",
                         FirstName = "Test1",
                         LastName = "Testsson",
-                        DateOfBirth = new DateOnly(1990, 1, 1),
+                        DateOfBirth = new DateTime(1990, 1, 1),
                         UserType = [UserType.Doctor.ToString()],
                         UserAccountType = [UserAccountType.User.ToString()]
                     },
@@ -38,7 +38,7 @@ namespace UserService.Data
                         PhoneNumber = "1234567890",
                         FirstName = "Test2",
                         LastName = "Testsson",
-                        DateOfBirth = new DateOnly(1990, 1, 1),
+                        DateOfBirth = new DateTime(1990, 1, 1),
                         UserType = [UserType.Nurse.ToString()],
                         UserAccountType = [UserAccountType.User.ToString()]
                     },
@@ -49,7 +49,7 @@ namespace UserService.Data
                         PhoneNumber = "1234567890",
                         FirstName = "Test3",
                         LastName = "Testsson",
-                        DateOfBirth = new DateOnly(1990, 1, 1),
+                        DateOfBirth = new DateTime(1990, 1, 1),
                         UserType = [UserType.Patient.ToString()],
                         UserAccountType = [UserAccountType.User.ToString()]
                     },
@@ -60,7 +60,7 @@ namespace UserService.Data
                         PhoneNumber = "1234567890",
                         FirstName = "Test4",
                         LastName = "Testsson",
-                        DateOfBirth = new DateOnly(1990, 1, 1),
+                        DateOfBirth = new DateTime(1990, 1, 1),
                         UserAccountType = [UserAccountType.Admin.ToString()]
                     },
                     new User
@@ -70,7 +70,7 @@ namespace UserService.Data
                         PhoneNumber = "1234567890",
                         FirstName = "Test5",
                         LastName = "Testsson",
-                        DateOfBirth = new DateOnly(1990, 1, 1),
+                        DateOfBirth = new DateTime(1990, 1, 1),
                         UserType = [UserType.Doctor.ToString()],
                         UserAccountType = [UserAccountType.User.ToString()]
                     },
@@ -81,7 +81,7 @@ namespace UserService.Data
                         PhoneNumber = "1234567890",
                         FirstName = "Test6",
                         LastName = "Testsson",
-                        DateOfBirth = new DateOnly(1990, 1, 1),
+                        DateOfBirth = new DateTime(1990, 1, 1),
                         UserAccountType = [UserAccountType.Developer.ToString()]
                     },
                     new User
@@ -91,7 +91,7 @@ namespace UserService.Data
                         PhoneNumber = "1234567890",
                         FirstName = "Test7",
                         LastName = "Testsson",
-                        DateOfBirth = new DateOnly(1990, 1, 1),
+                        DateOfBirth = new DateTime(1990, 1, 1),
                         UserType = [UserType.Patient.ToString()],
                         UserAccountType = [UserAccountType.Admin.ToString()]
                     },
@@ -102,7 +102,7 @@ namespace UserService.Data
                         PhoneNumber = "1234567890",
                         FirstName = "Test8",
                         LastName = "Testsson",
-                        DateOfBirth = new DateOnly(1990, 1, 1),
+                        DateOfBirth = new DateTime(1990, 1, 1),
                         UserType = [UserType.Nurse.ToString()],
                         UserAccountType = [UserAccountType.User.ToString()]
                     },
@@ -113,7 +113,7 @@ namespace UserService.Data
                         PhoneNumber = "1234567890",
                         FirstName = "Test9",
                         LastName = "Testsson",
-                        DateOfBirth = new DateOnly(1990, 1, 1),
+                        DateOfBirth = new DateTime(1990, 1, 1),
                         UserType = [UserType.Nurse.ToString()],
                         UserAccountType = [UserAccountType.Admin.ToString()]
                     },
@@ -124,7 +124,7 @@ namespace UserService.Data
                         PhoneNumber = "1234567890",
                         FirstName = "Test10",
                         LastName = "Testsson",
-                        DateOfBirth = new DateOnly(1990, 1, 1),
+                        DateOfBirth = new DateTime(1990, 1, 1),
                         UserType = [UserType.Patient.ToString()],
                         UserAccountType = [UserAccountType.User.ToString()]
                     }
