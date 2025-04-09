@@ -22,7 +22,12 @@ namespace UserService.Startup
             {
                 builder.Services.AddDbContext<UserDbContext>(options =>
                 {
-                    options.UseSqlServer(builder.Configuration.GetConnectionString("TestingConnection"));
+                    options.UseSqlServer(builder.Configuration.GetConnectionString("TestingConnection"), 
+                        options => 
+                        { 
+                            options.EnableRetryOnFailure();
+                        }
+                    );
                 });
             }
 
