@@ -14,6 +14,17 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    services:
+      mssql:
+        image: mcr.microsoft.com/mssql/server:2022-latest
+        options: --health-cmd="exit 0" --health-interval=10s --health-timeout=10s --health-retries=3
+        ports:
+          - 1433:1433
+        env:
+          SA_PASSWORD: "YourStrong!Passw0rd"
+          ACCEPT_EULA: "Y"
+          wait-for-service: true
+
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
@@ -28,6 +39,12 @@ jobs:
 
       - name: Build the solution
         run: dotnet build ./HealthCareAB.sln --configuration Release --no-restore
+
+      - name: Set connection string to SQL Server in container
+        run: |
+          echo "Connection string will be set to use SQL Server container"
+          sed -i 's/\\(localdb\\)\\mssqllocaldb/localhost/g' ./UserService/appsettings.json
+          sed -i 's/Integrated Security=True/TrustServerCertificate=True;User=sa;Password=YourStrong!Passw0rd;/g' ./UserService/appsettings.json
 
       - name: Run unit tests with report
         run: dotnet test ./UserService.Tests/UserService.Tests.csproj --configuration Release --no-build --logger "trx;LogFileName=TestResults.trx"
