@@ -4,7 +4,7 @@ namespace UserService
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +15,8 @@ namespace UserService
             app.UseOpenApi();
 
             app.UseDbDevServices();
+
+            await app.AddUserSeedData();
 
             app.UseHttpsRedirection();
 
