@@ -10,25 +10,10 @@ namespace UserService.Startup
     {
         public static void AddDependencies(this WebApplicationBuilder builder)
         {
-            if (Environment.GetEnvironmentVariable("GITHUB_ACTIONS") != "true")
+            builder.Services.AddDbContext<UserDbContext>(options =>
             {
-                builder.Services.AddDbContext<UserDbContext>(options =>
-                {
-                    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-                });
-            }
-            else
-            {
-                builder.Services.AddDbContext<UserDbContext>(options =>
-                {
-                    options.UseSqlServer(builder.Configuration.GetConnectionString("TestingConnection"),
-                        options =>
-                        {
-                            options.EnableRetryOnFailure();
-                        }
-                    );
-                });
-            }
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+            });
 
             builder.Services.AddScoped<IHashingRepository, HashingRepository>();
 
