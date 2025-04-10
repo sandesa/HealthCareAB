@@ -13,13 +13,15 @@ namespace UserService.Repositories
         private readonly IHashingRepository _hashing;
         private readonly IValidationRepository _verify;
         private readonly UserMappingService _mapper;
+        private readonly JwtTokenService _token;
 
-        public UserRepository(UserDbContext context, UserMappingService mapper, IHashingRepository hashing, IValidationRepository verify)
+        public UserRepository(UserDbContext context, UserMappingService mapper, IHashingRepository hashing, IValidationRepository verify, JwtTokenService token)
         {
             _context = context;
             _hashing = hashing;
             _verify = verify;
             _mapper = mapper;
+            _token = token;
         }
 
         public async Task<IEnumerable<User>> GetUsersDevAsync()
@@ -82,7 +84,7 @@ namespace UserService.Repositories
             return userDTO;
         }
 
-        public async Task<int?> ValidateUserAsync(string email, string password)
+        public async Task<string?> ValidateUserAsync(string email, string password)
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
             if (user == null)
@@ -99,8 +101,10 @@ namespace UserService.Repositories
                 return null;
             }
 
+            var token = _token.GenerateToken(user);
+
             Console.WriteLine($"User with username \"{email}\" and password validated.");
-            return user.Id;
+            return token;
         }
 
     }

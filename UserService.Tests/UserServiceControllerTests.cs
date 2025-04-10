@@ -57,7 +57,7 @@ namespace UserService.Tests
         [Fact]
         public async Task CreateUser_ReturnsOk_WhenUserCreated()
         {
-            var newUser = new UserCreation
+            UserCreation newUser = new()
             {
                 Email = "test",
                 PasswordHash = "123",
@@ -91,7 +91,7 @@ namespace UserService.Tests
         public async Task UpdateUser_ReturnsOk_WhenUserUpdated()
         {
             int id = 1;
-            var updatedUser = new UserUpdate
+            UserUpdate updatedUser = new()
             {
                 Email = "test",
                 PasswordHash = "123",
@@ -146,9 +146,7 @@ namespace UserService.Tests
         [Fact]
         public async Task ValidateUser_ReturnsOk_WhenCorrectEmailAndPassword()
         {
-            int id = 1;
-
-            ValidationRequest validationRequest = new ValidationRequest
+            ValidationRequest validationRequest = new()
             {
                 Email = "test1.testsson@gmail.com",
                 Password = "123"
@@ -164,11 +162,12 @@ namespace UserService.Tests
 
             response.EnsureSuccessStatusCode();
             var jsonResponse = await response.Content.ReadFromJsonAsync<JsonElement>();
-            var userId = jsonResponse.GetProperty("data").GetInt32();
+            var token = jsonResponse.GetProperty("data").GetString();
             var isSuccess = jsonResponse.GetProperty("isSuccess").GetBoolean();
+            var message = jsonResponse.GetProperty("message").GetString();
 
             Assert.True(isSuccess);
-            Assert.Equal(id, userId);
+            Assert.Equal("User validated successfully.", message);
         }
     }
 }
