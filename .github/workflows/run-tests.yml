@@ -12,18 +12,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-
-    services:
-      mssql:
-        image: mcr.microsoft.com/mssql/server:2022-latest
-        options: --health-cmd="exit 0" --health-interval=10s --health-timeout=10s --health-retries=3
-        ports:
-          - 1433:1433
-        env:
-          SA_PASSWORD: "A_s3cr3t_pswrd!"
-          ACCEPT_EULA: "Y"
-          wait-for-service: true
+    runs-on: windows-latest
 
     steps:
       - name: Check out repository code
