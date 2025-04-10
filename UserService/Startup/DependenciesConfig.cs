@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.Runtime.InteropServices;
 using UserService.Database;
 using UserService.Interfaces;
 using UserService.Repositories;
@@ -11,7 +10,7 @@ namespace UserService.Startup
     {
         public static void AddDependencies(this WebApplicationBuilder builder)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            if (Environment.GetEnvironmentVariable("GITHUB_ACTIONS") != "true")
             {
                 builder.Services.AddDbContext<UserDbContext>(options =>
                 {
@@ -22,9 +21,9 @@ namespace UserService.Startup
             {
                 builder.Services.AddDbContext<UserDbContext>(options =>
                 {
-                    options.UseSqlServer(builder.Configuration.GetConnectionString("TestingConnection"), 
-                        options => 
-                        { 
+                    options.UseSqlServer(builder.Configuration.GetConnectionString("TestingConnection"),
+                        options =>
+                        {
                             options.EnableRetryOnFailure();
                         }
                     );
