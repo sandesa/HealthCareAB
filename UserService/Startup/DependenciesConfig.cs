@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.Runtime.InteropServices;
 using UserService.Database;
 using UserService.Interfaces;
 using UserService.Repositories;
@@ -11,20 +10,10 @@ namespace UserService.Startup
     {
         public static void AddDependencies(this WebApplicationBuilder builder)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            builder.Services.AddDbContext<UserDbContext>(options =>
             {
-                builder.Services.AddDbContext<UserDbContext>(options =>
-                {
-                    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-                });
-            }
-            else
-            {
-                builder.Services.AddDbContext<UserDbContext>(options =>
-                {
-                    options.UseSqlServer(builder.Configuration.GetConnectionString("TestingConnection"));
-                });
-            }
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+            });
 
             builder.Services.AddScoped<IHashingRepository, HashingRepository>();
 

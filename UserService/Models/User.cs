@@ -8,7 +8,7 @@
         public string? PhoneNumber { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
-        public DateOnly? DateOfBirth { get; set; }
+        public DateTime? DateOfBirth { get; set; }
         public List<string>? UserType { get; set; }
         public List<string>? UserAccountType { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
