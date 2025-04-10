@@ -21,6 +21,7 @@ namespace UserService.Repositories
             {
                 throw new ArgumentNullException(nameof(hashingConfig), "Hashing configuration section is missing.");
             }
+
             var saltSizeValue = hashingConfig.GetRequiredSection("SaltSize").Value;
             var hashSizeValue = hashingConfig.GetRequiredSection("HashSize").Value;
             var iterationsValue = hashingConfig.GetRequiredSection("Iterations").Value;

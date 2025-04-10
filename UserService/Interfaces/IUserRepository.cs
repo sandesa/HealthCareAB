@@ -10,6 +10,6 @@ namespace UserService.Interfaces
         Task<UserDTO?> CreateUserAsync(UserCreation userCreation);
         Task<UserDTO?> UpdateUserAsync(int id, UserUpdate userUpdate);
         Task<UserDTO?> DeleteUserAsync(int id);
-        Task<int?> ValidateUserAsync(string email, string password);
+        Task<string?> ValidateUserAsync(string email, string password);
     }
 }
