@@ -74,6 +74,7 @@ namespace LoginService.Repositores
 
                 return new LoginResponse
                 {
+                    Token = validationResponse.Token,
                     Message = "User logged in successfully",
                     IsLoginSuccessful = true,
                     IsConnectedToService = true

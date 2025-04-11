@@ -14,7 +14,7 @@ namespace LoginService.Controllers
             _loginService = loginService;
         }
 
-        [HttpPost("validate")]
+        [HttpPost]
         public async Task<ActionResult<LoginResponse>> Login([FromBody] LoginRequest request)
         {
             try
