@@ -1,5 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SessionService.Database;
+using SessionService.Interfaces;
+using SessionService.Repositories;
+using SessionService.Services;
 
 namespace SessionService.Startup
 {
@@ -11,6 +14,12 @@ namespace SessionService.Startup
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
+
+            builder.Services.AddScoped<ISessionRepository, SessionRepository>();
+
+            builder.Services.AddScoped<Services.SessionService>();
+
+            builder.Services.AddScoped<SessionMappingService>();
 
             builder.Services.AddControllers();
 
