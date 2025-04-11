@@ -21,7 +21,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JournalService", "JournalSe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoggingService", "LoggingService\LoggingService.csproj", "{021DA756-5BBE-4065-952C-0E6CC3503937}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserService.Tests", "UserService.Tests\UserService.Tests.csproj", "{31FF06C0-E733-4DC5-BBC6-DC443BC25042}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XUnit.ServiceControllers.Tests", "XUnit.ServiceControllers.Tests\XUnit.ServiceControllers.Tests.csproj", "{D8A1C408-B61C-4EC6-9357-66EE857B58FD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,10 +65,10 @@ Global
 		{021DA756-5BBE-4065-952C-0E6CC3503937}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{021DA756-5BBE-4065-952C-0E6CC3503937}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{021DA756-5BBE-4065-952C-0E6CC3503937}.Release|Any CPU.Build.0 = Release|Any CPU
-		{31FF06C0-E733-4DC5-BBC6-DC443BC25042}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{31FF06C0-E733-4DC5-BBC6-DC443BC25042}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{31FF06C0-E733-4DC5-BBC6-DC443BC25042}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{31FF06C0-E733-4DC5-BBC6-DC443BC25042}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8A1C408-B61C-4EC6-9357-66EE857B58FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8A1C408-B61C-4EC6-9357-66EE857B58FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8A1C408-B61C-4EC6-9357-66EE857B58FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8A1C408-B61C-4EC6-9357-66EE857B58FD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

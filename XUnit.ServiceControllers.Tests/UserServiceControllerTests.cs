@@ -3,11 +3,12 @@ using Moq;
 using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
+using UserService;
 using UserService.Interfaces;
 using UserService.Models;
 using UserService.Utilities.StdDef;
 
-namespace UserService.Tests
+namespace XUnit.ServiceControllers.Tests
 {
     public class UserServiceControllerTests : IClassFixture<WebApplicationFactory<Program>>
     {
@@ -170,4 +171,5 @@ namespace UserService.Tests
             Assert.Equal("User validated successfully.", message);
         }
     }
+
 }
