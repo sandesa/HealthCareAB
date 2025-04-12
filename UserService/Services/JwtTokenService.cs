@@ -16,8 +16,13 @@ namespace UserService.Services
             _configuration = configuration;
         }
 
-        public string GenerateToken(User user)
+        public ValidationResponse GenerateToken(User user)
         {
+            if(user.Email == null || user.UserAccountType == null || user.UserType == null)
+            {
+                throw new ArgumentNullException(nameof(user), "User cannot be null.");
+            }
+
             var jwtConfig = _configuration.GetSection("JwtConfig");
 
             if (jwtConfig == null)
@@ -39,7 +44,7 @@ namespace UserService.Services
 
             var claims = new List<Claim>
             {
-                new (ClaimTypes.Email, user.Email),
+                new(ClaimTypes.Email, user.Email),
                 new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new(JwtRegisteredClaimNames.Sub, user.Id.ToString())
             };
@@ -59,7 +64,14 @@ namespace UserService.Services
                 signingCredentials: creds
             );
 
-            return new JwtSecurityTokenHandler().WriteToken(token);
+            ValidationResponse response = new()
+            {
+                Email = user.Email,
+                AccessToken = new JwtSecurityTokenHandler().WriteToken(token),
+                ExpiresIn = _tokenExpiration * 60
+            };
+
+            return response;
         }
     }
 }

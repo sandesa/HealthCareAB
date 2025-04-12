@@ -163,21 +163,21 @@ namespace UserService.Services
             }
         }
 
-        public async Task<ResponseDTO<string?>> ValidateUserAsync(string email, string password)
+        public async Task<ResponseDTO<ValidationResponse?>> ValidateUserAsync(string email, string password)
         {
             try
             {
-                var token = await _userRepository.ValidateUserAsync(email, password);
-                if (token == null)
+                var validationResponse = await _userRepository.ValidateUserAsync(email, password);
+                if (validationResponse == null)
                 {
-                    return new ResponseDTO<string?>
+                    return new ResponseDTO<ValidationResponse?>
                     {
                         Message = "Invalid email or password.",
                     };
                 }
-                return new ResponseDTO<string?>
+                return new ResponseDTO<ValidationResponse?>
                 {
-                    Data = token,
+                    Data = validationResponse,
                     Message = "User validated successfully.",
                     IsSuccess = true
                 };
@@ -185,7 +185,7 @@ namespace UserService.Services
             catch (Exception ex)
             {
                 Console.WriteLine($"An error occurred when validating User data. Error message: \"{ex.Message}\"");
-                return new ResponseDTO<string?>
+                return new ResponseDTO<ValidationResponse?>
                 {
                     Message = "An error occurred when validating User data.",
                 };

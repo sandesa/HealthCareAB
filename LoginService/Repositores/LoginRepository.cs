@@ -2,6 +2,7 @@
 using LoginService.Models;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace LoginService.Repositores
 {
@@ -36,11 +37,31 @@ namespace LoginService.Repositores
                 }
 
                 var jsonResponse = await response.Content.ReadFromJsonAsync<JsonElement>();
-                var token = jsonResponse.GetProperty("data").GetString();
+                var validationResponseData = jsonResponse.GetProperty("data");
+                var validationResponse = JsonSerializer.Deserialize<ValidationResponse>(validationResponseData.GetRawText(), new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true,
+                    Converters =
+                    {
+                        new JsonStringEnumConverter(JsonNamingPolicy.CamelCase)
+                    }
+                });
+
+                if (validationResponse == null || validationResponse.Email == null || validationResponse.AccessToken == null)
+                {
+                    return new ValidationResponse
+                    {
+                        Message = "Invalid credentials",
+                        IsValid = false,
+                        IsConnectedToService = true
+                    };
+                }
 
                 return new ValidationResponse
                 {
-                    Token = token,
+                    Email = validationResponse.Email.ToString(),
+                    AccessToken = validationResponse.AccessToken.ToString(),
+                    ExpiresIn = int.Parse(validationResponse.ExpiresIn.ToString()),
                     Message = "User validated successfully",
                     IsValid = true,
                     IsConnectedToService = true,
@@ -49,6 +70,7 @@ namespace LoginService.Repositores
 
             catch (HttpRequestException ex)
             {
+                Console.WriteLine($"Error in LoginRepository. Error message: \"{ex.Message}\"");
                 return new ValidationResponse
                 {
                     IsConnectedToService = false,
@@ -62,7 +84,17 @@ namespace LoginService.Repositores
         {
             try
             {
-                if (!validationResponse.IsValid)
+                if (validationResponse.IsValid == null)
+                {
+                    return new LoginResponse
+                    {
+                        Message = "Invalid credentials",
+                        IsLoginSuccessful = false,
+                        IsConnectedToService = true
+                    };
+                }
+
+                if ((bool)!validationResponse.IsValid)
                 {
                     return new LoginResponse
                     {
@@ -74,7 +106,9 @@ namespace LoginService.Repositores
 
                 return new LoginResponse
                 {
-                    Token = validationResponse.Token,
+                    Email = validationResponse.Email,
+                    AccessToken = validationResponse.AccessToken,
+                    ExpiresIn = validationResponse.ExpiresIn,
                     Message = "User logged in successfully",
                     IsLoginSuccessful = true,
                     IsConnectedToService = true
