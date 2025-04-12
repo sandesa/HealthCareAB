@@ -9,7 +9,7 @@ namespace SessionService.Services
         {
             return new SessionDTO
             {
-                Id = session.Id,
+                Email = session.Email,
                 OnlineStatus = session.OnlineStatus
             };
         }
@@ -18,7 +18,9 @@ namespace SessionService.Services
         {
             return new Session
             {
-                Token = sessionCreate.Token,
+                Email = sessionCreate.Email,
+                AccessToken = sessionCreate.AccessToken,
+                ExpiresIn = sessionCreate.ExpiresIn,
                 OnlineStatus = sessionCreate.OnlineStatus,
                 Login = sessionCreate.Login,
                 Logout = sessionCreate.Logout
@@ -28,7 +30,9 @@ namespace SessionService.Services
         public Session UpdateToSession(Session existingSession, SessionUpdate sessionUpdate)
         {
             existingSession.Id = existingSession.Id;
-            existingSession.Token = sessionUpdate.Token ?? existingSession.Token;
+            existingSession.Email = sessionUpdate.Email ?? existingSession.Email;
+            existingSession.AccessToken = sessionUpdate.AccessToken ?? existingSession.AccessToken;
+            existingSession.ExpiresIn = sessionUpdate.ExpiresIn;
             existingSession.OnlineStatus = sessionUpdate.OnlineStatus ?? existingSession.OnlineStatus;
             existingSession.Login = sessionUpdate.Login ?? existingSession.Login;
             existingSession.Logout = sessionUpdate.Logout ?? existingSession.Logout;

@@ -1,6 +1,6 @@
-﻿namespace SessionService.Models
+﻿namespace LoginService.Models
 {
-    public class SessionCreate
+    public class SessionRequest
     {
         public string? Email { get; set; }
         public string? AccessToken { get; set; }
