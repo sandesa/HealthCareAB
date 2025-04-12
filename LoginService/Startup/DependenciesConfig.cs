@@ -13,6 +13,12 @@ namespace LoginService.Startup
                 client.DefaultRequestHeaders.Add("Accept", "application/json");
             });
 
+            builder.Services.AddHttpClient("SessionService", client =>
+            {
+                client.BaseAddress = new Uri("http://localhost:5142/api/session/");
+                client.DefaultRequestHeaders.Add("Accept", "application/json");
+            });
+
             builder.Services.AddScoped<ILoginRepository, LoginRepository>();
 
             builder.Services.AddScoped<Services.LoginService>();

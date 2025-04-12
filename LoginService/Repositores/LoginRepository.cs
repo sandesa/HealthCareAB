@@ -9,10 +9,12 @@ namespace LoginService.Repositores
     public class LoginRepository : ILoginRepository
     {
         private readonly HttpClient _httpClientUser;
+        private readonly HttpClient _httpClientSession;
 
         public LoginRepository(IHttpClientFactory factory)
         {
             _httpClientUser = factory.CreateClient("UserService");
+            _httpClientSession = factory.CreateClient("SessionService");
         }
 
         public async Task<ValidationResponse> ValidateUserAsync(LoginRequest request)
@@ -99,6 +101,30 @@ namespace LoginService.Repositores
                     return new LoginResponse
                     {
                         Message = validationResponse.Message,
+                        IsLoginSuccessful = false,
+                        IsConnectedToService = true
+                    };
+                }
+
+                var sessionRequest = new SessionRequest
+                {
+                    Email = validationResponse.Email,
+                    AccessToken = validationResponse.AccessToken,
+                    ExpiresIn = validationResponse.ExpiresIn
+                };
+
+                var jsonContent = new StringContent(JsonSerializer.Serialize(sessionRequest),
+                    Encoding.UTF8,
+                    "application/json"
+                );
+
+                var response = await _httpClientSession.PostAsync("create", jsonContent);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    return new LoginResponse
+                    {
+                        Message = "Failed to create session",
                         IsLoginSuccessful = false,
                         IsConnectedToService = true
                     };

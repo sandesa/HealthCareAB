@@ -38,6 +38,8 @@ namespace SessionService.Repositories
         public async Task<SessionDTO?> CreateSessionAsync(SessionCreate sessionCreate)
         {
             var session = _mapper.CreateToSession(sessionCreate);
+            session.OnlineStatus = true;
+            session.Login = DateTime.Now;
             _context.Sessions.Add(session);
             await _context.SaveChangesAsync();
             var sessionDTO = _mapper.SessionToDto(session);
