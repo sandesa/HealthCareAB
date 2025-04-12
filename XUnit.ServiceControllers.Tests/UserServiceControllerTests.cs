@@ -163,12 +163,14 @@ namespace XUnit.ServiceControllers.Tests
 
             response.EnsureSuccessStatusCode();
             var jsonResponse = await response.Content.ReadFromJsonAsync<JsonElement>();
-            var token = jsonResponse.GetProperty("data").GetString();
-            var isSuccess = jsonResponse.GetProperty("isSuccess").GetBoolean();
-            var message = jsonResponse.GetProperty("message").GetString();
+            var validationResponse = jsonResponse.GetProperty("data");
+            var email = validationResponse.GetProperty("email").GetString();
+            var accessToken = validationResponse.GetProperty("accessToken").GetString();
+            var expiration = validationResponse.GetProperty("expiresIn").GetInt32();
 
-            Assert.True(isSuccess);
-            Assert.Equal("User validated successfully.", message);
+            Assert.Equal(validationRequest.Email, email);
+            Assert.NotNull(accessToken);
+            Assert.Equal(3600, expiration);
         }
     }
 

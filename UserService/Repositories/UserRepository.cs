@@ -84,7 +84,7 @@ namespace UserService.Repositories
             return userDTO;
         }
 
-        public async Task<string?> ValidateUserAsync(string email, string password)
+        public async Task<ValidationResponse?> ValidateUserAsync(string email, string password)
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
             if (user == null)
@@ -101,10 +101,15 @@ namespace UserService.Repositories
                 return null;
             }
 
-            var token = _token.GenerateToken(user);
+            var validationResponse = _token.GenerateToken(user);
 
             Console.WriteLine($"User with username \"{email}\" and password validated.");
-            return token;
+            return new ValidationResponse
+            {
+                Email = user.Email,
+                AccessToken = validationResponse.AccessToken,
+                ExpiresIn = validationResponse.ExpiresIn,
+            };
         }
 
     }
