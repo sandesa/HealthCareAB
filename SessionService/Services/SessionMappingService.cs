@@ -12,6 +12,8 @@ namespace SessionService.Services
                 Id = session.Id,
                 Email = session.Email,
                 AccessToken = session.AccessToken,
+                Login = session.Login,
+                Logout = session.Logout
             };
         }
 
