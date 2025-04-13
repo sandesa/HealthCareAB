@@ -64,6 +64,19 @@ namespace XUnit.ServiceControllers.Tests
         }
 
         [Fact]
+        public async Task UpdateSessionLogout_ReturnsOk_WhenUpdated()
+        {
+            int sessionId = 1;
+
+            var response = await _client.PutAsJsonAsync($"/api/session/logout/{sessionId}", sessionId);
+            response.EnsureSuccessStatusCode();
+            var jsonResponse = await response.Content.ReadFromJsonAsync<JsonElement>();
+            var session = jsonResponse.GetProperty("data");
+            Assert.Equal(sessionId, session.GetProperty("id").GetInt32());
+            Assert.Equal(DateTime.Now.ToShortDateString(), session.GetProperty("logout").GetDateTime().ToShortDateString());
+        }
+
+        [Fact]
         public async Task UpdateSession_ReturnsOk_WhenUpdated()
         {
             int sessionId = 1;

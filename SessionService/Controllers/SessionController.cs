@@ -53,11 +53,11 @@ namespace SessionService.Controllers
         }
 
         [HttpPost("create")]
-        public async Task<IActionResult> CreateSession([FromBody] SessionCreate sessionCreate)
+        public async Task<IActionResult> CreateLoginSession([FromBody] SessionCreate sessionCreate)
         {
             try
             {
-                var response = await _sessionService.CreateSessionAsync(sessionCreate);
+                var response = await _sessionService.CreateLoginSessionAsync(sessionCreate);
                 if (response.IsSuccess)
                 {
                     return Ok(response);
@@ -71,12 +71,31 @@ namespace SessionService.Controllers
             }
         }
 
+        [HttpPut("logout/{id}")]
+        public async Task<IActionResult> UpdateSessionLogout(int id)
+        {
+            try
+            {
+                var response = await _sessionService.UpdateSessionAsync(id, null, true);
+                if (response.IsSuccess)
+                {
+                    return Ok(response);
+                }
+                return BadRequest(response);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred when updating Session data (logout). Error message: \"{ex.Message}\"");
+                return StatusCode(500, "An error occurred when updating Session data (logout).");
+            }
+        }
+
         [HttpPut("update/{id}")]
         public async Task<IActionResult> UpdateSession(int id, [FromBody] SessionUpdate sessionUpdate)
         {
             try
             {
-                var response = await _sessionService.UpdateSessionAsync(id, sessionUpdate);
+                var response = await _sessionService.UpdateSessionAsync(id, sessionUpdate, false);
                 if (response.IsSuccess)
                 {
                     return Ok(response);

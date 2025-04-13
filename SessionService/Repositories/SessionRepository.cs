@@ -45,14 +45,23 @@ namespace SessionService.Repositories
             return sessionDTO;
         }
 
-        public async Task<SessionDTO?> UpdateSessionAsync(int id, SessionUpdate SessionUpdate)
+        public async Task<SessionDTO?> UpdateSessionAsync(int id, SessionUpdate? sessionUpdate, bool logout)
         {
             var session = await _context.Sessions.FindAsync(id);
             if (session == null)
             {
                 return null;
             }
-            session = _mapper.UpdateToSession(session, SessionUpdate);
+            if(sessionUpdate != null)
+            {
+                session = _mapper.UpdateToSession(session, sessionUpdate);
+            }
+            
+            if(logout)
+            {
+                session.Logout = DateTime.Now;
+            }
+
             _context.Sessions.Update(session);
             await _context.SaveChangesAsync();
             var sessionDTO = _mapper.SessionToDto(session);

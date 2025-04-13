@@ -75,7 +75,7 @@ namespace SessionService.Services
             }
         }
 
-        public async Task<ResponseDTO<SessionDTO?>> CreateSessionAsync(SessionCreate sessionCreate)
+        public async Task<ResponseDTO<SessionDTO?>> CreateLoginSessionAsync(SessionCreate sessionCreate)
         {
             try
             {
@@ -106,11 +106,21 @@ namespace SessionService.Services
             }
         }
 
-        public async Task<ResponseDTO<SessionDTO?>> UpdateSessionAsync(int id, SessionUpdate sessionUpdate)
+        public async Task<ResponseDTO<SessionDTO?>> UpdateSessionAsync(int id, SessionUpdate? sessionUpdate, bool logout)
         {
             try
             {
-                var session = await _sessionRepository.UpdateSessionAsync(id, sessionUpdate);
+                SessionDTO? session;
+
+                if (sessionUpdate == null)
+                {
+                    session = await _sessionRepository.UpdateSessionAsync(id, null, logout);
+                }
+                else
+                {
+                    session = await _sessionRepository.UpdateSessionAsync(id, sessionUpdate, logout);
+                }
+
                 if (session == null)
                 {
                     return new ResponseDTO<SessionDTO?>
