@@ -33,16 +33,16 @@ namespace XUnit.ServiceControllers.Tests
             var sessions = jsonResponse.GetProperty("data");
         }
 
-        //[Fact]
-        //public async Task GetSessionById_ReturnsOk_WhenIsSuccess()
-        //{
-        //    int sessionId = 1;
-        //    var response = await _client.GetAsync($"/api/session/get/{sessionId}");
-        //    response.EnsureSuccessStatusCode();
-        //    var jsonResponse = await response.Content.ReadFromJsonAsync<JsonElement>();
-        //    var session = jsonResponse.GetProperty("data");
-        //    Assert.Equal(sessionId, session.GetProperty("id").GetInt32());
-        //}
+        [Fact]
+        public async Task GetSessionById_ReturnsOk_WhenIsSuccess()
+        {
+            int sessionId = 1;
+            var response = await _client.GetAsync($"/api/session/get/{sessionId}");
+            response.EnsureSuccessStatusCode();
+            var jsonResponse = await response.Content.ReadFromJsonAsync<JsonElement>();
+            var session = jsonResponse.GetProperty("data");
+            Assert.Equal(sessionId, session.GetProperty("id").GetInt32());
+        }
 
         [Fact]
         public async Task CreateSession_ReturnsOk_WhenCreated()
@@ -63,33 +63,34 @@ namespace XUnit.ServiceControllers.Tests
             Assert.Equal(sessionCreate.AccessToken, session.GetProperty("accessToken").GetString());
         }
 
-        //[Fact]
-        //public async Task UpdateSession_ReturnsOk_WhenUpdated()
-        //{
-        //    int sessionId = 1;
-        //    SessionUpdate sessionUpdate = new()
-        //    {
-        //        Email = "NewTestEmail",
-        //    };
+        [Fact]
+        public async Task UpdateSession_ReturnsOk_WhenUpdated()
+        {
+            int sessionId = 1;
+            SessionUpdate sessionUpdate = new()
+            {
+                Email = "NewTestEmail",
+                AccessToken = "NewTestToken"
+            };
 
-        //    var response = await _client.PutAsJsonAsync($"/api/session/update/{sessionId}", sessionUpdate);
-        //    response.EnsureSuccessStatusCode();
-        //    var jsonResponse = await response.Content.ReadFromJsonAsync<JsonElement>();
-        //    var session = jsonResponse.GetProperty("data");
-        //    Assert.Equal(sessionId, session.GetProperty("id").GetInt32());
-        //    Assert.Equal(sessionUpdate.Email, session.GetProperty("email").GetString());
-        //    Assert.Equal(sessionUpdate.AccessToken, session.GetProperty("accessToken").GetString());
-        //}
+            var response = await _client.PutAsJsonAsync($"/api/session/update/{sessionId}", sessionUpdate);
+            response.EnsureSuccessStatusCode();
+            var jsonResponse = await response.Content.ReadFromJsonAsync<JsonElement>();
+            var session = jsonResponse.GetProperty("data");
+            Assert.Equal(sessionId, session.GetProperty("id").GetInt32());
+            Assert.Equal(sessionUpdate.Email, session.GetProperty("email").GetString());
+            Assert.Equal(sessionUpdate.AccessToken, session.GetProperty("accessToken").GetString());
+        }
 
-        //[Fact]
-        //public async Task DeleteSession_ReturnsOk_WhenDeleted()
-        //{
-        //    int sessionId = 1;
-        //    var response = await _client.DeleteAsync($"/api/session/delete/{sessionId}");
-        //    response.EnsureSuccessStatusCode();
-        //    var jsonResponse = await response.Content.ReadFromJsonAsync<JsonElement>();
-        //    var session = jsonResponse.GetProperty("data");
-        //    Assert.Equal(sessionId, session.GetProperty("id").GetInt32());
-        //}
+        [Fact]
+        public async Task DeleteSession_ReturnsOk_WhenDeleted()
+        {
+            int sessionId = 1;
+            var response = await _client.DeleteAsync($"/api/session/delete/{sessionId}");
+            response.EnsureSuccessStatusCode();
+            var jsonResponse = await response.Content.ReadFromJsonAsync<JsonElement>();
+            var session = jsonResponse.GetProperty("data");
+            Assert.Equal(sessionId, session.GetProperty("id").GetInt32());
+        }
     }
 }
