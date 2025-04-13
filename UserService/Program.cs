@@ -14,9 +14,7 @@ namespace UserService
 
             app.UseOpenApi();
 
-            app.UseDbDevServices();
-
-            await app.AddUserSeedData();
+            await app.UseDbDevServices();
 
             app.UseHttpsRedirection();
 
