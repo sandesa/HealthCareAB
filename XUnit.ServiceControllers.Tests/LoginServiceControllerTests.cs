@@ -17,7 +17,7 @@ namespace XUnit.ServiceControllers.Tests
         }
 
         [Fact]
-        public async Task LoginUser_ReturnsUnauthorized()
+        public async Task LoginUser_ReturnsOk()
         {
             LoginRequest request = new()
             {
