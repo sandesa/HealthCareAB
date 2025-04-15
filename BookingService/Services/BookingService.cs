@@ -93,8 +93,7 @@ namespace BookingService.Services
                 {
                     return new ResponseDTO<BookingDTO?>
                     {
-                        Message = "No booking found with this ID.",
-                        IsSuccess = true
+                        Message = "No booking found with this ID: " + id,
                     };
                 }
                 return new ResponseDTO<BookingDTO?>
@@ -152,7 +151,7 @@ namespace BookingService.Services
                 {
                     return new ResponseDTO<BookingDTO?>
                     {
-                        Message = "Failed to update booking.",
+                        Message = "Could not find the existing booking.",
                     };
                 }
                 return new ResponseDTO<BookingDTO?>
