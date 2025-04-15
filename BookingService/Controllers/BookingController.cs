@@ -55,7 +55,7 @@ namespace BookingService.Controllers
             {
                 return Ok(response);
             }
-            return BadRequest(response);
+            return NotFound(response);
         }
 
         [HttpPost("create")]
