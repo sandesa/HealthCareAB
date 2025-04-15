@@ -1,5 +1,4 @@
-﻿using BookingService.Database;
-using BookingService.Utilities;
+﻿using BookingService.Utilities;
 
 namespace BookingService.Startup
 {
@@ -10,11 +9,11 @@ namespace BookingService.Startup
             if (app.Environment.IsDevelopment())
             {
                 app.ApplyMigrations();
-                //await app.AddUserSeedData();
+                //await app.AddBookingSeedData();
             }
         }
 
-        public static async Task AddUserSeedData(this WebApplication app)
+        public static async Task AddBookingSeedData(this WebApplication app)
         {
             //bool reseed = true;
 
