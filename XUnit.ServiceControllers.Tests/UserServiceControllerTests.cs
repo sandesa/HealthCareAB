@@ -32,7 +32,7 @@ namespace XUnit.ServiceControllers.Tests
         {
             int numberOfUsers = 10;
 
-            var response = await _client.GetAsync("/api/user/get-all");
+            var response = await _client.GetAsync("/api/user/dev");
 
             response.EnsureSuccessStatusCode();
             var jsonResponse = await response.Content.ReadFromJsonAsync<JsonElement>();
@@ -68,13 +68,7 @@ namespace XUnit.ServiceControllers.Tests
                 DateOfBirth = new DateTime(1998, 03, 02)
             };
 
-            var content = new StringContent(
-                JsonSerializer.Serialize(newUser),
-                Encoding.UTF8,
-                "application/json"
-            );
-
-            var response = await _client.PostAsync("/api/user/create", content);
+            var response = await _client.PostAsJsonAsync("/api/user/create", newUser);
 
             response.EnsureSuccessStatusCode();
             var jsonResponse = await response.Content.ReadFromJsonAsync<JsonElement>();
@@ -104,13 +98,7 @@ namespace XUnit.ServiceControllers.Tests
                 UserAccountType = [UserAccountType.Developer.ToString()]
             };
 
-            var content = new StringContent(
-                JsonSerializer.Serialize(updatedUser),
-                Encoding.UTF8,
-                "application/json"
-            );
-
-            var response = await _client.PutAsync($"/api/user/update/{id}", content);
+            var response = await _client.PutAsJsonAsync($"/api/user/update/{id}", updatedUser);
 
             response.EnsureSuccessStatusCode();
             var jsonResponse = await response.Content.ReadFromJsonAsync<JsonElement>();
@@ -153,22 +141,18 @@ namespace XUnit.ServiceControllers.Tests
                 Password = "123"
             };
 
-            var content = new StringContent(
-                JsonSerializer.Serialize(validationRequest),
-                Encoding.UTF8,
-                "application/json"
-            );
-
-            var response = await _client.PostAsync($"/api/user/validate", content);
+            var response = await _client.PostAsJsonAsync($"/api/user/validate", validationRequest);
 
             response.EnsureSuccessStatusCode();
             var jsonResponse = await response.Content.ReadFromJsonAsync<JsonElement>();
-            var token = jsonResponse.GetProperty("data").GetString();
-            var isSuccess = jsonResponse.GetProperty("isSuccess").GetBoolean();
-            var message = jsonResponse.GetProperty("message").GetString();
+            var validationResponse = jsonResponse.GetProperty("data");
+            var email = validationResponse.GetProperty("email").GetString();
+            var accessToken = validationResponse.GetProperty("accessToken").GetString();
+            var expiration = validationResponse.GetProperty("expiresIn").GetInt32();
 
-            Assert.True(isSuccess);
-            Assert.Equal("User validated successfully.", message);
+            Assert.Equal(validationRequest.Email, email);
+            Assert.NotNull(accessToken);
+            Assert.Equal(3600, expiration);
         }
     }
 

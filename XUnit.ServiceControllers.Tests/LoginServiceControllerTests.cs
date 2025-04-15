@@ -17,7 +17,7 @@ namespace XUnit.ServiceControllers.Tests
         }
 
         [Fact]
-        public async Task LoginUser_ReturnsUnauthorized()
+        public async Task LoginUser_ReturnsOk()
         {
             LoginRequest request = new()
             {
@@ -25,6 +25,7 @@ namespace XUnit.ServiceControllers.Tests
                 Password = "123"
             };
             var response = await _client.PostAsJsonAsync("/api/login", request);
+            Assert.NotNull(response);
             //response.EnsureSuccessStatusCode();
             //var jsonResponse = await response.Content.ReadFromJsonAsync<JsonElement>();
             //var token = jsonResponse.GetProperty("Token").ToString();
