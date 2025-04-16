@@ -8,7 +8,7 @@ namespace SessionService.Interfaces
         Task<IEnumerable<Session>> GetSessionDevAsync();
         Task<SessionDTO?> GetSessionByIdAsync(int id);
         Task<SessionDTO?> CreateSessionAsync(SessionCreate sessionCreate);
-        Task<SessionDTO?> UpdateSessionAsync(int id, SessionUpdate? SessionUpdate, bool logout);
+        Task<SessionDTO?> UpdateSessionAsync(int id, SessionUpdate? sessionUpdate, bool logout);
         Task<SessionDTO?> DeleteSessionAsync(int id);
     }
 }
