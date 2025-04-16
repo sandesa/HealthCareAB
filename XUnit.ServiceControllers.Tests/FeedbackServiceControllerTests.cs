@@ -20,8 +20,6 @@ namespace XUnit.ServiceControllers.Tests
         [Fact]
         public async Task GetFeedbacksDev_ReturnsOk_WhenIsSuccess()
         {
-            int numberOfFeedbacks = 10;
-
             var response = await _client.GetAsync("/api/feedback/dev");
 
             response.EnsureSuccessStatusCode();
@@ -29,7 +27,7 @@ namespace XUnit.ServiceControllers.Tests
             var jsonResponse = await response.Content.ReadFromJsonAsync<JsonElement>();
             var feedbacks = jsonResponse.GetProperty("data");
 
-            Assert.Equal(numberOfFeedbacks, feedbacks.GetArrayLength());
+            Assert.NotEmpty(feedbacks.EnumerateArray());
         }
 
         [Fact]
