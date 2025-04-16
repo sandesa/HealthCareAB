@@ -12,7 +12,8 @@ namespace FeedbackService.Services
                 BookingId = feedback.BookingId,
                 Rating = feedback.Rating,
                 Comment = feedback.Comment,
-                Created = feedback.Created
+                Created = feedback.Created,
+                Updated = feedback.Updated
             };
         }
 

@@ -142,7 +142,7 @@ namespace FeedbackService.Services
                 {
                     return new ResponseDTO<FeedbackDTO>
                     {
-                        IsSuccess = true,
+                        IsSuccess = false,
                         Message = "Couldn't find existing feedback."
                     };
                 }
@@ -172,7 +172,7 @@ namespace FeedbackService.Services
                 {
                     return new ResponseDTO<FeedbackDTO>
                     {
-                        IsSuccess = true,
+                        IsSuccess = false,
                         Message = "Couldn't find existing feedback."
                     };
                 }
