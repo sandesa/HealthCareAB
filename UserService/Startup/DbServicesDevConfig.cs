@@ -25,7 +25,7 @@ namespace UserService.Startup
             var context = services.GetRequiredService<UserDbContext>();
             var hashingRepository = services.GetRequiredService<IHashingRepository>();
 
-            await UserSeedData.InitializeAsync(context, reseed, CancellationToken.None, hashingRepository);
+            await UserSeedData.InitializeAsync(context, reseed, hashingRepository, CancellationToken.None);
             scope.Dispose();
         }
     }

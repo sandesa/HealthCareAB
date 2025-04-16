@@ -8,7 +8,7 @@ namespace UserService.Data
 {
     public class UserSeedData
     {
-        public static async Task InitializeAsync(UserDbContext context, bool reseed, CancellationToken token, IHashingRepository hashingRepository)
+        public static async Task InitializeAsync(UserDbContext context, bool reseed, IHashingRepository hashingRepository, CancellationToken token)
         {
             if (reseed && context.Users.Any())
             {

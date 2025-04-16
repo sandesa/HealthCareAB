@@ -20,6 +20,8 @@ namespace XUnit.ServiceControllers.Tests
         [Fact]
         public async Task GetFeedbacksDev_ReturnsOk_WhenIsSuccess()
         {
+            int numberOfFeedbacks = 10;
+
             var response = await _client.GetAsync("/api/feedback/dev");
 
             response.EnsureSuccessStatusCode();
@@ -27,7 +29,7 @@ namespace XUnit.ServiceControllers.Tests
             var jsonResponse = await response.Content.ReadFromJsonAsync<JsonElement>();
             var feedbacks = jsonResponse.GetProperty("data");
 
-            //Assert.NotEmpty(feedbacks.EnumerateArray());
+            Assert.Equal(numberOfFeedbacks, feedbacks.GetArrayLength());
         }
 
         [Fact]
@@ -37,12 +39,14 @@ namespace XUnit.ServiceControllers.Tests
 
             var response = await _client.GetAsync($"/api/feedback/{feedbackId}");
 
-            //response.EnsureSuccessStatusCode();
+            response.EnsureSuccessStatusCode();
 
             var jsonResponse = await response.Content.ReadFromJsonAsync<JsonElement>();
-            var feedback = jsonResponse.GetProperty("data");
+            var message = jsonResponse.GetProperty("message").GetString();
+            var isSuccess = jsonResponse.GetProperty("isSuccess").GetBoolean();
 
-            //Assert.NotNull(feedback);
+            Assert.Equal("Feedback successfully fetched.", message);
+            Assert.True(isSuccess);
         }
 
         [Fact]
@@ -52,12 +56,14 @@ namespace XUnit.ServiceControllers.Tests
 
             var response = await _client.GetAsync($"/api/feedback/booking/{bookingId}");
 
-            //response.EnsureSuccessStatusCode();
+            response.EnsureSuccessStatusCode();
 
             var jsonResponse = await response.Content.ReadFromJsonAsync<JsonElement>();
             var feedback = jsonResponse.GetProperty("data");
 
-            //Assert.NotNull(feedback);
+            Assert.Equal(1, feedback.GetProperty("bookingId").GetInt32());
+            Assert.Equal("Feedback successfully fetched.", jsonResponse.GetProperty("message").GetString());
+            Assert.True(jsonResponse.GetProperty("isSuccess").GetBoolean());
         }
 
         [Fact]
@@ -71,14 +77,17 @@ namespace XUnit.ServiceControllers.Tests
             };
             var response = await _client.PostAsJsonAsync("/api/feedback/create", newFeedback);
 
-            //response.EnsureSuccessStatusCode();
+            response.EnsureSuccessStatusCode();
 
             var jsonResponse = await response.Content.ReadFromJsonAsync<JsonElement>();
             var feedback = jsonResponse.GetProperty("data");
 
-            //Assert.Equal(1, feedback.GetProperty("bookingId").GetInt32());
-            //Assert.Equal(5, feedback.GetProperty("rating").GetInt32());
-            //Assert.Equal("Test", feedback.GetProperty("comment").GetString());
+            Assert.Equal(1, feedback.GetProperty("bookingId").GetInt32());
+            Assert.Equal(5, feedback.GetProperty("rating").GetInt32());
+            Assert.Equal("Test", feedback.GetProperty("comment").GetString());
+            Assert.Equal(DateTime.Now.ToShortDateString(), feedback.GetProperty("created").GetDateTime().ToShortDateString());
+            Assert.Equal("Feedback successfully created.", jsonResponse.GetProperty("message").GetString());
+            Assert.True(jsonResponse.GetProperty("isSuccess").GetBoolean());
         }
 
         [Fact]
@@ -93,14 +102,16 @@ namespace XUnit.ServiceControllers.Tests
 
             var response = await _client.PutAsJsonAsync($"/api/feedback/update/{feedbackId}", updatedFeedback);
 
-            //response.EnsureSuccessStatusCode();
+            response.EnsureSuccessStatusCode();
 
             var jsonResponse = await response.Content.ReadFromJsonAsync<JsonElement>();
             var feedback = jsonResponse.GetProperty("data");
 
-            //Assert.Equal(1, feedback.GetProperty("id").GetInt32());
-            //Assert.Equal(5, feedback.GetProperty("rating").GetInt32());
-            //Assert.Equal("Updated Test", feedback.GetProperty("comment").GetString());
+            Assert.Equal(5, feedback.GetProperty("rating").GetInt32());
+            Assert.Equal("Updated Test", feedback.GetProperty("comment").GetString());
+            Assert.Equal(DateTime.Now.ToShortDateString(), feedback.GetProperty("updated").GetDateTime().ToShortDateString());
+            Assert.Equal("Feedback successfully updated.", jsonResponse.GetProperty("message").GetString());
+            Assert.True(jsonResponse.GetProperty("isSuccess").GetBoolean());
         }
 
         [Fact]
@@ -110,12 +121,12 @@ namespace XUnit.ServiceControllers.Tests
 
             var response = await _client.DeleteAsync($"/api/feedback/delete/{feedbackId}");
 
-            //response.EnsureSuccessStatusCode();
+            response.EnsureSuccessStatusCode();
 
             var jsonResponse = await response.Content.ReadFromJsonAsync<JsonElement>();
-            var feedback = jsonResponse.GetProperty("data");
 
-            //Assert.Equal(1, feedback.GetProperty("id").GetInt32());
+            Assert.Equal("Feedback successfully deleted.", jsonResponse.GetProperty("message").GetString());
+            Assert.True(jsonResponse.GetProperty("isSuccess").GetBoolean());
         }
     }
 }

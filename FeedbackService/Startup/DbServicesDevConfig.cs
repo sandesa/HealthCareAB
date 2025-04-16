@@ -1,4 +1,6 @@
-﻿using FeedbackService.Utilities;
+﻿using FeedbackService.Data;
+using FeedbackService.Database;
+using FeedbackService.Utilities;
 
 namespace FeedbackService.Startup
 {
@@ -9,20 +11,20 @@ namespace FeedbackService.Startup
             if (app.Environment.IsDevelopment())
             {
                 app.ApplyMigrations();
-                //await app.AddFeedbackSeedData();
+                await app.AddFeedbackSeedData();
             }
         }
 
-        //public static async Task AddFeedbackSeedData(this WebApplication app)
-        //{
-        //    bool reseed = true;
+        public static async Task AddFeedbackSeedData(this WebApplication app)
+        {
+            bool reseed = true;
 
-        //    using var scope = app.Services.CreateScope();
-        //    var services = scope.ServiceProvider;
-        //    var context = services.GetRequiredService<FeedbackDbContext>();
+            using var scope = app.Services.CreateScope();
+            var services = scope.ServiceProvider;
+            var context = services.GetRequiredService<FeedbackDbContext>();
 
-        //    await FeedbackSeedData.InitializeAsync(context, reseed, CancellationToken.None);
-        //    scope.Dispose();
-        //}
+            await FeedbackSeedData.InitializeAsync(context, reseed, CancellationToken.None);
+            scope.Dispose();
+        }
     }
 }
