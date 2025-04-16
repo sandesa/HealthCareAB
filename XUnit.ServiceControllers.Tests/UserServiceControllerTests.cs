@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
 using Moq;
 using System.Net.Http.Json;
-using System.Text;
 using System.Text.Json;
 using UserService;
 using UserService.Interfaces;
