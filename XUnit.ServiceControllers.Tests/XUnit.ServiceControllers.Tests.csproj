@@ -22,6 +22,7 @@
     <ProjectReference Include="..\LoginService\LoginService.csproj" />
     <ProjectReference Include="..\SessionService\SessionService.csproj" />
     <ProjectReference Include="..\BookingService\BookingService.csproj" />
+    <ProjectReference Include="..\FeedbackService\FeedbackService.csproj" />
   </ItemGroup>
 
   <ItemGroup>
