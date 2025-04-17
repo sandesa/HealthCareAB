@@ -25,7 +25,7 @@ namespace JournalService.Data
                         CaregiverId = 2,
                         BookingId = 1,
                         JournalType = JournalType.Observation.ToString(),
-                        JournalText = "Patient is stable and recovering well.",
+                        JournalEntry = "Patient is stable and recovering well.",
                         CreatedAt = DateTime.Now
                     },
                     new Journal
@@ -34,7 +34,7 @@ namespace JournalService.Data
                         CaregiverId = 2,
                         BookingId = 4,
                         JournalType = JournalType.Observation.ToString(),
-                        JournalText = "Patient is stable and recovering well again.",
+                        JournalEntry = "Patient is stable and recovering well again.",
                         CreatedAt = DateTime.Now.AddDays(10)
                     },
                     new Journal
@@ -43,7 +43,7 @@ namespace JournalService.Data
                         CaregiverId = 4,
                         BookingId = 8,
                         JournalType = JournalType.Medication.ToString(),
-                        JournalText = "New medication prescribed.",
+                        JournalEntry = "New medication prescribed.",
                         CreatedAt = DateTime.Now.AddDays(20)
                     },
                     new Journal
@@ -52,7 +52,7 @@ namespace JournalService.Data
                         CaregiverId = 14,
                         BookingId = 15,
                         JournalType = JournalType.Treatment.ToString(),
-                        JournalText = "New treatment plan.",
+                        JournalEntry = "New treatment plan.",
                         CreatedAt = DateTime.Now.AddDays(30)
                     },
                     new Journal
@@ -60,7 +60,7 @@ namespace JournalService.Data
                         PatientId = 26,
                         CaregiverId = 3,
                         JournalType = JournalType.Observation.ToString(),
-                        JournalText = "Patient is stable and recovering well.",
+                        JournalEntry = "Patient is stable and recovering well.",
                         CreatedAt = DateTime.Now.AddDays(-10)
                     },
                     new Journal
@@ -68,7 +68,7 @@ namespace JournalService.Data
                         PatientId = 2,
                         CaregiverId = 7,
                         JournalType = JournalType.Other.ToString(),
-                        JournalText = "Thoughts and feelings.",
+                        JournalEntry = "Thoughts and feelings.",
                         CreatedAt = DateTime.Now.AddDays(-15)
                     },
                     new Journal
@@ -76,7 +76,7 @@ namespace JournalService.Data
                         PatientId = 8,
                         CaregiverId = 11,
                         JournalType = JournalType.Medication.ToString(),
-                        JournalText = "New medication prescribed.",
+                        JournalEntry = "New medication prescribed.",
                         CreatedAt = DateTime.Now.AddDays(-20)
                     },
                     new Journal
@@ -85,7 +85,7 @@ namespace JournalService.Data
                         CaregiverId = 4,
                         BookingId = 12,
                         JournalType = JournalType.Treatment.ToString(),
-                        JournalText = "Treatment plan reworked.",
+                        JournalEntry = "Treatment plan reworked.",
                         CreatedAt = DateTime.Now.AddDays(-3)
                     },
                     new Journal
@@ -94,7 +94,7 @@ namespace JournalService.Data
                         CaregiverId = 26,
                         BookingId = 65,
                         JournalType = JournalType.Observation.ToString(),
-                        JournalText = "New observation.",
+                        JournalEntry = "New observation.",
                         CreatedAt = DateTime.Now.AddDays(10)
                     },
                     new Journal
@@ -103,7 +103,7 @@ namespace JournalService.Data
                         CaregiverId = 4,
                         BookingId = 12,
                         JournalType = JournalType.Treatment.ToString(),
-                        JournalText = "Treatment plan reworked.",
+                        JournalEntry = "Treatment plan reworked.",
                         CreatedAt = DateTime.Now.AddDays(-3)
                     }
                 );

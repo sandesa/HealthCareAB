@@ -13,7 +13,7 @@ namespace JournalService.Services
                 PatientId = journal.PatientId,
                 BookingId = journal.BookingId,
                 JournalType = journal.JournalType,
-                JournalText = journal.JournalText,
+                JournalEntry = journal.JournalEntry,
                 CreatedAt = journal.CreatedAt,
                 UpdatedAt = journal.UpdatedAt
             };
@@ -27,7 +27,7 @@ namespace JournalService.Services
                 PatientId = journalCreate.PatientId,
                 BookingId = journalCreate.BookingId,
                 JournalType = journalCreate.JournalType,
-                JournalText = journalCreate.JournalText,
+                JournalEntry = journalCreate.JournalEntry,
             };
         }
 
@@ -38,7 +38,7 @@ namespace JournalService.Services
             existingJournal.CaregiverId = existingJournal.CaregiverId;
             existingJournal.BookingId = journalUpdate.BookingId ?? existingJournal.BookingId;
             existingJournal.JournalType = journalUpdate.JournalType ?? existingJournal.JournalType;
-            existingJournal.JournalText = journalUpdate.JournalText ?? existingJournal.JournalText;
+            existingJournal.JournalEntry = journalUpdate.JournalEntry ?? existingJournal.JournalEntry;
             existingJournal.CreatedAt = existingJournal.CreatedAt;
             return existingJournal;
         }
