@@ -1,4 +1,7 @@
 ﻿using AvailabilityService.Database;
+using AvailabilityService.Interfaces;
+using AvailabilityService.Repositories;
+using AvailabilityService.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace AvailabilityService.Startup
@@ -11,6 +14,12 @@ namespace AvailabilityService.Startup
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
+
+            builder.Services.AddScoped<IAvailabilityRepository, AvailabilityRepository>();
+
+            builder.Services.AddScoped<AvailabilityMappingService>();
+
+            builder.Services.AddScoped<Services.AvailabilityService>();
 
             builder.Services.AddControllers();
 
