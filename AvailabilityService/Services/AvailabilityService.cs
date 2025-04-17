@@ -71,7 +71,7 @@ namespace AvailabilityService.Services
             }
         }
 
-        public async Task<ResponseDTO<IEnumerable<AvailabilityDTO>>> GetAvailabilitiesByDateIdAsync(DateTime date)
+        public async Task<ResponseDTO<IEnumerable<AvailabilityDTO>>> GetAvailabilitiesByDateIdAsync(string date)
         {
             try
             {

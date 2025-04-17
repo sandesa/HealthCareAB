@@ -31,7 +31,6 @@ namespace SessionService.Services
 
         public Session UpdateToSession(Session existingSession, SessionUpdate sessionUpdate)
         {
-            existingSession.Id = existingSession.Id;
             existingSession.Email = sessionUpdate.Email ?? existingSession.Email;
             existingSession.AccessToken = sessionUpdate.AccessToken ?? existingSession.AccessToken;
             existingSession.ExpiresIn = sessionUpdate.ExpiresIn;
