@@ -21,8 +21,8 @@ namespace AvailabilityService.Data
                     new Availability
                     {
                         CaregiverId = 1,
-                        StartTime = DateTime.Now.AddDays(10),
-                        EndTime = DateTime.Now.AddDays(10).AddHours(8),
+                        StartTime = DateTime.Now.AddDays(5),
+                        EndTime = DateTime.Now.AddDays(5).AddHours(8),
                         Notes = "Available for 8 hours",
                         CreatedAt = DateTime.Now,
                     },
@@ -37,8 +37,8 @@ namespace AvailabilityService.Data
                     new Availability
                     {
                         CaregiverId = 2,
-                        StartTime = DateTime.Now.AddDays(1),
-                        EndTime = DateTime.Now.AddDays(1).AddHours(8),
+                        StartTime = new DateTime(2025, 10, 01),
+                        EndTime = new DateTime(2025, 10, 01).AddHours(8),
                         CreatedAt = DateTime.Now,
                     },
                     new Availability
