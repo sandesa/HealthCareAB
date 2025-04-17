@@ -72,7 +72,7 @@ namespace AvailabilityService.Controllers
             {
                 return Ok(result);
             }
-            return BadRequest(result);
+            return NotFound(result);
         }
 
         [HttpPost("create")]
@@ -117,7 +117,7 @@ namespace AvailabilityService.Controllers
             {
                 return Ok(result);
             }
-            return BadRequest(result);
+            return NotFound(result);
         }
     }
 }

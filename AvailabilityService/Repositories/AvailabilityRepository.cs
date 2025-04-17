@@ -26,7 +26,6 @@ namespace AvailabilityService.Repositories
         public async Task<IEnumerable<AvailabilityDTO>> GetAvailabilitiesByCaregiverIdAsync(int caregiverId)
         {
             var avails = await _context.Availabilities.Where(a => a.CaregiverId == caregiverId).ToListAsync();
-
             var availDtos = avails.Select(a => _mapper.AvailToDto(a));
             return availDtos;
         }

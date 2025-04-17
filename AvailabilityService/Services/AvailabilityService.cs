@@ -76,7 +76,7 @@ namespace AvailabilityService.Services
             try
             {
                 var availabilities = await _availabilityRepository.GetAvailabilitiesByDateIdAsync(date);
-                if (availabilities == null || !availabilities.Any())
+                if (!availabilities.Any())
                 {
                     return new ResponseDTO<IEnumerable<AvailabilityDTO>>
                     {
