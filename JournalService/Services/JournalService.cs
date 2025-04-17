@@ -18,18 +18,28 @@ namespace JournalService.Services
             try
             {
                 var journals = await _journalRepository.GetJournalsDevAsync();
+
+                if (journals == null || !journals.Any())
+                {
+                    return new ResponseDTO<IEnumerable<Journal>>
+                    {
+                        Message = "No journals found.",
+                        IsSuccess = true
+                    };
+                }
+
                 return new ResponseDTO<IEnumerable<Journal>>
                 {
                     Data = journals,
                     Message = "Journals DEV retrieved successfully.",
-                    IsSuccess = true,
+                    IsSuccess = true
                 };
             }
             catch (Exception ex)
             {
                 return new ResponseDTO<IEnumerable<Journal>>
                 {
-                    Message = $"An error occurred while DEV retrieving journals: {ex.Message}",
+                    Message = $"An error occurred while DEV retrieving journals: {ex.Message}"
                 };
             }
         }
@@ -39,18 +49,28 @@ namespace JournalService.Services
             try
             {
                 var journals = await _journalRepository.GetJournalsByUserIdAsync(caregiverId, patientId);
+
+                if (journals == null || !journals.Any())
+                {
+                    return new ResponseDTO<IEnumerable<JournalDTO>>
+                    {
+                        Message = "No journals found for the specified user.",
+                        IsSuccess = true
+                    };
+                }
+
                 return new ResponseDTO<IEnumerable<JournalDTO>>
                 {
                     Data = journals,
                     Message = "Journals retrieved successfully.",
-                    IsSuccess = true,
+                    IsSuccess = true
                 };
             }
             catch (Exception ex)
             {
                 return new ResponseDTO<IEnumerable<JournalDTO>>
                 {
-                    Message = $"An error occurred while retrieving journals: {ex.Message}",
+                    Message = $"An error occurred while retrieving journals: {ex.Message}"
                 };
             }
         }
@@ -64,21 +84,21 @@ namespace JournalService.Services
                 {
                     return new ResponseDTO<JournalDTO>
                     {
-                        Message = "Journal not found.",
+                        Message = "Journal not found."
                     };
                 }
                 return new ResponseDTO<JournalDTO>
                 {
                     Data = journal,
                     Message = "Journal retrieved successfully.",
-                    IsSuccess = true,
+                    IsSuccess = true
                 };
             }
             catch (Exception ex)
             {
                 return new ResponseDTO<JournalDTO>
                 {
-                    Message = $"An error occurred while retrieving the journal: {ex.Message}",
+                    Message = $"An error occurred while retrieving the journal: {ex.Message}"
                 };
             }
         }
@@ -92,21 +112,21 @@ namespace JournalService.Services
                 {
                     return new ResponseDTO<JournalDTO>
                     {
-                        Message = "Failed to create journal.",
+                        Message = "Failed to create journal."
                     };
                 }
                 return new ResponseDTO<JournalDTO>
                 {
                     Data = journal,
                     Message = "Journal created successfully.",
-                    IsSuccess = true,
+                    IsSuccess = true
                 };
             }
             catch (Exception ex)
             {
                 return new ResponseDTO<JournalDTO>
                 {
-                    Message = $"An error occurred while creating the journal: {ex.Message}",
+                    Message = $"An error occurred while creating the journal: {ex.Message}"
                 };
             }
         }
@@ -120,21 +140,21 @@ namespace JournalService.Services
                 {
                     return new ResponseDTO<JournalDTO>
                     {
-                        Message = "Failed to update journal.",
+                        Message = "Failed to update journal."
                     };
                 }
                 return new ResponseDTO<JournalDTO>
                 {
                     Data = journal,
                     Message = "Journal updated successfully.",
-                    IsSuccess = true,
+                    IsSuccess = true
                 };
             }
             catch (Exception ex)
             {
                 return new ResponseDTO<JournalDTO>
                 {
-                    Message = $"An error occurred while updating the journal: {ex.Message}",
+                    Message = $"An error occurred while updating the journal: {ex.Message}"
                 };
             }
         }
@@ -148,21 +168,21 @@ namespace JournalService.Services
                 {
                     return new ResponseDTO<JournalDTO>
                     {
-                        Message = "Failed to delete journal.",
+                        Message = "Could not find the existing journal."
                     };
                 }
                 return new ResponseDTO<JournalDTO>
                 {
                     Data = journal,
                     Message = "Journal deleted successfully.",
-                    IsSuccess = true,
+                    IsSuccess = true
                 };
             }
             catch (Exception ex)
             {
                 return new ResponseDTO<JournalDTO>
                 {
-                    Message = $"An error occurred while deleting the journal: {ex.Message}",
+                    Message = $"An error occurred while deleting the journal: {ex.Message}"
                 };
             }
         }
