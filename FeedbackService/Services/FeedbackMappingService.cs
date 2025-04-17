@@ -29,11 +29,8 @@ namespace FeedbackService.Services
 
         public Feedback UpdateToFeedback(Feedback existingFeedback, FeedbackUpdate feedbackUpdate)
         {
-            existingFeedback.Id = existingFeedback.Id;
-            existingFeedback.BookingId = existingFeedback.BookingId;
             existingFeedback.Rating = feedbackUpdate.Rating ?? existingFeedback.Rating;
             existingFeedback.Comment = feedbackUpdate.Comment ?? existingFeedback.Comment;
-            existingFeedback.Created = existingFeedback.Created;
             return existingFeedback;
         }
 

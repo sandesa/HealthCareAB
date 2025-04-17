@@ -44,7 +44,7 @@ namespace UserService.Repositories
             }
 
             userCreation.PasswordHash = _hashing.HashPassword(userCreation.PasswordHash);
-            var user = _mapper.ModificationToUser(userCreation);
+            var user = _mapper.CreationToUser(userCreation);
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
             var userDTO = _mapper.UserToDto(user);
@@ -62,7 +62,7 @@ namespace UserService.Repositories
             {
                 userUpdate.PasswordHash = _hashing.HashPassword(userUpdate.PasswordHash);
             }
-            existingUser = _mapper.UserToUser(existingUser, userUpdate);
+            existingUser = _mapper.UpdateToUser(existingUser, userUpdate);
             existingUser.UpdatedAt = DateTime.Now;
             _context.Users.Update(existingUser);
             await _context.SaveChangesAsync();

@@ -33,13 +33,9 @@ namespace JournalService.Services
 
         public Journal UpdateToJournal(Journal existingJournal, JournalUpdate journalUpdate)
         {
-            existingJournal.Id = existingJournal.Id;
-            existingJournal.PatientId = existingJournal.PatientId;
-            existingJournal.CaregiverId = existingJournal.CaregiverId;
             existingJournal.BookingId = journalUpdate.BookingId ?? existingJournal.BookingId;
             existingJournal.JournalType = journalUpdate.JournalType ?? existingJournal.JournalType;
             existingJournal.JournalEntry = journalUpdate.JournalEntry ?? existingJournal.JournalEntry;
-            existingJournal.CreatedAt = existingJournal.CreatedAt;
             return existingJournal;
         }
     }

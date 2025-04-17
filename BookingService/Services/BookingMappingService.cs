@@ -54,9 +54,6 @@ namespace BookingService.Services
 
         public Booking UpdateToBooking(Booking existingBooking, BookingUpdate bookingUpdate)
         {
-            existingBooking.Id = existingBooking.Id;
-            existingBooking.CaregiverId = existingBooking.CaregiverId;
-            existingBooking.PatientId = existingBooking.PatientId;
             existingBooking.MeetingDate = bookingUpdate.MeetingDate ?? existingBooking.MeetingDate;
             existingBooking.MeetingType = bookingUpdate.MeetingType ?? existingBooking.MeetingType;
             existingBooking.Clinic = bookingUpdate.Clinic ?? existingBooking.Clinic;

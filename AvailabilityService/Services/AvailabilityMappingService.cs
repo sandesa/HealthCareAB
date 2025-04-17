@@ -1,30 +1,38 @@
-﻿using System.Reflection;
+﻿using AvailabilityService.DTO;
+using AvailabilityService.Models;
 
 namespace AvailabilityService.Services
 {
     public class AvailabilityMappingService
     {
-        public TTarget Map<TTarget>(object input) where TTarget : new()
+        public AvailabilityDTO AvailToDto(Availability availability)
         {
-            ArgumentNullException.ThrowIfNull(input);
-
-            var target = new TTarget();
-            var inputProps = input.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
-            var targetProps = typeof(TTarget).GetProperties(BindingFlags.Public | BindingFlags.Instance);
-
-            foreach (var targetProp in targetProps)
+            return new AvailabilityDTO
             {
-                var inputProp = inputProps.FirstOrDefault(p => p.Name == targetProp.Name &&
-                                                               p.PropertyType == targetProp.PropertyType &&
-                                                               p.CanRead && targetProp.CanWrite);
-                if (inputProp != null)
-                {
-                    var value = inputProp.GetValue(input);
-                    targetProp.SetValue(target, value);
-                }
-            }
+                CaregiverId = availability.CaregiverId,
+                StartTime = availability.StartTime,
+                EndTime = availability.EndTime,
+                Notes = availability.Notes,
+            };
+        }
 
-            return target;
+        public Availability CreateToAvail(AvailabilityCreate availabilityCreate)
+        {
+            return new Availability
+            {
+                CaregiverId = availabilityCreate.CaregiverId,
+                StartTime = availabilityCreate.StartTime,
+                EndTime = availabilityCreate.EndTime,
+                Notes = availabilityCreate.Notes,
+            };
+        }
+
+        public Availability UpdateToAvail(Availability existingAvailability, AvailabilityUpdate availabilityUpdate)
+        {
+            existingAvailability.StartTime = availabilityUpdate.StartTime;
+            existingAvailability.EndTime = availabilityUpdate.EndTime;
+            existingAvailability.Notes = availabilityUpdate.Notes ?? existingAvailability.Notes;
+            return existingAvailability;
         }
     }
 }

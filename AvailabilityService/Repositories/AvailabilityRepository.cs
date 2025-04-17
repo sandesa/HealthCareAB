@@ -27,15 +27,19 @@ namespace AvailabilityService.Repositories
         {
             var avails = await _context.Availabilities.Where(a => a.CaregiverId == caregiverId).ToListAsync();
 
-            var availDtos = avails.Select(a => _mapper.Map<AvailabilityDTO>(a));
+            var availDtos = avails.Select(a => _mapper.AvailToDto(a));
             return availDtos;
         }
 
-        public async Task<IEnumerable<AvailabilityDTO>> GetAvailabilitiesByDateIdAsync(DateTime date)
+        public async Task<IEnumerable<AvailabilityDTO>> GetAvailabilitiesByDateIdAsync(string date)
         {
-            var avails = await _context.Availabilities.Where(a => a.StartTime.Date == date.Date).ToListAsync();
+            if (!DateTime.TryParse(date, out var parsedDate))
+            {
+                return [];
+            }
+            var avails = await _context.Availabilities.Where(a => a.StartTime.Date == parsedDate.Date).ToListAsync();
 
-            var availDtos = avails.Select(a => _mapper.Map<AvailabilityDTO>(a));
+            var availDtos = avails.Select(a => _mapper.AvailToDto(a));
             return availDtos;
         }
 
@@ -46,7 +50,7 @@ namespace AvailabilityService.Repositories
             {
                 return null;
             }
-            var availDto = _mapper.Map<AvailabilityDTO>(avail);
+            var availDto = _mapper.AvailToDto(avail);
             return availDto;
         }
 
@@ -56,12 +60,12 @@ namespace AvailabilityService.Repositories
             {
                 return null;
             }
-            var avail = _mapper.Map<Availability>(newAvailability);
+            var avail = _mapper.CreateToAvail(newAvailability);
             avail.CreatedAt = DateTime.Now;
             await _context.Availabilities.AddAsync(avail);
             await _context.SaveChangesAsync();
 
-            var availDto = _mapper.Map<AvailabilityDTO>(avail);
+            var availDto = _mapper.AvailToDto(avail);
             return availDto;
         }
 
@@ -72,12 +76,12 @@ namespace AvailabilityService.Repositories
             {
                 return null;
             }
-            var avail = _mapper.Map<Availability>(availabilityUpdate);
+            var avail = _mapper.UpdateToAvail(existingAvail, availabilityUpdate);
             avail.UpdatedAt = DateTime.Now;
             _context.Availabilities.Update(avail);
             await _context.SaveChangesAsync();
 
-            var availDto = _mapper.Map<AvailabilityDTO>(avail);
+            var availDto = _mapper.AvailToDto(avail);
             return availDto;
         }
 
@@ -90,7 +94,7 @@ namespace AvailabilityService.Repositories
             }
             _context.Availabilities.Remove(avail);
             await _context.SaveChangesAsync();
-            var availDto = _mapper.Map<AvailabilityDTO>(avail);
+            var availDto = _mapper.AvailToDto(avail);
             return availDto;
         }
     }

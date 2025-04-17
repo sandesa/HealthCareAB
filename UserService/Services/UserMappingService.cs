@@ -40,9 +40,8 @@ namespace UserService.Services
         }
 
 
-        public User UserToUser(User existingUser, UserUpdate userUpdate)
+        public User UpdateToUser(User existingUser, UserUpdate userUpdate)
         {
-            existingUser.Id = existingUser.Id;
             existingUser.Email = userUpdate.Email ?? existingUser.Email;
             existingUser.PasswordHash = userUpdate.PasswordHash ?? existingUser.PasswordHash;
             existingUser.PhoneNumber = userUpdate.PhoneNumber ?? existingUser.PhoneNumber;
@@ -51,11 +50,10 @@ namespace UserService.Services
             existingUser.DateOfBirth = userUpdate.DateOfBirth ?? existingUser.DateOfBirth;
             existingUser.UserType = userUpdate.UserType ?? existingUser.UserType;
             existingUser.UserAccountType = userUpdate.UserAccountType ?? existingUser.UserAccountType;
-            existingUser.CreatedAt = existingUser.CreatedAt;
             return existingUser;
         }
 
-        public User ModificationToUser(UserCreation userCreation)
+        public User CreationToUser(UserCreation userCreation)
         {
             return new User
             {
