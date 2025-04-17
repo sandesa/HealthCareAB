@@ -1,4 +1,7 @@
 ﻿using JournalService.Database;
+using JournalService.Interfaces;
+using JournalService.Repositories;
+using JournalService.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace JournalService.Startup
@@ -12,7 +15,15 @@ namespace JournalService.Startup
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
 
+            builder.Services.AddScoped<IJournalRepository, JournalRepository>();
+
+            builder.Services.AddScoped<Services.JournalService>();
+
+            builder.Services.AddScoped<JournalMappingService>();
+
             builder.Services.AddControllers();
+
+            builder.Services.AddOpenApi();
 
             builder.Services.AddOpenApiServices();
         }
