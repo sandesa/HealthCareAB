@@ -56,12 +56,13 @@ namespace AvailabilityService.Repositories
 
         public async Task<AvailabilityDTO?> CreateAvailabilityAsync(AvailabilityCreate newAvailability)
         {
-            if (newAvailability == null)
+            if (newAvailability == null || newAvailability.StartTime > newAvailability.EndTime)
             {
                 return null;
             }
             var avail = _mapper.CreateToAvail(newAvailability);
             avail.CreatedAt = DateTime.Now;
+
             await _context.Availabilities.AddAsync(avail);
             await _context.SaveChangesAsync();
 
@@ -78,6 +79,12 @@ namespace AvailabilityService.Repositories
             }
             var avail = _mapper.UpdateToAvail(existingAvail, availabilityUpdate);
             avail.UpdatedAt = DateTime.Now;
+
+            if (avail.StartTime > avail.EndTime)
+            {
+                return null;
+            }
+
             _context.Availabilities.Update(avail);
             await _context.SaveChangesAsync();
 
@@ -94,6 +101,7 @@ namespace AvailabilityService.Repositories
             }
             _context.Availabilities.Remove(avail);
             await _context.SaveChangesAsync();
+
             var availDto = _mapper.AvailToDto(avail);
             return availDto;
         }
