@@ -70,8 +70,10 @@ namespace BookingService.Repositories
         {
             var booking = _mapper.CreationToBooking(bookingCreation);
             booking.Created = DateTime.Now;
-            _context.Bookings.Add(booking);
+
+            await _context.Bookings.AddAsync(booking);
             await _context.SaveChangesAsync();
+
             var bookingDTO = _mapper.BookingToDto(booking);
             return bookingDTO;
         }
