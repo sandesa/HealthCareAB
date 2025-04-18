@@ -1,5 +1,5 @@
-﻿using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
+﻿using Microsoft.IdentityModel.JsonWebTokens;
+using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using System.Text;
 using UserService.Models;
@@ -18,7 +18,7 @@ namespace UserService.Services
 
         public ValidationResponse GenerateToken(User user)
         {
-            if(user.Email == null || user.UserAccountType == null || user.UserType == null)
+            if (user.Email == null || user.UserAccountType == null || user.UserType == null)
             {
                 throw new ArgumentNullException(nameof(user), "User cannot be null.");
             }
@@ -44,31 +44,34 @@ namespace UserService.Services
 
             var claims = new List<Claim>
             {
-                new(ClaimTypes.Email, user.Email),
-                new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new(JwtRegisteredClaimNames.Sub, user.Id.ToString())
+                new(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+                new("role", user.UserAccountType),
+                new(JwtRegisteredClaimNames.Email, user.Email),
+                new("user_type", user.UserType)
             };
-
-            claims.AddRange(user.UserAccountType.Select(type => new Claim(ClaimTypes.Role, type)));
-            claims.AddRange(user.UserType.Select(type => new Claim(ClaimTypes.Role, type)));
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_secret));
 
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-            var token = new JwtSecurityToken(
-                issuer: _issuer,
-                audience: _audience,
-                claims: claims,
-                expires: DateTime.Now.AddMinutes(_tokenExpiration),
-                signingCredentials: creds
-            );
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(claims),
+                Expires = DateTime.Now.AddMinutes(_tokenExpiration),
+                SigningCredentials = creds,
+                Issuer = _issuer,
+                Audience = _audience
+            };
+
+            var handler = new JsonWebTokenHandler();
+
+            string token = handler.CreateToken(tokenDescriptor);
 
             ValidationResponse response = new()
             {
                 Email = user.Email,
-                AccessToken = new JwtSecurityTokenHandler().WriteToken(token),
-                ExpiresIn = _tokenExpiration * 60
+                AccessToken = token,
+                Expires = tokenDescriptor.Expires
             };
 
             return response;

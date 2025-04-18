@@ -28,8 +28,8 @@ namespace UserService.Data
                         FirstName = "Test1",
                         LastName = "Testsson",
                         DateOfBirth = new DateTime(1990, 1, 1),
-                        UserType = [UserType.Doctor.ToString()],
-                        UserAccountType = [UserAccountType.User.ToString()]
+                        UserType = UserType.Doctor.ToString(),
+                        UserAccountType = UserAccountType.User.ToString()
                     },
                     new User
                     {
@@ -39,8 +39,8 @@ namespace UserService.Data
                         FirstName = "Test2",
                         LastName = "Testsson",
                         DateOfBirth = new DateTime(1990, 1, 1),
-                        UserType = [UserType.Nurse.ToString()],
-                        UserAccountType = [UserAccountType.User.ToString()]
+                        UserType = UserType.Nurse.ToString(),
+                        UserAccountType = UserAccountType.User.ToString()
                     },
                     new User
                     {
@@ -50,8 +50,8 @@ namespace UserService.Data
                         FirstName = "Test3",
                         LastName = "Testsson",
                         DateOfBirth = new DateTime(1990, 1, 1),
-                        UserType = [UserType.Patient.ToString()],
-                        UserAccountType = [UserAccountType.User.ToString()]
+                        UserType = UserType.Patient.ToString(),
+                        UserAccountType = UserAccountType.User.ToString()
                     },
                     new User
                     {
@@ -61,7 +61,7 @@ namespace UserService.Data
                         FirstName = "Test4",
                         LastName = "Testsson",
                         DateOfBirth = new DateTime(1990, 1, 1),
-                        UserAccountType = [UserAccountType.Admin.ToString()]
+                        UserAccountType = UserAccountType.Admin.ToString()
                     },
                     new User
                     {
@@ -71,8 +71,8 @@ namespace UserService.Data
                         FirstName = "Test5",
                         LastName = "Testsson",
                         DateOfBirth = new DateTime(1990, 1, 1),
-                        UserType = [UserType.Doctor.ToString()],
-                        UserAccountType = [UserAccountType.User.ToString()]
+                        UserType = UserType.Doctor.ToString(),
+                        UserAccountType = UserAccountType.User.ToString()
                     },
                     new User
                     {
@@ -82,7 +82,7 @@ namespace UserService.Data
                         FirstName = "Test6",
                         LastName = "Testsson",
                         DateOfBirth = new DateTime(1990, 1, 1),
-                        UserAccountType = [UserAccountType.Developer.ToString()]
+                        UserAccountType = UserAccountType.Developer.ToString()
                     },
                     new User
                     {
@@ -92,8 +92,8 @@ namespace UserService.Data
                         FirstName = "Test7",
                         LastName = "Testsson",
                         DateOfBirth = new DateTime(1990, 1, 1),
-                        UserType = [UserType.Patient.ToString()],
-                        UserAccountType = [UserAccountType.Admin.ToString()]
+                        UserType = UserType.Patient.ToString(),
+                        UserAccountType = UserAccountType.Admin.ToString()
                     },
                     new User
                     {
@@ -103,8 +103,8 @@ namespace UserService.Data
                         FirstName = "Test8",
                         LastName = "Testsson",
                         DateOfBirth = new DateTime(1990, 1, 1),
-                        UserType = [UserType.Nurse.ToString()],
-                        UserAccountType = [UserAccountType.User.ToString()]
+                        UserType = UserType.Nurse.ToString(),
+                        UserAccountType = UserAccountType.User.ToString()
                     },
                     new User
                     {
@@ -114,8 +114,8 @@ namespace UserService.Data
                         FirstName = "Test9",
                         LastName = "Testsson",
                         DateOfBirth = new DateTime(1990, 1, 1),
-                        UserType = [UserType.Nurse.ToString()],
-                        UserAccountType = [UserAccountType.Admin.ToString()]
+                        UserType = UserType.Nurse.ToString(),
+                        UserAccountType = UserAccountType.Admin.ToString()
                     },
                     new User
                     {
@@ -125,8 +125,8 @@ namespace UserService.Data
                         FirstName = "Test10",
                         LastName = "Testsson",
                         DateOfBirth = new DateTime(1990, 1, 1),
-                        UserType = [UserType.Patient.ToString()],
-                        UserAccountType = [UserAccountType.User.ToString()]
+                        UserType = UserType.Patient.ToString(),
+                        UserAccountType = UserAccountType.User.ToString()
                     }
                 );
                 await context.SaveChangesAsync(token);

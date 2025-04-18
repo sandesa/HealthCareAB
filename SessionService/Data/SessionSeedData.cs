@@ -22,35 +22,35 @@ namespace SessionService.Data
                     {
                         Email = "test1.testsson@gmail.com",
                         AccessToken = "test1Token",
-                        ExpiresIn = 3600,
+                        Expires = DateTime.Now.AddMinutes(60),
                         Login = DateTime.Now,
                     },
                     new Session
                     {
                         Email = "test2.testsson@gmail.com",
                         AccessToken = "test2Token",
-                        ExpiresIn = 3600,
+                        Expires = DateTime.Now.AddMinutes(60),
                         Login = DateTime.Now,
                     },
                     new Session
                     {
                         Email = "test3.testsson@gmail.com",
                         AccessToken = "test3Token",
-                        ExpiresIn = 3600,
+                        Expires = DateTime.Now.AddMinutes(60),
                         Login = DateTime.Now,
                     },
                     new Session
                     {
                         Email = "test4.testsson@gmail.com",
                         AccessToken = "test4Token",
-                        ExpiresIn = 3600,
+                        Expires = DateTime.Now.AddMinutes(60),
                         Login = DateTime.Now,
                     },
                     new Session
                     {
                         Email = "test5.testsson@gmail.com",
                         AccessToken = "test5Token",
-                        ExpiresIn = 3600,
+                        Expires = DateTime.Now.AddMinutes(60),
                         Login = DateTime.Now,
                     }
                 );

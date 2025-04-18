@@ -61,9 +61,9 @@ namespace LoginService.Repositores
 
                 return new ValidationResponse
                 {
-                    Email = validationResponse.Email.ToString(),
-                    AccessToken = validationResponse.AccessToken.ToString(),
-                    ExpiresIn = int.Parse(validationResponse.ExpiresIn.ToString()),
+                    Email = validationResponse.Email,
+                    AccessToken = validationResponse.AccessToken,
+                    Expires = validationResponse.Expires,
                     Message = "User validated successfully",
                     IsValid = true,
                     IsConnectedToService = true,
@@ -110,7 +110,7 @@ namespace LoginService.Repositores
                 {
                     Email = validationResponse.Email,
                     AccessToken = validationResponse.AccessToken,
-                    ExpiresIn = validationResponse.ExpiresIn
+                    Expires = validationResponse.Expires
                 };
 
                 var jsonContent = new StringContent(JsonSerializer.Serialize(sessionRequest),
@@ -134,7 +134,7 @@ namespace LoginService.Repositores
                 {
                     Email = validationResponse.Email,
                     AccessToken = validationResponse.AccessToken,
-                    ExpiresIn = validationResponse.ExpiresIn,
+                    Expires = validationResponse.Expires,
                     Message = "User logged in successfully",
                     IsLoginSuccessful = true,
                     IsConnectedToService = true

@@ -34,6 +34,7 @@ namespace UserService.Startup
                     ValidIssuer = builder.Configuration["JwtConfig:Issuer"],
                     ValidAudience = builder.Configuration["JwtConfig:Audience"],
                     IssuerSigningKey = new SymmetricSecurityKey(Convert.FromBase64String(builder.Configuration["JwtConfig:Secret"]!)),
+                    ClockSkew = TimeSpan.Zero,
                     ValidateIssuer = true,
                     ValidateAudience = true,
                     ValidateLifetime = true,

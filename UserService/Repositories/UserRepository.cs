@@ -108,7 +108,7 @@ namespace UserService.Repositories
             {
                 Email = user.Email,
                 AccessToken = validationResponse.AccessToken,
-                ExpiresIn = validationResponse.ExpiresIn,
+                Expires = validationResponse.Expires,
             };
         }
 
