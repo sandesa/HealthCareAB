@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using UserService.Models;
 
 namespace UserService.Controllers
 {
+    [Authorize]
     [Route("api/user")]
     [ApiController]
     public class UserController : Controller
@@ -52,6 +54,7 @@ namespace UserService.Controllers
             }
         }
 
+        [AllowAnonymous]
         [HttpPost("create")]
         public async Task<IActionResult> CreateUser([FromBody] UserCreation userCreation)
         {
@@ -109,6 +112,7 @@ namespace UserService.Controllers
             }
         }
 
+        [AllowAnonymous]
         [HttpPost("validate")]
         public async Task<IActionResult> ValidateUser([FromBody] ValidationRequest validationRequest)
         {

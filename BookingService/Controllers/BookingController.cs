@@ -1,4 +1,5 @@
 ﻿using BookingService.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookingService.Controllers
@@ -14,6 +15,7 @@ namespace BookingService.Controllers
             _bookingService = bookingService;
         }
 
+        [Authorize(Roles = "Developer")]
         [HttpGet("dev")]
         public async Task<IActionResult> GetBookingsDev()
         {
@@ -25,6 +27,7 @@ namespace BookingService.Controllers
             return BadRequest(response);
         }
 
+        [Authorize]
         [HttpGet("caregiver/{caregiverId}")]
         public async Task<IActionResult> GetBookingsByCaregiverId(int caregiverId)
         {
@@ -36,6 +39,7 @@ namespace BookingService.Controllers
             return BadRequest(response);
         }
 
+        [Authorize]
         [HttpGet("user/{patientId}")]
         public async Task<IActionResult> GetBookingsByPatientId(int patientId)
         {
@@ -47,6 +51,7 @@ namespace BookingService.Controllers
             return BadRequest(response);
         }
 
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetBookingById(int id)
         {
@@ -58,6 +63,7 @@ namespace BookingService.Controllers
             return NotFound(response);
         }
 
+        [Authorize]
         [HttpPost("create")]
         public async Task<IActionResult> CreateBooking([FromBody] BookingCreation bookingCreation)
         {
@@ -69,6 +75,7 @@ namespace BookingService.Controllers
             return BadRequest(response);
         }
 
+        [Authorize]
         [HttpPut("update/{id}")]
         public async Task<IActionResult> UpdateBooking(int id, [FromBody] BookingUpdate bookingUpdate)
         {
@@ -80,6 +87,7 @@ namespace BookingService.Controllers
             return BadRequest(response);
         }
 
+        [Authorize]
         [HttpPut("cancel/{id}")]
         public async Task<IActionResult> CancelBooking(int id)
         {
@@ -91,6 +99,7 @@ namespace BookingService.Controllers
             return BadRequest(response);
         }
 
+        [Authorize]
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteBooking(int id)
         {

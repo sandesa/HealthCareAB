@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SessionService.Models;
 
 namespace SessionService.Controllers
@@ -14,6 +15,7 @@ namespace SessionService.Controllers
             _sessionService = sessionService;
         }
 
+        [Authorize(Roles = "Developer")]
         [HttpGet("dev")]
         public async Task<IActionResult> GetSessionsDev()
         {
@@ -33,6 +35,7 @@ namespace SessionService.Controllers
             }
         }
 
+        [Authorize]
         [HttpGet("get/{id}")]
         public async Task<IActionResult> GetSessionById(int id)
         {
@@ -71,6 +74,7 @@ namespace SessionService.Controllers
             }
         }
 
+        [Authorize]
         [HttpPut("logout/{id}")]
         public async Task<IActionResult> UpdateSessionLogout(int id)
         {
@@ -90,6 +94,7 @@ namespace SessionService.Controllers
             }
         }
 
+        [Authorize]
         [HttpPut("update/{id}")]
         public async Task<IActionResult> UpdateSession(int id, [FromBody] SessionUpdate sessionUpdate)
         {
@@ -109,6 +114,7 @@ namespace SessionService.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin, Developer")]
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteSession(int id)
         {

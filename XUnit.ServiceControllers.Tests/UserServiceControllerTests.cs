@@ -110,8 +110,8 @@ namespace XUnit.ServiceControllers.Tests
             Assert.Equal("Test", createdUser.GetProperty("firstName").GetString());
             Assert.Equal("Testsson", createdUser.GetProperty("lastName").GetString());
             Assert.Equal("1998-03-02T00:00:00", createdUser.GetProperty("dateOfBirth").GetString());
-            Assert.Equal("Doctor", createdUser.GetProperty("userType").EnumerateArray().First().GetString());
-            Assert.Equal("Developer", createdUser.GetProperty("userAccountType").EnumerateArray().First().GetString());
+            Assert.Equal("Doctor", createdUser.GetProperty("userType").GetString());
+            Assert.Equal("Developer", createdUser.GetProperty("userAccountType").GetString());
         }
 
         [Fact]

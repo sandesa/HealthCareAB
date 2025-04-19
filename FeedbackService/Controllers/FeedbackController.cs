@@ -1,4 +1,5 @@
 ﻿using FeedbackService.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FeedbackService.Controllers
@@ -14,6 +15,7 @@ namespace FeedbackService.Controllers
             _feedbackService = feedbackService;
         }
 
+        [Authorize(Roles = "Developer")]
         [HttpGet("dev")]
         public async Task<IActionResult> GetFeedbacksDevAsync()
         {
@@ -31,6 +33,7 @@ namespace FeedbackService.Controllers
             return BadRequest(response);
         }
 
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetFeedbackByIdAsync(int id)
         {
@@ -48,6 +51,7 @@ namespace FeedbackService.Controllers
             return NotFound(response);
         }
 
+        [Authorize]
         [HttpGet("booking/{bookingId}")]
         public async Task<IActionResult> GetFeedbackByBookingIdAsync(int bookingId)
         {
@@ -65,6 +69,7 @@ namespace FeedbackService.Controllers
             return NotFound(response);
         }
 
+        [Authorize]
         [HttpPost("create")]
         public async Task<IActionResult> CreateFeedbackAsync([FromBody] FeedbackCreate feedback)
         {
@@ -86,6 +91,7 @@ namespace FeedbackService.Controllers
             return BadRequest(response);
         }
 
+        [Authorize]
         [HttpPut("update/{id}")]
         public async Task<IActionResult> UpdateFeedbackAsync(int id, [FromBody] FeedbackUpdate feedback)
         {
@@ -107,6 +113,7 @@ namespace FeedbackService.Controllers
             return NotFound(response);
         }
 
+        [Authorize]
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteFeedbackAsync(int id)
         {

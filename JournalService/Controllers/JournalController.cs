@@ -1,4 +1,5 @@
 ﻿using JournalService.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JournalService.Controllers
@@ -14,6 +15,7 @@ namespace JournalService.Controllers
             _journalService = journalService;
         }
 
+        [Authorize(Roles = "Developer")]
         [HttpGet("dev")]
         public async Task<IActionResult> GetJournalsDevAsync()
         {
@@ -30,6 +32,7 @@ namespace JournalService.Controllers
             return BadRequest(response);
         }
 
+        [Authorize]
         [HttpGet("user/{patientId}")]
         public async Task<IActionResult> GetJournalsByUserIdAsync(int patientId)
         {
@@ -46,6 +49,7 @@ namespace JournalService.Controllers
             return NotFound(response);
         }
 
+        [Authorize]
         [HttpGet("caregiver/{caregiverId}")]
         public async Task<IActionResult> GetJournalsByCaregiverIdAsync(int caregiverId)
         {
@@ -62,6 +66,7 @@ namespace JournalService.Controllers
             return NotFound(response);
         }
 
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetJournalByIdAsync(int id)
         {
@@ -78,6 +83,7 @@ namespace JournalService.Controllers
             return NotFound(response);
         }
 
+        [Authorize]
         [HttpPost("create")]
         public async Task<IActionResult> CreateJournalAsync([FromBody] JournalCreate journalCreate)
         {
@@ -94,6 +100,7 @@ namespace JournalService.Controllers
             return BadRequest(response);
         }
 
+        [Authorize]
         [HttpPut("update/{id}")]
         public async Task<IActionResult> UpdateJournalAsync(int id, [FromBody] JournalUpdate journalUpdate)
         {
@@ -110,6 +117,7 @@ namespace JournalService.Controllers
             return NotFound(response);
         }
 
+        [Authorize]
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteJournalAsync(int id)
         {

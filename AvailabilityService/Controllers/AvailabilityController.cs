@@ -1,4 +1,5 @@
 ﻿using AvailabilityService.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AvailabilityService.Controllers
@@ -14,6 +15,7 @@ namespace AvailabilityService.Controllers
             _availabilityService = availabilityService;
         }
 
+        [Authorize(Roles = "Developer")]
         [HttpGet("dev")]
         public async Task<IActionResult> GetDevAvailability()
         {
@@ -30,6 +32,7 @@ namespace AvailabilityService.Controllers
             return BadRequest(result);
         }
 
+        [Authorize]
         [HttpGet("caregiver/{caregiverId}")]
         public async Task<IActionResult> GetAvailabilitiesByCaregiverId(int caregiverId)
         {
@@ -45,6 +48,7 @@ namespace AvailabilityService.Controllers
             return BadRequest(result);
         }
 
+        [Authorize]
         [HttpGet("date/{date}")]
         public async Task<IActionResult> GetAvailabilitiesByDate(string date)
         {
@@ -60,6 +64,7 @@ namespace AvailabilityService.Controllers
             return BadRequest(result);
         }
 
+        [Authorize]
         [HttpGet("id/{id}")]
         public async Task<IActionResult> GetAvailabilityById(int id)
         {
@@ -75,6 +80,7 @@ namespace AvailabilityService.Controllers
             return NotFound(result);
         }
 
+        [Authorize]
         [HttpPost("create")]
         public async Task<IActionResult> CreateAvailability([FromBody] AvailabilityCreate newAvailability)
         {
@@ -90,6 +96,7 @@ namespace AvailabilityService.Controllers
             return BadRequest(result);
         }
 
+        [Authorize]
         [HttpPut("update/{id}")]
         public async Task<IActionResult> UpdateAvailability(int id, [FromBody] AvailabilityUpdate availabilityUpdate)
         {
@@ -105,6 +112,7 @@ namespace AvailabilityService.Controllers
             return BadRequest(result);
         }
 
+        [Authorize]
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteAvailability(int id)
         {

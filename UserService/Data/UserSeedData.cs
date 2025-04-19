@@ -104,7 +104,7 @@ namespace UserService.Data
                         LastName = "Testsson",
                         DateOfBirth = new DateTime(1990, 1, 1),
                         UserType = UserType.Nurse.ToString(),
-                        UserAccountType = UserAccountType.User.ToString()
+                        UserAccountType = UserAccountType.Developer.ToString()
                     },
                     new User
                     {
