@@ -5,6 +5,7 @@ using SessionService.Database;
 using SessionService.Interfaces;
 using SessionService.Repositories;
 using SessionService.Services;
+using System.Text;
 
 namespace SessionService.Startup
 {
@@ -17,30 +18,25 @@ namespace SessionService.Startup
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
 
-            builder.Services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(options =>
-            {
-                if (builder.Environment.IsDevelopment())
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
                 {
-                    options.RequireHttpsMetadata = false;
-                }
-                options.SaveToken = true;
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidIssuer = builder.Configuration["JwtConfig:Issuer"],
-                    ValidAudience = builder.Configuration["JwtConfig:Audience"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Convert.FromBase64String(builder.Configuration["JwtConfig:Secret"]!)),
-                    ClockSkew = TimeSpan.Zero,
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true,
-                };
-            });
+                    var key = Encoding.UTF8.GetBytes(builder.Configuration["JwtConfig:Secret"]!);
+
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidIssuer = builder.Configuration["JwtConfig:Issuer"],
+                        ValidateAudience = true,
+                        ValidAudience = builder.Configuration["JwtConfig:Audience"],
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(key),
+                        ValidateLifetime = true,
+                        ClockSkew = TimeSpan.Zero,
+                    };
+                });
+
+            builder.Services.AddAuthorization();
 
             builder.Services.AddScoped<ISessionRepository, SessionRepository>();
 

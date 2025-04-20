@@ -1,9 +1,11 @@
-﻿using Microsoft.IdentityModel.JsonWebTokens;
+﻿
+
+
 using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using UserService.Models;
-
 
 namespace UserService.Services
 {
@@ -44,34 +46,31 @@ namespace UserService.Services
 
             var claims = new List<Claim>
             {
-                new(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
-                new("role", user.UserAccountType),
-                new(JwtRegisteredClaimNames.Email, user.Email),
+                new(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new(ClaimTypes.Role, user.UserAccountType),
+                new(ClaimTypes.Email, user.Email),
                 new("user_type", user.UserType)
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_secret));
 
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512);
 
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.Now.AddMinutes(_tokenExpiration),
-                SigningCredentials = creds,
-                Issuer = _issuer,
-                Audience = _audience
-            };
+            var tokenDescriptor = new JwtSecurityToken(
+                issuer: _issuer,
+                audience: _audience,
+                claims: claims,
+                expires: DateTime.Now.AddMinutes(_tokenExpiration),
+                signingCredentials: creds
+            );
 
-            var handler = new JsonWebTokenHandler();
-
-            string token = handler.CreateToken(tokenDescriptor);
+            string token = new JwtSecurityTokenHandler().WriteToken(tokenDescriptor);
 
             ValidationResponse response = new()
             {
                 Email = user.Email,
                 AccessToken = token,
-                Expires = tokenDescriptor.Expires
+                Expires = tokenDescriptor.ValidTo
             };
 
             return response;

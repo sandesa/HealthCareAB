@@ -4,7 +4,6 @@ using UserService.Models;
 
 namespace UserService.Controllers
 {
-    [Authorize]
     [Route("api/user")]
     [ApiController]
     public class UserController : Controller
@@ -16,6 +15,7 @@ namespace UserService.Controllers
             _userService = userService;
         }
 
+        [Authorize]
         [HttpGet("dev")]
         public async Task<IActionResult> GetUsersDev()
         {

@@ -20,14 +20,6 @@ namespace UserService.Startup
                     options.Theme = ScalarTheme.Saturn;
                     options.Layout = ScalarLayout.Modern;
                     options.HideClientButton = true;
-                    options.Authentication = new ScalarAuthenticationOptions
-                    {
-                        PreferredSecurityScheme = "ApiKey",
-                        ApiKey = new ApiKeyOptions
-                        {
-                            Token = "secret_key"
-                        }
-                    };
                 });
             }
         }
