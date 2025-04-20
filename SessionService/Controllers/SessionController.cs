@@ -114,7 +114,7 @@ namespace SessionService.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin, Developer")]
+        [Authorize]
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteSession(int id)
         {

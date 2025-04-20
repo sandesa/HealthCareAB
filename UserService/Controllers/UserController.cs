@@ -15,7 +15,7 @@ namespace UserService.Controllers
             _userService = userService;
         }
 
-        [Authorize]
+        [Authorize(Policy = "Developer")]
         [HttpGet("dev")]
         public async Task<IActionResult> GetUsersDev()
         {
@@ -35,6 +35,7 @@ namespace UserService.Controllers
             }
         }
 
+        [Authorize(Policy = "Caregiver")]
         [HttpGet("get-all")]
         public async Task<IActionResult> GetUsers()
         {
@@ -74,6 +75,7 @@ namespace UserService.Controllers
             }
         }
 
+        [Authorize]
         [HttpPut("update/{id}")]
         public async Task<IActionResult> UpdateUser(int id, [FromBody] UserUpdate userUpdate)
         {
@@ -93,6 +95,7 @@ namespace UserService.Controllers
             }
         }
 
+        [Authorize]
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteUser(int id)
         {

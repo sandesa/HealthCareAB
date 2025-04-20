@@ -29,7 +29,7 @@ namespace UserService.Data
                         LastName = "Testsson",
                         DateOfBirth = new DateTime(1990, 1, 1),
                         UserType = UserType.Doctor.ToString(),
-                        UserAccountType = UserAccountType.User.ToString()
+                        UserAccountType = UserAccountType.Caregiver.ToString()
                     },
                     new User
                     {
@@ -40,7 +40,7 @@ namespace UserService.Data
                         LastName = "Testsson",
                         DateOfBirth = new DateTime(1990, 1, 1),
                         UserType = UserType.Nurse.ToString(),
-                        UserAccountType = UserAccountType.User.ToString()
+                        UserAccountType = UserAccountType.Caregiver.ToString()
                     },
                     new User
                     {
@@ -72,7 +72,7 @@ namespace UserService.Data
                         LastName = "Testsson",
                         DateOfBirth = new DateTime(1990, 1, 1),
                         UserType = UserType.Doctor.ToString(),
-                        UserAccountType = UserAccountType.User.ToString()
+                        UserAccountType = UserAccountType.Caregiver.ToString()
                     },
                     new User
                     {
@@ -104,7 +104,7 @@ namespace UserService.Data
                         LastName = "Testsson",
                         DateOfBirth = new DateTime(1990, 1, 1),
                         UserType = UserType.Nurse.ToString(),
-                        UserAccountType = UserAccountType.Developer.ToString()
+                        UserAccountType = UserAccountType.Caregiver.ToString()
                     },
                     new User
                     {
@@ -115,7 +115,7 @@ namespace UserService.Data
                         LastName = "Testsson",
                         DateOfBirth = new DateTime(1990, 1, 1),
                         UserType = UserType.Nurse.ToString(),
-                        UserAccountType = UserAccountType.Admin.ToString()
+                        UserAccountType = UserAccountType.Caregiver.ToString()
                     },
                     new User
                     {

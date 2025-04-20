@@ -37,7 +37,17 @@ namespace UserService.Startup
                 });
 
 
-            builder.Services.AddAuthorization();
+            builder.Services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Developer", policy =>
+                    policy.RequireRole("Developer"));
+
+                options.AddPolicy("Admin", policy =>
+                    policy.RequireRole("Admin"));
+
+                options.AddPolicy("Caregiver", policy =>
+                    policy.RequireRole("Caregiver"));
+            });
 
             builder.Services.AddScoped<IHashingRepository, HashingRepository>();
 
