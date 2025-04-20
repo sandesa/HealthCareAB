@@ -19,6 +19,8 @@ namespace JournalService
 
             app.UseHttpsRedirection();
 
+            app.UseAuthentication();
+
             app.UseAuthorization();
 
             app.MapControllers();

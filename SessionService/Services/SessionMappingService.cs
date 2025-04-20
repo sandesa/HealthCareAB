@@ -23,7 +23,7 @@ namespace SessionService.Services
             {
                 Email = sessionCreate.Email,
                 AccessToken = sessionCreate.AccessToken,
-                ExpiresIn = sessionCreate.ExpiresIn,
+                Expires = sessionCreate.Expires,
                 Login = sessionCreate.Login,
                 Logout = sessionCreate.Logout
             };
@@ -33,7 +33,7 @@ namespace SessionService.Services
         {
             existingSession.Email = sessionUpdate.Email ?? existingSession.Email;
             existingSession.AccessToken = sessionUpdate.AccessToken ?? existingSession.AccessToken;
-            existingSession.ExpiresIn = sessionUpdate.ExpiresIn;
+            existingSession.Expires = sessionUpdate.Expires;
             existingSession.Login = sessionUpdate.Login ?? existingSession.Login;
             existingSession.Logout = sessionUpdate.Logout ?? existingSession.Logout;
             return existingSession;

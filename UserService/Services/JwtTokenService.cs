@@ -1,9 +1,11 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿
+
+
+using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using UserService.Models;
-
 
 namespace UserService.Services
 {
@@ -18,7 +20,7 @@ namespace UserService.Services
 
         public ValidationResponse GenerateToken(User user)
         {
-            if(user.Email == null || user.UserAccountType == null || user.UserType == null)
+            if (user.Email == null || user.UserAccountType == null || user.UserType == null)
             {
                 throw new ArgumentNullException(nameof(user), "User cannot be null.");
             }
@@ -44,19 +46,17 @@ namespace UserService.Services
 
             var claims = new List<Claim>
             {
+                new(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new(ClaimTypes.Role, user.UserAccountType),
                 new(ClaimTypes.Email, user.Email),
-                new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new(JwtRegisteredClaimNames.Sub, user.Id.ToString())
+                new("user_type", user.UserType)
             };
-
-            claims.AddRange(user.UserAccountType.Select(type => new Claim(ClaimTypes.Role, type)));
-            claims.AddRange(user.UserType.Select(type => new Claim(ClaimTypes.Role, type)));
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_secret));
 
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512);
 
-            var token = new JwtSecurityToken(
+            var tokenDescriptor = new JwtSecurityToken(
                 issuer: _issuer,
                 audience: _audience,
                 claims: claims,
@@ -64,11 +64,13 @@ namespace UserService.Services
                 signingCredentials: creds
             );
 
+            string token = new JwtSecurityTokenHandler().WriteToken(tokenDescriptor);
+
             ValidationResponse response = new()
             {
                 Email = user.Email,
-                AccessToken = new JwtSecurityTokenHandler().WriteToken(token),
-                ExpiresIn = _tokenExpiration * 60
+                AccessToken = token,
+                Expires = tokenDescriptor.ValidTo
             };
 
             return response;

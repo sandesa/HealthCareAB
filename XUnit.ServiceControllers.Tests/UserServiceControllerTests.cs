@@ -93,8 +93,8 @@ namespace XUnit.ServiceControllers.Tests
                 FirstName = "Test",
                 LastName = "Testsson",
                 DateOfBirth = new DateTime(1998, 03, 02),
-                UserType = [UserType.Doctor.ToString()],
-                UserAccountType = [UserAccountType.Developer.ToString()]
+                UserType = UserType.Doctor.ToString(),
+                UserAccountType = UserAccountType.Developer.ToString()
             };
 
             var response = await _client.PutAsJsonAsync($"/api/user/update/{id}", updatedUser);
@@ -110,8 +110,8 @@ namespace XUnit.ServiceControllers.Tests
             Assert.Equal("Test", createdUser.GetProperty("firstName").GetString());
             Assert.Equal("Testsson", createdUser.GetProperty("lastName").GetString());
             Assert.Equal("1998-03-02T00:00:00", createdUser.GetProperty("dateOfBirth").GetString());
-            Assert.Equal("Doctor", createdUser.GetProperty("userType").EnumerateArray().First().GetString());
-            Assert.Equal("Developer", createdUser.GetProperty("userAccountType").EnumerateArray().First().GetString());
+            Assert.Equal("Doctor", createdUser.GetProperty("userType").GetString());
+            Assert.Equal("Developer", createdUser.GetProperty("userAccountType").GetString());
         }
 
         [Fact]
@@ -147,11 +147,11 @@ namespace XUnit.ServiceControllers.Tests
             var validationResponse = jsonResponse.GetProperty("data");
             var email = validationResponse.GetProperty("email").GetString();
             var accessToken = validationResponse.GetProperty("accessToken").GetString();
-            var expiration = validationResponse.GetProperty("expiresIn").GetInt32();
+            var expiration = validationResponse.GetProperty("expires").GetDateTime();
 
             Assert.Equal(validationRequest.Email, email);
             Assert.NotNull(accessToken);
-            Assert.Equal(3600, expiration);
+            Assert.Equal(DateTime.Now.AddMinutes(60).ToShortDateString(), expiration.ToShortDateString());
         }
     }
 

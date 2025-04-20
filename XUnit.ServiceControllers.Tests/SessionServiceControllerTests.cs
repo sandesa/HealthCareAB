@@ -1,13 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
 using SessionService;
 using SessionService.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http.Json;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace XUnit.ServiceControllers.Tests
 {
@@ -51,7 +46,7 @@ namespace XUnit.ServiceControllers.Tests
             {
                 Email = "testEmail",
                 AccessToken = "testToken",
-                ExpiresIn = 3600,
+                Expires = DateTime.Now.AddMinutes(60),
                 Login = DateTime.Now
             };
 

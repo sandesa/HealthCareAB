@@ -12,8 +12,6 @@ namespace UserService
 
             var app = builder.Build();
 
-            app.UseOpenApi();
-
             await app.UseDbDevServices();
 
             app.UseHttpsRedirection();
@@ -21,6 +19,8 @@ namespace UserService
             app.UseAuthentication();
 
             app.UseAuthorization();
+
+            app.UseOpenApi();
 
             app.MapControllers();
 
