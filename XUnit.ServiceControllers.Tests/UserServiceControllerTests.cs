@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
 using Moq;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text.Json;
 using UserService;
@@ -24,6 +25,9 @@ namespace XUnit.ServiceControllers.Tests
             mockVerify.Setup(v => v.VerifyPassword(It.IsAny<string>(), It.IsAny<string>()))
                 .Returns(true);
             _verify = mockVerify.Object;
+
+            var token = JwtTokenGeneratorTest.GenerateToken();
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         }
 
         [Fact]
