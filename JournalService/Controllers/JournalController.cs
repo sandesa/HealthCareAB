@@ -1,7 +1,6 @@
 ﻿using JournalService.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace JournalService.Controllers
 {
@@ -84,7 +83,7 @@ namespace JournalService.Controllers
             return NotFound(response);
         }
 
-        [Authorize("Doctor, Nurse")]
+        [Authorize(Roles = "Developer,Admin,Caregiver")]
         [HttpPost("create")]
         public async Task<IActionResult> CreateJournalAsync([FromBody] JournalCreate journalCreate)
         {
@@ -101,7 +100,7 @@ namespace JournalService.Controllers
             return BadRequest(response);
         }
 
-        [Authorize(Roles = "Doctor, Nurse, Admin, Developer")]
+        [Authorize(Roles = "Developer,Admin,Caregiver")]
         [HttpPut("update/{id}")]
         public async Task<IActionResult> UpdateJournalAsync(int id, [FromBody] JournalUpdate journalUpdate)
         {
@@ -118,7 +117,7 @@ namespace JournalService.Controllers
             return NotFound(response);
         }
 
-        [Authorize(Roles = "Admin, Developer")]
+        [Authorize(Roles = "Developer,Admin")]
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteJournalAsync(int id)
         {

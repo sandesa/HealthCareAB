@@ -15,7 +15,7 @@ namespace UserService.Controllers
             _userService = userService;
         }
 
-        [Authorize(Policy = "Developer")]
+        [Authorize(Roles = "Developer")]
         [HttpGet("dev")]
         public async Task<IActionResult> GetUsersDev()
         {
@@ -35,7 +35,7 @@ namespace UserService.Controllers
             }
         }
 
-        [Authorize(Policy = "Caregiver")]
+        [Authorize(Roles = "Developer,Admin,Caregiver")]
         [HttpGet("get-all")]
         public async Task<IActionResult> GetUsers()
         {

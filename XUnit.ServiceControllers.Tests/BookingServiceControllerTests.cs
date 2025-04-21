@@ -3,6 +3,7 @@ using BookingService.Models;
 using BookingService.Utilities.StdDef;
 using Microsoft.AspNetCore.Mvc.Testing;
 using System.Net;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text.Json;
 
@@ -17,6 +18,9 @@ namespace XUnit.ServiceControllers.Tests
         {
             _factory = factory;
             _client = factory.CreateClient();
+
+            var token = JwtTokenGeneratorTest.GenerateToken();
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         }
 
         [Fact]
