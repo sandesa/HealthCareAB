@@ -51,7 +51,6 @@ namespace XUnit.ServiceControllers.Tests
                 Email = "testEmail",
                 AccessToken = "testToken",
                 Expires = DateTime.Now.AddMinutes(60),
-                Login = DateTime.Now
             };
 
             var response = await _client.PostAsJsonAsync("/api/session/create", sessionCreate);
