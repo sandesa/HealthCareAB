@@ -63,7 +63,7 @@ namespace UserService.Repositories
                 userUpdate.PasswordHash = _hashing.HashPassword(userUpdate.PasswordHash);
             }
             existingUser = _mapper.UpdateToUser(existingUser, userUpdate);
-            existingUser.UpdatedAt = DateTime.Now;
+            existingUser.UpdatedAt = DateTime.UtcNow;
             _context.Users.Update(existingUser);
             await _context.SaveChangesAsync();
             var userDTO = _mapper.UserToDto(existingUser);

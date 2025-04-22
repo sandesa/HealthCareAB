@@ -34,8 +34,16 @@ namespace UserService.Startup
                         ValidateLifetime = true,
                         ClockSkew = TimeSpan.Zero,
                     };
+                    options.Events = new JwtBearerEvents
+                    {
+                        OnAuthenticationFailed = context =>
+                        {
+                            Console.WriteLine("Token failed:");
+                            Console.WriteLine(context.Exception.ToString());
+                            return Task.CompletedTask;
+                        }
+                    };
                 });
-
 
             builder.Services.AddAuthorization(options =>
             {

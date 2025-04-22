@@ -28,8 +28,8 @@ namespace UserService.Data
                         FirstName = "Test1",
                         LastName = "Testsson",
                         DateOfBirth = new DateTime(1990, 1, 1),
-                        UserType = UserType.Doctor.ToString(),
-                        UserAccountType = UserAccountType.Caregiver.ToString()
+                        UserType = UserType.Other.ToString(),
+                        UserAccountType = UserAccountType.Developer.ToString()
                     },
                     new User
                     {
@@ -61,6 +61,7 @@ namespace UserService.Data
                         FirstName = "Test4",
                         LastName = "Testsson",
                         DateOfBirth = new DateTime(1990, 1, 1),
+                        UserType = UserType.Other.ToString(),
                         UserAccountType = UserAccountType.Admin.ToString()
                     },
                     new User
@@ -82,6 +83,7 @@ namespace UserService.Data
                         FirstName = "Test6",
                         LastName = "Testsson",
                         DateOfBirth = new DateTime(1990, 1, 1),
+                        UserType = UserType.Other.ToString(),
                         UserAccountType = UserAccountType.Developer.ToString()
                     },
                     new User
@@ -92,7 +94,7 @@ namespace UserService.Data
                         FirstName = "Test7",
                         LastName = "Testsson",
                         DateOfBirth = new DateTime(1990, 1, 1),
-                        UserType = UserType.Patient.ToString(),
+                        UserType = UserType.Other.ToString(),
                         UserAccountType = UserAccountType.Admin.ToString()
                     },
                     new User

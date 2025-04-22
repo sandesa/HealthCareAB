@@ -52,7 +52,7 @@ namespace JournalService.Repositories
         public async Task<JournalDTO?> CreateJournalAsync(JournalCreate journalCreate)
         {
             var journal = _mapper.CreateToJournal(journalCreate);
-            journal.CreatedAt = DateTime.Now;
+            journal.CreatedAt = DateTime.UtcNow;
 
             await _context.Journals.AddAsync(journal);
             await _context.SaveChangesAsync();
@@ -73,7 +73,7 @@ namespace JournalService.Repositories
                 journal = _mapper.UpdateToJournal(journal, journalUpdate);
             }
 
-            journal.UpdatedAt = DateTime.Now;
+            journal.UpdatedAt = DateTime.UtcNow;
             _context.Journals.Update(journal);
             await _context.SaveChangesAsync();
             var journalDTO = _mapper.JournalToDto(journal);
