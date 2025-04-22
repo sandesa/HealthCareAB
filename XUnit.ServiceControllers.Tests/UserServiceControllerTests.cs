@@ -150,12 +150,11 @@ namespace XUnit.ServiceControllers.Tests
             var jsonResponse = await response.Content.ReadFromJsonAsync<JsonElement>();
             var validationResponse = jsonResponse.GetProperty("data");
             var email = validationResponse.GetProperty("email").GetString();
-            var accessToken = validationResponse.GetProperty("accessToken").GetString();
-            var expiration = validationResponse.GetProperty("expires").GetDateTime();
 
+            Assert.NotNull(validationResponse.GetProperty("userAccountType").GetString());
             Assert.Equal(validationRequest.Email, email);
-            Assert.NotNull(accessToken);
-            Assert.Equal(DateTime.Now.AddMinutes(60).ToShortDateString(), expiration.ToShortDateString());
+            Assert.NotNull(validationResponse.GetProperty("userType").GetString());
+            Assert.True(validationResponse.GetProperty("isValid").GetBoolean());
         }
     }
 

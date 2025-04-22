@@ -23,6 +23,8 @@ namespace LoginService.Startup
 
             builder.Services.AddScoped<Services.LoginService>();
 
+            builder.Services.AddScoped<Services.JwtService>();
+
             builder.Services.AddControllers();
 
             builder.Services.AddOpenApiServices();

@@ -103,7 +103,7 @@ namespace XUnit.ServiceControllers.Tests
             Assert.Equal(16, createdJournal.GetProperty("bookingId").GetInt32());
             Assert.Equal(JournalType.Treatment.ToString(), createdJournal.GetProperty("journalType").GetString());
             Assert.Equal("Test journal entry", createdJournal.GetProperty("journalEntry").GetString());
-            Assert.Equal(DateTime.Now.ToShortDateString(), createdJournal.GetProperty("createdAt").GetDateTime().ToShortDateString());
+            Assert.Equal(DateTime.UtcNow.ToShortDateString(), createdJournal.GetProperty("createdAt").GetDateTime().ToShortDateString());
         }
 
         [Fact]
@@ -127,7 +127,7 @@ namespace XUnit.ServiceControllers.Tests
             Assert.Equal(20, updatedJournal.GetProperty("bookingId").GetInt32());
             Assert.Equal(JournalType.Other.ToString(), updatedJournal.GetProperty("journalType").GetString());
             Assert.Equal("Updated journal entry", updatedJournal.GetProperty("journalEntry").GetString());
-            Assert.Equal(DateTime.Now.ToShortDateString(), updatedJournal.GetProperty("updatedAt").GetDateTime().ToShortDateString());
+            Assert.Equal(DateTime.UtcNow.ToShortDateString(), updatedJournal.GetProperty("updatedAt").GetDateTime().ToShortDateString());
         }
 
         [Fact]

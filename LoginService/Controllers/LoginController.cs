@@ -21,12 +21,12 @@ namespace LoginService.Controllers
             {
                 var validationResponse = await _loginService.ValidateUserAsync(request);
 
-                if (validationResponse.IsValid == null)
+                if (validationResponse == null || !validationResponse.IsValid)
                 {
                     return Unauthorized(validationResponse);
                 }
 
-                if ((bool)!validationResponse.IsValid)
+                if (!validationResponse.IsValid)
                 {
                     return Unauthorized(validationResponse);
                 }

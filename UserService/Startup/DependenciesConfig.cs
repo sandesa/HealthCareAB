@@ -67,8 +67,6 @@ namespace UserService.Startup
 
             builder.Services.AddScoped<UserMappingService>();
 
-            builder.Services.AddScoped<JwtTokenService>();
-
             builder.Services.AddControllers();
 
             builder.Services.AddOpenApiServices();

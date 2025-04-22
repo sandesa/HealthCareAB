@@ -130,7 +130,7 @@ namespace XUnit.ServiceControllers.Tests
             Assert.Equal("Main Clinic", createdBooking.GetProperty("clinic").GetString());
             Assert.Equal("Testgatan 1, 41234 Gothenburg", createdBooking.GetProperty("address").GetString());
             Assert.False(createdBooking.GetProperty("isCancelled").GetBoolean());
-            Assert.Equal(DateTime.Now.ToShortDateString(), createdBooking.GetProperty("created").GetDateTime().ToShortDateString());
+            Assert.Equal(DateTime.UtcNow.ToShortDateString(), createdBooking.GetProperty("created").GetDateTime().ToShortDateString());
         }
 
         [Fact]
@@ -160,7 +160,7 @@ namespace XUnit.ServiceControllers.Tests
             Assert.Equal("Test Clinic", updatedBookingResponse.GetProperty("clinic").GetString());
             Assert.Equal("NewTestgatan 1, 41234 Gothenburg", updatedBookingResponse.GetProperty("address").GetString());
             Assert.False(updatedBookingResponse.GetProperty("isCancelled").GetBoolean());
-            Assert.Equal(DateTime.Now.ToShortDateString(), updatedBookingResponse.GetProperty("updated").GetDateTime().ToShortDateString());
+            Assert.Equal(DateTime.UtcNow.ToShortDateString(), updatedBookingResponse.GetProperty("updated").GetDateTime().ToShortDateString());
         }
 
         [Fact]
@@ -179,7 +179,7 @@ namespace XUnit.ServiceControllers.Tests
             Assert.Equal(1, cancelledBooking.GetProperty("caregiverId").GetInt32());
             Assert.Equal(1, cancelledBooking.GetProperty("patientId").GetInt32());
             Assert.True(cancelledBooking.GetProperty("isCancelled").GetBoolean());
-            Assert.Equal(DateTime.Now.ToShortDateString(), cancelledBooking.GetProperty("cancelDate").GetDateTime().ToShortDateString());
+            Assert.Equal(DateTime.UtcNow.ToShortDateString(), cancelledBooking.GetProperty("cancelDate").GetDateTime().ToShortDateString());
         }
 
         [Fact]

@@ -1,28 +1,25 @@
-﻿
-
-
+﻿using LoginService.Models;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using UserService.Models;
 
-namespace UserService.Services
+namespace LoginService.Services
 {
-    public class JwtTokenService
+    public class JwtService
     {
         private readonly IConfiguration _configuration;
 
-        public JwtTokenService(IConfiguration configuration)
+        public JwtService(IConfiguration configuration)
         {
             _configuration = configuration;
         }
 
-        public ValidationResponse GenerateToken(User user)
+        public string GenerateToken(ValidationResponse response)
         {
-            if (user.Email == null || user.UserAccountType == null || user.UserType == null)
+            if (response.UserAccountType == null || response.Email == null || response.UserType == null || !response.IsValid)
             {
-                throw new ArgumentNullException(nameof(user), "User cannot be null.");
+                throw new ArgumentNullException(nameof(response), "Response cannot be null.");
             }
 
             var jwtConfig = _configuration.GetSection("JwtConfig");
@@ -45,12 +42,12 @@ namespace UserService.Services
             var _tokenExpiration = int.Parse(tokenExpiration);
 
             var claims = new List<Claim>
-                {
-                    new(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                    new(ClaimTypes.Role, user.UserAccountType),
-                    new(ClaimTypes.Email, user.Email),
-                    new("user_type", user.UserType)
-                };
+            {
+                new(ClaimTypes.NameIdentifier, response.UserId.ToString()),
+                new(ClaimTypes.Role, response.UserAccountType),
+                new(ClaimTypes.Email, response.Email),
+                new("user_type", response.UserType)
+            };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_secret));
 
@@ -66,14 +63,7 @@ namespace UserService.Services
 
             string token = new JwtSecurityTokenHandler().WriteToken(tokenDescriptor);
 
-            ValidationResponse response = new()
-            {
-                Email = user.Email,
-                AccessToken = token,
-                Expires = tokenDescriptor.ValidTo
-            };
-
-            return response;
+            return token;
         }
     }
 }
