@@ -12,7 +12,7 @@ namespace LoginService.Services
             _loginRepository = loginRepository;
         }
 
-        public async Task<ValidationResponse> ValidateUserAsync(LoginRequest request)
+        public async Task<ValidationResponse?> ValidateUserAsync(LoginRequest request)
         {
             var validationResponse = await _loginRepository.ValidateUserAsync(request);
 

@@ -1,6 +1,6 @@
-﻿namespace LoginService.Models
+﻿namespace UserService.DTO
 {
-    public class ValidationResponse
+    public class ValidationResponseDTO
     {
         public int UserId { get; set; }
         public string? UserAccountType { get; set; }
