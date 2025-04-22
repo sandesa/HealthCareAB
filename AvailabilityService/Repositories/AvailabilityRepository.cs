@@ -60,7 +60,7 @@ namespace AvailabilityService.Repositories
                 return null;
             }
             var avail = _mapper.CreateToAvail(newAvailability);
-            avail.CreatedAt = DateTime.Now;
+            avail.CreatedAt = DateTime.UtcNow;
 
             await _context.Availabilities.AddAsync(avail);
             await _context.SaveChangesAsync();
@@ -77,7 +77,7 @@ namespace AvailabilityService.Repositories
                 return null;
             }
             var avail = _mapper.UpdateToAvail(existingAvail, availabilityUpdate);
-            avail.UpdatedAt = DateTime.Now;
+            avail.UpdatedAt = DateTime.UtcNow;
 
             if (avail.StartTime > avail.EndTime)
             {

@@ -1,6 +1,6 @@
-﻿namespace LoginService.Models
+﻿namespace GatewayService.Models
 {
-    public class SessionRequest
+    public class SessionCreate
     {
         public string? Email { get; set; }
         public string? AccessToken { get; set; }

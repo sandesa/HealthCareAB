@@ -48,7 +48,7 @@ namespace BookingService.Services
                 MeetingType = bookingCreation.MeetingType,
                 Clinic = bookingCreation.Clinic,
                 Address = bookingCreation.Address,
-                Created = DateTime.Now
+                Created = DateTime.UtcNow
             };
         }
 

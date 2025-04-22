@@ -4,6 +4,7 @@
     {
         Doctor,
         Nurse,
-        Patient
+        Patient,
+        Other
     }
 }

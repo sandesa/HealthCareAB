@@ -26,7 +26,7 @@ namespace JournalService.Data
                         BookingId = 1,
                         JournalType = JournalType.Observation.ToString(),
                         JournalEntry = "Patient is stable and recovering well.",
-                        CreatedAt = DateTime.Now
+                        CreatedAt = DateTime.UtcNow
                     },
                     new Journal
                     {
@@ -35,7 +35,7 @@ namespace JournalService.Data
                         BookingId = 4,
                         JournalType = JournalType.Observation.ToString(),
                         JournalEntry = "Patient is stable and recovering well again.",
-                        CreatedAt = DateTime.Now.AddDays(10)
+                        CreatedAt = DateTime.UtcNow.AddDays(10)
                     },
                     new Journal
                     {
@@ -44,7 +44,7 @@ namespace JournalService.Data
                         BookingId = 8,
                         JournalType = JournalType.Medication.ToString(),
                         JournalEntry = "New medication prescribed.",
-                        CreatedAt = DateTime.Now.AddDays(20)
+                        CreatedAt = DateTime.UtcNow.AddDays(20)
                     },
                     new Journal
                     {
@@ -53,7 +53,7 @@ namespace JournalService.Data
                         BookingId = 15,
                         JournalType = JournalType.Treatment.ToString(),
                         JournalEntry = "New treatment plan.",
-                        CreatedAt = DateTime.Now.AddDays(30)
+                        CreatedAt = DateTime.UtcNow.AddDays(30)
                     },
                     new Journal
                     {
@@ -61,7 +61,7 @@ namespace JournalService.Data
                         CaregiverId = 3,
                         JournalType = JournalType.Observation.ToString(),
                         JournalEntry = "Patient is stable and recovering well.",
-                        CreatedAt = DateTime.Now.AddDays(-10)
+                        CreatedAt = DateTime.UtcNow.AddDays(-10)
                     },
                     new Journal
                     {
@@ -69,7 +69,7 @@ namespace JournalService.Data
                         CaregiverId = 7,
                         JournalType = JournalType.Other.ToString(),
                         JournalEntry = "Thoughts and feelings.",
-                        CreatedAt = DateTime.Now.AddDays(-15)
+                        CreatedAt = DateTime.UtcNow.AddDays(-15)
                     },
                     new Journal
                     {
@@ -77,7 +77,7 @@ namespace JournalService.Data
                         CaregiverId = 11,
                         JournalType = JournalType.Medication.ToString(),
                         JournalEntry = "New medication prescribed.",
-                        CreatedAt = DateTime.Now.AddDays(-20)
+                        CreatedAt = DateTime.UtcNow.AddDays(-20)
                     },
                     new Journal
                     {
@@ -86,7 +86,7 @@ namespace JournalService.Data
                         BookingId = 12,
                         JournalType = JournalType.Treatment.ToString(),
                         JournalEntry = "Treatment plan reworked.",
-                        CreatedAt = DateTime.Now.AddDays(-3)
+                        CreatedAt = DateTime.UtcNow.AddDays(-3)
                     },
                     new Journal
                     {
@@ -95,7 +95,7 @@ namespace JournalService.Data
                         BookingId = 65,
                         JournalType = JournalType.Observation.ToString(),
                         JournalEntry = "New observation.",
-                        CreatedAt = DateTime.Now.AddDays(10)
+                        CreatedAt = DateTime.UtcNow.AddDays(10)
                     },
                     new Journal
                     {
@@ -104,7 +104,7 @@ namespace JournalService.Data
                         BookingId = 12,
                         JournalType = JournalType.Treatment.ToString(),
                         JournalEntry = "Treatment plan reworked.",
-                        CreatedAt = DateTime.Now.AddDays(-3)
+                        CreatedAt = DateTime.UtcNow.AddDays(-3)
                     }
                 );
                 await context.SaveChangesAsync(token);
