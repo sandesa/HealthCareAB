@@ -93,6 +93,7 @@ namespace SessionService.Controllers
                 return StatusCode(500, "An error occurred when updating Session data (logout).");
             }
         }
+
         [Authorize(Roles = "Developer,Admin")]
         [HttpPut("update/{id}")]
         public async Task<IActionResult> UpdateSession(int id, [FromBody] SessionUpdate sessionUpdate)

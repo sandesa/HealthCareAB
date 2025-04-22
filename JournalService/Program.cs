@@ -17,7 +17,14 @@ namespace JournalService
 
             await app.UseDbDevServices();
 
-            app.UseHttpsRedirection();
+            if (!app.Environment.IsDevelopment())
+            {
+                app.UseHttpsRedirection();
+            }
+            else
+            {
+                app.UseDeveloperExceptionPage();
+            }
 
             app.UseAuthentication();
 

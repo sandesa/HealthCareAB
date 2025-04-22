@@ -38,7 +38,7 @@ namespace SessionService.Repositories
         public async Task<SessionDTO?> CreateSessionAsync(SessionCreate sessionCreate)
         {
             var session = _mapper.CreateToSession(sessionCreate);
-            session.Login = DateTime.Now;
+            session.Login = DateTime.UtcNow;
             _context.Sessions.Add(session);
             await _context.SaveChangesAsync();
             var sessionDTO = _mapper.SessionToDto(session);
@@ -52,14 +52,14 @@ namespace SessionService.Repositories
             {
                 return null;
             }
-            if(sessionUpdate != null)
+            if (sessionUpdate != null)
             {
                 session = _mapper.UpdateToSession(session, sessionUpdate);
             }
-            
-            if(logout)
+
+            if (logout)
             {
-                session.Logout = DateTime.Now;
+                session.Logout = DateTime.UtcNow;
             }
 
             _context.Sessions.Update(session);

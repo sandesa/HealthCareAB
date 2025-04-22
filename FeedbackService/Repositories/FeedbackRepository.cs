@@ -51,7 +51,7 @@ namespace FeedbackService.Repositories
         {
             var feedback = _mapper.CreateToFeedback(feedbackCreate);
 
-            feedback.Created = DateTime.Now;
+            feedback.Created = DateTime.UtcNow;
             _context.Feedbacks.Add(feedback);
             await _context.SaveChangesAsync();
 
@@ -70,7 +70,7 @@ namespace FeedbackService.Repositories
             {
                 existingFeedback = _mapper.UpdateToFeedback(existingFeedback, feedbackUpdate);
             }
-            existingFeedback.Updated = DateTime.Now;
+            existingFeedback.Updated = DateTime.UtcNow;
 
             _context.Feedbacks.Update(existingFeedback);
             await _context.SaveChangesAsync();

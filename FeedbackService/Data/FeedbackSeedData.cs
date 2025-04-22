@@ -23,70 +23,70 @@ namespace FeedbackService.Data
                         BookingId = 1,
                         Rating = 5,
                         Comment = "Excellent service!",
-                        Created = DateTime.Now,
+                        Created = DateTime.UtcNow,
                     },
                     new Feedback
                     {
                         BookingId = 2,
                         Rating = 2,
                         Comment = "Bad service!",
-                        Created = DateTime.Now,
+                        Created = DateTime.UtcNow,
                     },
                     new Feedback
                     {
                         BookingId = 3,
                         Rating = 4,
                         Comment = "Good service!",
-                        Created = DateTime.Now,
+                        Created = DateTime.UtcNow,
                     },
                     new Feedback
                     {
                         BookingId = 4,
                         Rating = 3,
                         Comment = "Decent service!",
-                        Created = DateTime.Now,
+                        Created = DateTime.UtcNow,
                     },
                     new Feedback
                     {
                         BookingId = 5,
                         Rating = 5,
                         Comment = "Excellent service!",
-                        Created = DateTime.Now,
+                        Created = DateTime.UtcNow,
                     },
                     new Feedback
                     {
                         BookingId = 6,
                         Rating = 1,
                         Comment = "Super bad service!",
-                        Created = DateTime.Now,
+                        Created = DateTime.UtcNow,
                     },
                     new Feedback
                     {
                         BookingId = 7,
                         Rating = 2,
                         Comment = "Bad service!",
-                        Created = DateTime.Now,
+                        Created = DateTime.UtcNow,
                     },
                     new Feedback
                     {
                         BookingId = 8,
                         Rating = 5,
                         Comment = "Excellent service!",
-                        Created = DateTime.Now,
+                        Created = DateTime.UtcNow,
                     },
                     new Feedback
                     {
                         BookingId = 9,
                         Rating = 4,
                         Comment = "Good service!",
-                        Created = DateTime.Now,
+                        Created = DateTime.UtcNow,
                     },
                     new Feedback
                     {
                         BookingId = 10,
                         Rating = 5,
                         Comment = "Excellent service!",
-                        Created = DateTime.Now,
+                        Created = DateTime.UtcNow,
                     }
                 );
                 await context.SaveChangesAsync(token);

@@ -23,9 +23,7 @@ namespace SessionService.Services
             {
                 Email = sessionCreate.Email,
                 AccessToken = sessionCreate.AccessToken,
-                Expires = sessionCreate.Expires,
-                Login = sessionCreate.Login,
-                Logout = sessionCreate.Logout
+                Expires = sessionCreate.Expires
             };
         }
 

@@ -45,12 +45,12 @@ namespace UserService.Services
             var _tokenExpiration = int.Parse(tokenExpiration);
 
             var claims = new List<Claim>
-            {
-                new(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new(ClaimTypes.Role, user.UserAccountType),
-                new(ClaimTypes.Email, user.Email),
-                new("user_type", user.UserType)
-            };
+                {
+                    new(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                    new(ClaimTypes.Role, user.UserAccountType),
+                    new(ClaimTypes.Email, user.Email),
+                    new("user_type", user.UserType)
+                };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_secret));
 
@@ -60,7 +60,7 @@ namespace UserService.Services
                 issuer: _issuer,
                 audience: _audience,
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(_tokenExpiration),
+                expires: DateTime.UtcNow.AddMinutes(_tokenExpiration),
                 signingCredentials: creds
             );
 
