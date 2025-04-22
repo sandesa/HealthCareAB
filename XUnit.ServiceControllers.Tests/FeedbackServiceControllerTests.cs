@@ -87,7 +87,7 @@ namespace XUnit.ServiceControllers.Tests
             Assert.Equal(1, feedback.GetProperty("bookingId").GetInt32());
             Assert.Equal(5, feedback.GetProperty("rating").GetInt32());
             Assert.Equal("Test", feedback.GetProperty("comment").GetString());
-            Assert.Equal(DateTime.Now.ToShortDateString(), feedback.GetProperty("created").GetDateTime().ToShortDateString());
+            Assert.Equal(DateTime.UtcNow.ToShortDateString(), feedback.GetProperty("created").GetDateTime().ToShortDateString());
             Assert.Equal("Feedback successfully created.", jsonResponse.GetProperty("message").GetString());
             Assert.True(jsonResponse.GetProperty("isSuccess").GetBoolean());
         }
@@ -111,7 +111,7 @@ namespace XUnit.ServiceControllers.Tests
 
             Assert.Equal(5, feedback.GetProperty("rating").GetInt32());
             Assert.Equal("Updated Test", feedback.GetProperty("comment").GetString());
-            Assert.Equal(DateTime.Now.ToShortDateString(), feedback.GetProperty("updated").GetDateTime().ToShortDateString());
+            Assert.Equal(DateTime.UtcNow.ToShortDateString(), feedback.GetProperty("updated").GetDateTime().ToShortDateString());
             Assert.Equal("Feedback successfully updated.", jsonResponse.GetProperty("message").GetString());
             Assert.True(jsonResponse.GetProperty("isSuccess").GetBoolean());
         }

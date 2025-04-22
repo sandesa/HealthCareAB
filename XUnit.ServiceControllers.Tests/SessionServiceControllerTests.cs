@@ -50,7 +50,7 @@ namespace XUnit.ServiceControllers.Tests
             {
                 Email = "testEmail",
                 AccessToken = "testToken",
-                Expires = DateTime.Now.AddMinutes(60),
+                Expires = DateTime.UtcNow.AddMinutes(60),
             };
 
             var response = await _client.PostAsJsonAsync("/api/session/create", sessionCreate);
@@ -71,7 +71,7 @@ namespace XUnit.ServiceControllers.Tests
             var jsonResponse = await response.Content.ReadFromJsonAsync<JsonElement>();
             var session = jsonResponse.GetProperty("data");
             Assert.Equal(sessionId, session.GetProperty("id").GetInt32());
-            Assert.Equal(DateTime.Now.ToShortDateString(), session.GetProperty("logout").GetDateTime().ToShortDateString());
+            Assert.Equal(DateTime.UtcNow.ToShortDateString(), session.GetProperty("logout").GetDateTime().ToShortDateString());
         }
 
         [Fact]
