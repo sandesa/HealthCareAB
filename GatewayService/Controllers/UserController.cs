@@ -17,7 +17,7 @@ namespace GatewayService.Controllers
             _userClient = httpClientFactory.CreateClient("UserService");
         }
 
-        [HttpGet("user/dev")]
+        [HttpGet("dev")]
         public async Task<IActionResult> GetUsersDevAsync()
         {
             try
@@ -42,7 +42,7 @@ namespace GatewayService.Controllers
             }
         }
 
-        [HttpGet("user/get-users")]
+        [HttpGet("get-users")]
         public async Task<IActionResult> GetUsersAsync()
         {
             try
@@ -67,7 +67,7 @@ namespace GatewayService.Controllers
             }
         }
 
-        [HttpPost("user/create")]
+        [HttpPost("create")]
         public async Task<IActionResult> CreateUserAsync([FromBody] UserCreation userCreation)
         {
             try
@@ -89,7 +89,7 @@ namespace GatewayService.Controllers
             }
         }
 
-        [HttpPut("user/update{id}")]
+        [HttpPut("update/{id}")]
         public async Task<IActionResult> UpdateUserAsync(int id, [FromBody] UserUpdate userUpdate)
         {
             try
@@ -123,7 +123,7 @@ namespace GatewayService.Controllers
             }
         }
 
-        [HttpDelete("user/delete/{id}")]
+        [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteUserAsync(int id)
         {
             try

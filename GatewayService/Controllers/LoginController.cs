@@ -6,17 +6,17 @@ using System.Text.Json;
 namespace GatewayService.Controllers
 {
     [ApiController]
-    [Route("api/gateway")]
-    public class GatewayController : Controller
+    [Route("api/login")]
+    public class LoginController : Controller
     {
         private readonly HttpClient _loginClient;
 
-        public GatewayController(IHttpClientFactory factory)
+        public LoginController(IHttpClientFactory factory)
         {
             _loginClient = factory.CreateClient("LoginService");
         }
 
-        [HttpPost("login")]
+        [HttpPost]
         public async Task<IActionResult> LoginAsync([FromBody] LoginRequest request)
         {
             var jsonContent = new StringContent(JsonSerializer.Serialize(request),
@@ -33,6 +33,7 @@ namespace GatewayService.Controllers
 
                 var jsonResponse = await response.Content.ReadFromJsonAsync<JsonElement>();
                 var token = jsonResponse.GetProperty("accessToken").ToString();
+                var email = jsonResponse.GetProperty("email").ToString();
 
                 var cookieOptions = new CookieOptions
                 {

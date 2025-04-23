@@ -46,5 +46,28 @@ namespace LoginService.Controllers
                 return StatusCode(500, "An error occurred when logging in.");
             }
         }
+
+        [HttpPost("logout/{token}")]
+        public async Task<IActionResult> Logout(string token)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(token))
+                {
+                    return Unauthorized(new { Message = "Missing or invalid token." });
+                }
+
+                var response = await _loginService.LogoutAsync(token);
+                if (response.IsLogoutSuccessful)
+                {
+                    return Ok(response);
+                }
+                return BadRequest(response);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { ex.Message, IsConnectedToService = false });
+            }
+        }
     }
 }

@@ -6,5 +6,6 @@ namespace LoginService.Interfaces
     {
         Task<ValidationResponse?> ValidateUserAsync(LoginRequest request);
         Task<LoginResponse> LoginUserAsync(ValidationResponse validationResponse);
+        Task<LogoutResponse> LogoutAsync(string token);
     }
 }

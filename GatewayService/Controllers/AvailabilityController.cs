@@ -17,7 +17,7 @@ namespace GatewayService.Controllers
             _availabilityClient = httpClientFactory.CreateClient("AvailabilityService");
         }
 
-        [HttpGet("availability/dev")]
+        [HttpGet("dev")]
         public async Task<IActionResult> GetAvailabilitiesDevAsync()
         {
             try
@@ -41,7 +41,7 @@ namespace GatewayService.Controllers
             }
         }
 
-        [HttpGet("availability/caregiver/{caregiverId}")]
+        [HttpGet("caregiver/{caregiverId}")]
         public async Task<IActionResult> GetAvailabilitiesByCaregiverIdAsync(int caregiverId)
         {
             try
@@ -65,7 +65,7 @@ namespace GatewayService.Controllers
             }
         }
 
-        [HttpGet("availability/date/{date}")]
+        [HttpGet("date/{date}")]
         public async Task<IActionResult> GetAvailabilitiesByDateAsync(string date)
         {
             try
@@ -89,7 +89,7 @@ namespace GatewayService.Controllers
             }
         }
 
-        [HttpGet("availability/{id}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetAvailabilityByIdAsync(int id)
         {
             try
@@ -113,7 +113,7 @@ namespace GatewayService.Controllers
             }
         }
 
-        [HttpPost("availability/create")]
+        [HttpPost("create")]
         public async Task<IActionResult> CreateAvailabilityAsync([FromBody] AvailabilityCreation availabilityCreation)
         {
             try
@@ -145,7 +145,7 @@ namespace GatewayService.Controllers
             }
         }
 
-        [HttpPut("availability/update/{id}")]
+        [HttpPut("update/{id}")]
         public async Task<IActionResult> UpdateAvailabilityAsync(int id, [FromBody] AvailabilityUpdate availabilityUpdate)
         {
             try
@@ -177,7 +177,7 @@ namespace GatewayService.Controllers
             }
         }
 
-        [HttpDelete("availability/delete/{id}")]
+        [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteAvailabilityAsync(int id)
         {
             try

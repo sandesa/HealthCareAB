@@ -17,7 +17,7 @@ namespace GatewayService.Controllers
             _sessionClient = httpClientFactory.CreateClient("SessionService");
         }
 
-        [HttpGet("session/dev")]
+        [HttpGet("dev")]
         public async Task<IActionResult> GetSessionsDevAsync()
         {
             try
@@ -41,7 +41,7 @@ namespace GatewayService.Controllers
             }
         }
 
-        [HttpGet("session/get/{id}")]
+        [HttpGet("get/{id}")]
         public async Task<IActionResult> GetSessionByIdAsync(int id)
         {
             try
@@ -65,7 +65,7 @@ namespace GatewayService.Controllers
             }
         }
 
-        [HttpPost("session/create")]
+        [HttpPost("create")]
         public async Task<IActionResult> CreateLoginSessionAsync([FromBody] SessionCreate sessionCreate)
         {
             try
@@ -95,8 +95,8 @@ namespace GatewayService.Controllers
             }
         }
 
-        [HttpPut("session/logout{id}")]
-        public async Task<IActionResult> LogoutSessionAsync(int id)
+        [HttpPut("logout")]
+        public async Task<IActionResult> LogoutSessionAsync()
         {
             try
             {
@@ -105,7 +105,7 @@ namespace GatewayService.Controllers
                     return Unauthorized(new { Message = "Missing or invalid token." });
                 }
 
-                HttpRequestMessage requestMessage = new(HttpMethod.Put, $"logout/{id}");
+                HttpRequestMessage requestMessage = new(HttpMethod.Put, $"logout/{token}");
                 requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
                 var response = await _sessionClient.SendAsync(requestMessage);
@@ -119,7 +119,7 @@ namespace GatewayService.Controllers
             }
         }
 
-        [HttpPut("session/update{id}")]
+        [HttpPut("update/{id}")]
         public async Task<IActionResult> UpdateSessionAsync(int id, [FromBody] SessionUpdate sessionUpdate)
         {
             try
@@ -150,7 +150,7 @@ namespace GatewayService.Controllers
             }
         }
 
-        [HttpDelete("session/delete/{id}")]
+        [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteSessionAsync(int id)
         {
             try

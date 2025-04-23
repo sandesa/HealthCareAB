@@ -17,7 +17,7 @@ namespace GatewayService.Controllers
             _journalClient = httpClientFactory.CreateClient("JournalService");
         }
 
-        [HttpGet("journal/dev")]
+        [HttpGet("dev")]
         public IActionResult GetJournalsDevAsync(int id)
         {
             try
@@ -41,7 +41,7 @@ namespace GatewayService.Controllers
             }
         }
 
-        [HttpGet("journal/user/{patientId}")]
+        [HttpGet("user/{patientId}")]
         public async Task<IActionResult> GetJournalsByUserIdAsync(int patientId)
         {
             try
@@ -64,7 +64,7 @@ namespace GatewayService.Controllers
             }
         }
 
-        [HttpGet("journal/caregiver/{caregiverId}")]
+        [HttpGet("caregiver/{caregiverId}")]
         public async Task<IActionResult> GetJournalsByCaregiverIdAsync(int caregiverId)
         {
             try
@@ -87,7 +87,7 @@ namespace GatewayService.Controllers
             }
         }
 
-        [HttpPost("journal/{id}")]
+        [HttpPost("{id}")]
         public async Task<IActionResult> GetJournalByIdAsync(int id)
         {
             try
@@ -111,7 +111,7 @@ namespace GatewayService.Controllers
             }
         }
 
-        [HttpPost("journal/create")]
+        [HttpPost("create")]
         public async Task<IActionResult> CreateJournalAsync([FromBody] JournalCreation journalCreation)
         {
             try
@@ -143,7 +143,7 @@ namespace GatewayService.Controllers
             }
         }
 
-        [HttpPut("journal/update/{id}")]
+        [HttpPut("update/{id}")]
         public async Task<IActionResult> UpdateJournalAsync(int id, [FromBody] JournalUpdate journalUpdate)
         {
             try
@@ -175,7 +175,7 @@ namespace GatewayService.Controllers
             }
         }
 
-        [HttpDelete("journal/delete/{id}")]
+        [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteJournalAsync(int id)
         {
             try

@@ -129,5 +129,39 @@ namespace LoginService.Repositores
                 };
             }
         }
+
+        public async Task<LogoutResponse> LogoutAsync(string token)
+        {
+            try
+            {
+                var sessionResponse = await _httpClientSession.PutAsync($"logout/{token}", null);
+                if (!sessionResponse.IsSuccessStatusCode)
+                {
+                    return new LogoutResponse
+                    {
+                        Message = "Failed to logout",
+                        IsLogoutSuccessful = false,
+                        IsConnectedToService = true
+                    };
+                }
+
+                return new LogoutResponse
+                {
+                    Message = "User logged out successfully",
+                    IsLogoutSuccessful = true,
+                    IsConnectedToService = true
+                };
+            }
+            catch (Exception ex)
+            {
+                return new LogoutResponse
+                {
+                    Message = ex.Message,
+                    IsLogoutSuccessful = false,
+                    IsConnectedToService = false
+                };
+            }
+
+        }
     }
 }

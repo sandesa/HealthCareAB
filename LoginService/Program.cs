@@ -15,7 +15,14 @@ namespace LoginService
 
             app.UseOpenApi();
 
-            app.UseHttpsRedirection();
+            if (!app.Environment.IsDevelopment())
+            {
+                app.UseHttpsRedirection();
+            }
+            else
+            {
+                app.UseDeveloperExceptionPage();
+            }
 
             app.UseAuthorization();
 

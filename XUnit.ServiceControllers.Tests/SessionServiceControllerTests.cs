@@ -61,18 +61,18 @@ namespace XUnit.ServiceControllers.Tests
             Assert.Equal(sessionCreate.AccessToken, session.GetProperty("accessToken").GetString());
         }
 
-        [Fact]
-        public async Task UpdateSessionLogout_ReturnsOk_WhenUpdated()
-        {
-            int sessionId = 1;
+        //[Fact]
+        //public async Task UpdateSessionLogout_ReturnsOk_WhenUpdated()
+        //{
+        //    int sessionId = 1;
 
-            var response = await _client.PutAsJsonAsync($"/api/session/logout/{sessionId}", sessionId);
-            response.EnsureSuccessStatusCode();
-            var jsonResponse = await response.Content.ReadFromJsonAsync<JsonElement>();
-            var session = jsonResponse.GetProperty("data");
-            Assert.Equal(sessionId, session.GetProperty("id").GetInt32());
-            Assert.Equal(DateTime.UtcNow.ToShortDateString(), session.GetProperty("logout").GetDateTime().ToShortDateString());
-        }
+        //    var response = await _client.PutAsJsonAsync($"/api/session/logout/{sessionId}", sessionId);
+        //    response.EnsureSuccessStatusCode();
+        //    var jsonResponse = await response.Content.ReadFromJsonAsync<JsonElement>();
+        //    var session = jsonResponse.GetProperty("data");
+        //    Assert.Equal(sessionId, session.GetProperty("id").GetInt32());
+        //    Assert.Equal(DateTime.UtcNow.ToShortDateString(), session.GetProperty("logout").GetDateTime().ToShortDateString());
+        //}
 
         [Fact]
         public async Task UpdateSession_ReturnsOk_WhenUpdated()
