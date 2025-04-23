@@ -13,15 +13,13 @@ namespace UserService.Repositories
         private readonly IHashingRepository _hashing;
         private readonly IValidationRepository _verify;
         private readonly UserMappingService _mapper;
-        private readonly JwtTokenService _token;
 
-        public UserRepository(UserDbContext context, UserMappingService mapper, IHashingRepository hashing, IValidationRepository verify, JwtTokenService token)
+        public UserRepository(UserDbContext context, UserMappingService mapper, IHashingRepository hashing, IValidationRepository verify)
         {
             _context = context;
             _hashing = hashing;
             _verify = verify;
             _mapper = mapper;
-            _token = token;
         }
 
         public async Task<IEnumerable<User>> GetUsersDevAsync()
@@ -44,7 +42,7 @@ namespace UserService.Repositories
             }
 
             userCreation.PasswordHash = _hashing.HashPassword(userCreation.PasswordHash);
-            var user = _mapper.ModificationToUser(userCreation);
+            var user = _mapper.CreationToUser(userCreation);
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
             var userDTO = _mapper.UserToDto(user);
@@ -62,8 +60,8 @@ namespace UserService.Repositories
             {
                 userUpdate.PasswordHash = _hashing.HashPassword(userUpdate.PasswordHash);
             }
-            existingUser = _mapper.UserToUser(existingUser, userUpdate);
-            existingUser.UpdatedAt = DateTime.Now;
+            existingUser = _mapper.UpdateToUser(existingUser, userUpdate);
+            existingUser.UpdatedAt = DateTime.UtcNow;
             _context.Users.Update(existingUser);
             await _context.SaveChangesAsync();
             var userDTO = _mapper.UserToDto(existingUser);
@@ -84,7 +82,7 @@ namespace UserService.Repositories
             return userDTO;
         }
 
-        public async Task<ValidationResponse?> ValidateUserAsync(string email, string password)
+        public async Task<ValidationResponseDTO?> ValidateUserAsync(string email, string password)
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
             if (user == null)
@@ -101,14 +99,14 @@ namespace UserService.Repositories
                 return null;
             }
 
-            var validationResponse = _token.GenerateToken(user);
-
             Console.WriteLine($"User with username \"{email}\" and password validated.");
-            return new ValidationResponse
+            return new ValidationResponseDTO
             {
+                UserId = user.Id,
+                UserAccountType = user.UserAccountType,
+                UserType = user.UserType,
                 Email = user.Email,
-                AccessToken = validationResponse.AccessToken,
-                ExpiresIn = validationResponse.ExpiresIn,
+                IsValid = true
             };
         }
 

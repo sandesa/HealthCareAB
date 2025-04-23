@@ -30,7 +30,7 @@ namespace UserService.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("DateOfBirth")
@@ -54,10 +54,10 @@ namespace UserService.Migrations
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.PrimitiveCollection<string>("UserAccountType")
+                    b.Property<string>("UserAccountType")
                         .HasColumnType("nvarchar(max)");
 
-                    b.PrimitiveCollection<string>("UserType")
+                    b.Property<string>("UserType")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

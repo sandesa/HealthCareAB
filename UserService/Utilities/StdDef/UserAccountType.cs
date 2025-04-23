@@ -3,7 +3,8 @@
     public enum UserAccountType
     {
         Admin,
-        User,
-        Developer
+        Caregiver,
+        Developer,
+        User
     }
 }

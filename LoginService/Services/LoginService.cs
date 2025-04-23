@@ -12,7 +12,7 @@ namespace LoginService.Services
             _loginRepository = loginRepository;
         }
 
-        public async Task<ValidationResponse> ValidateUserAsync(LoginRequest request)
+        public async Task<ValidationResponse?> ValidateUserAsync(LoginRequest request)
         {
             var validationResponse = await _loginRepository.ValidateUserAsync(request);
 
@@ -42,6 +42,13 @@ namespace LoginService.Services
                 };
             }
             return loginResponse;
+        }
+
+        public async Task<LogoutResponse> LogoutAsync(string token)
+        {
+            var response = await _loginRepository.LogoutAsync(token);
+
+            return response;
         }
     }
 }

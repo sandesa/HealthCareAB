@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SessionService.Models;
 
 namespace SessionService.Controllers
@@ -14,6 +15,7 @@ namespace SessionService.Controllers
             _sessionService = sessionService;
         }
 
+        [Authorize(Roles = "Developer")]
         [HttpGet("dev")]
         public async Task<IActionResult> GetSessionsDev()
         {
@@ -33,6 +35,7 @@ namespace SessionService.Controllers
             }
         }
 
+        [Authorize]
         [HttpGet("get/{id}")]
         public async Task<IActionResult> GetSessionById(int id)
         {
@@ -71,12 +74,12 @@ namespace SessionService.Controllers
             }
         }
 
-        [HttpPut("logout/{id}")]
-        public async Task<IActionResult> UpdateSessionLogout(int id)
+        [HttpPut("logout/{token}")]
+        public async Task<IActionResult> UpdateSessionLogout(string token)
         {
             try
             {
-                var response = await _sessionService.UpdateSessionAsync(id, null, true);
+                var response = await _sessionService.UpdateSessionAsync(token, null, null);
                 if (response.IsSuccess)
                 {
                     return Ok(response);
@@ -90,12 +93,13 @@ namespace SessionService.Controllers
             }
         }
 
+        [Authorize(Roles = "Developer,Admin")]
         [HttpPut("update/{id}")]
         public async Task<IActionResult> UpdateSession(int id, [FromBody] SessionUpdate sessionUpdate)
         {
             try
             {
-                var response = await _sessionService.UpdateSessionAsync(id, sessionUpdate, false);
+                var response = await _sessionService.UpdateSessionAsync(null, id, sessionUpdate);
                 if (response.IsSuccess)
                 {
                     return Ok(response);
@@ -109,6 +113,7 @@ namespace SessionService.Controllers
             }
         }
 
+        [Authorize(Roles = "Developer,Admin")]
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteSession(int id)
         {

@@ -23,18 +23,15 @@ namespace SessionService.Services
             {
                 Email = sessionCreate.Email,
                 AccessToken = sessionCreate.AccessToken,
-                ExpiresIn = sessionCreate.ExpiresIn,
-                Login = sessionCreate.Login,
-                Logout = sessionCreate.Logout
+                Expires = sessionCreate.Expires
             };
         }
 
         public Session UpdateToSession(Session existingSession, SessionUpdate sessionUpdate)
         {
-            existingSession.Id = existingSession.Id;
             existingSession.Email = sessionUpdate.Email ?? existingSession.Email;
             existingSession.AccessToken = sessionUpdate.AccessToken ?? existingSession.AccessToken;
-            existingSession.ExpiresIn = sessionUpdate.ExpiresIn;
+            existingSession.Expires = sessionUpdate.Expires;
             existingSession.Login = sessionUpdate.Login ?? existingSession.Login;
             existingSession.Logout = sessionUpdate.Logout ?? existingSession.Logout;
             return existingSession;

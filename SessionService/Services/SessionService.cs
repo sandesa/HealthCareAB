@@ -106,7 +106,7 @@ namespace SessionService.Services
             }
         }
 
-        public async Task<ResponseDTO<SessionDTO?>> UpdateSessionAsync(int id, SessionUpdate? sessionUpdate, bool logout)
+        public async Task<ResponseDTO<SessionDTO?>> UpdateSessionAsync(string? token, int? id, SessionUpdate? sessionUpdate)
         {
             try
             {
@@ -114,11 +114,18 @@ namespace SessionService.Services
 
                 if (sessionUpdate == null)
                 {
-                    session = await _sessionRepository.UpdateSessionAsync(id, null, logout);
+                    if (token != null)
+                    {
+                        session = await _sessionRepository.UpdateSessionAsync(token, null, null);
+                    }
+                    else
+                    {
+                        session = await _sessionRepository.UpdateSessionAsync(null, id, null);
+                    }
                 }
                 else
                 {
-                    session = await _sessionRepository.UpdateSessionAsync(id, sessionUpdate, logout);
+                    session = await _sessionRepository.UpdateSessionAsync(null, id, sessionUpdate);
                 }
 
                 if (session == null)

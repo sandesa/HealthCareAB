@@ -38,34 +38,43 @@ namespace SessionService.Repositories
         public async Task<SessionDTO?> CreateSessionAsync(SessionCreate sessionCreate)
         {
             var session = _mapper.CreateToSession(sessionCreate);
-            session.Login = DateTime.Now;
+            session.Login = DateTime.UtcNow;
             _context.Sessions.Add(session);
             await _context.SaveChangesAsync();
             var sessionDTO = _mapper.SessionToDto(session);
             return sessionDTO;
         }
 
-        public async Task<SessionDTO?> UpdateSessionAsync(int id, SessionUpdate? sessionUpdate, bool logout)
+        public async Task<SessionDTO?> UpdateSessionAsync(string? token, int? id, SessionUpdate? sessionUpdate)
         {
-            var session = await _context.Sessions.FindAsync(id);
-            if (session == null)
+            if (token != null)
             {
-                return null;
-            }
-            if(sessionUpdate != null)
-            {
-                session = _mapper.UpdateToSession(session, sessionUpdate);
-            }
-            
-            if(logout)
-            {
-                session.Logout = DateTime.Now;
+                var session = await _context.Sessions.FirstOrDefaultAsync(s => s.AccessToken == token);
+
+                session!.Logout = DateTime.UtcNow;
+
+                _context.Sessions.Update(session!);
+                await _context.SaveChangesAsync();
+                var sessionDTO = _mapper.SessionToDto(session!);
+                return sessionDTO;
             }
 
-            _context.Sessions.Update(session);
-            await _context.SaveChangesAsync();
-            var sessionDTO = _mapper.SessionToDto(session);
-            return sessionDTO;
+            if (id != null)
+            {
+                var session = await _context.Sessions.FindAsync(id);
+
+                if (sessionUpdate != null)
+                {
+                    session = _mapper.UpdateToSession(session!, sessionUpdate);
+                }
+
+                _context.Sessions.Update(session!);
+                await _context.SaveChangesAsync();
+                var sessionDTO = _mapper.SessionToDto(session!);
+                return sessionDTO;
+            }
+
+            return null;
         }
 
         public async Task<SessionDTO?> DeleteSessionAsync(int id)

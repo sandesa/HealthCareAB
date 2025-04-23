@@ -36,8 +36,8 @@ namespace SessionService.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ExpiresIn")
-                        .HasColumnType("int");
+                    b.Property<DateTime?>("Expires")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("Login")
                         .HasColumnType("datetime2");

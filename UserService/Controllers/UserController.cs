@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using UserService.Models;
 
 namespace UserService.Controllers
@@ -14,6 +15,7 @@ namespace UserService.Controllers
             _userService = userService;
         }
 
+        [Authorize(Roles = "Developer")]
         [HttpGet("dev")]
         public async Task<IActionResult> GetUsersDev()
         {
@@ -33,6 +35,7 @@ namespace UserService.Controllers
             }
         }
 
+        [Authorize(Roles = "Developer,Admin,Caregiver")]
         [HttpGet("get-all")]
         public async Task<IActionResult> GetUsers()
         {
@@ -52,6 +55,7 @@ namespace UserService.Controllers
             }
         }
 
+        [AllowAnonymous]
         [HttpPost("create")]
         public async Task<IActionResult> CreateUser([FromBody] UserCreation userCreation)
         {
@@ -71,6 +75,7 @@ namespace UserService.Controllers
             }
         }
 
+        [Authorize]
         [HttpPut("update/{id}")]
         public async Task<IActionResult> UpdateUser(int id, [FromBody] UserUpdate userUpdate)
         {
@@ -90,6 +95,7 @@ namespace UserService.Controllers
             }
         }
 
+        [Authorize]
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteUser(int id)
         {
@@ -109,6 +115,7 @@ namespace UserService.Controllers
             }
         }
 
+        [AllowAnonymous]
         [HttpPost("validate")]
         public async Task<IActionResult> ValidateUser([FromBody] ValidationRequest validationRequest)
         {

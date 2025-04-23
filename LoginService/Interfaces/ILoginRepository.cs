@@ -4,7 +4,8 @@ namespace LoginService.Interfaces
 {
     public interface ILoginRepository
     {
-        Task<ValidationResponse> ValidateUserAsync(LoginRequest request);
+        Task<ValidationResponse?> ValidateUserAsync(LoginRequest request);
         Task<LoginResponse> LoginUserAsync(ValidationResponse validationResponse);
+        Task<LogoutResponse> LogoutAsync(string token);
     }
 }

@@ -12,7 +12,7 @@ namespace BookingService.Services
                 Id = booking.Id,
                 CaregiverId = booking.CaregiverId,
                 PatientId = booking.PatientId,
-                Date = booking.MeetingDate,
+                MeetingDate = booking.MeetingDate,
                 MeetingType = booking.MeetingType,
                 Clinic = booking.Clinic,
                 Address = booking.Address,
@@ -30,7 +30,7 @@ namespace BookingService.Services
                 Id = bookingDto.Id,
                 CaregiverId = bookingDto.CaregiverId,
                 PatientId = bookingDto.PatientId,
-                MeetingDate = bookingDto.Date,
+                MeetingDate = bookingDto.MeetingDate,
                 MeetingType = bookingDto.MeetingType,
                 Clinic = bookingDto.Clinic,
                 Address = bookingDto.Address,
@@ -48,15 +48,12 @@ namespace BookingService.Services
                 MeetingType = bookingCreation.MeetingType,
                 Clinic = bookingCreation.Clinic,
                 Address = bookingCreation.Address,
-                Created = DateTime.Now
+                Created = DateTime.UtcNow
             };
         }
 
         public Booking UpdateToBooking(Booking existingBooking, BookingUpdate bookingUpdate)
         {
-            existingBooking.Id = existingBooking.Id;
-            existingBooking.CaregiverId = existingBooking.CaregiverId;
-            existingBooking.PatientId = existingBooking.PatientId;
             existingBooking.MeetingDate = bookingUpdate.MeetingDate ?? existingBooking.MeetingDate;
             existingBooking.MeetingType = bookingUpdate.MeetingType ?? existingBooking.MeetingType;
             existingBooking.Clinic = bookingUpdate.Clinic ?? existingBooking.Clinic;

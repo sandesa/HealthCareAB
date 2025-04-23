@@ -12,15 +12,22 @@ namespace UserService
 
             var app = builder.Build();
 
-            app.UseOpenApi();
-
             await app.UseDbDevServices();
 
-            app.UseHttpsRedirection();
+            if (!app.Environment.IsDevelopment())
+            {
+                app.UseHttpsRedirection();
+            }
+            else
+            {
+                app.UseDeveloperExceptionPage();
+            }
 
             app.UseAuthentication();
 
             app.UseAuthorization();
+
+            app.UseOpenApi();
 
             app.MapControllers();
 

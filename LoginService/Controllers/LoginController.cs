@@ -21,12 +21,12 @@ namespace LoginService.Controllers
             {
                 var validationResponse = await _loginService.ValidateUserAsync(request);
 
-                if (validationResponse.IsValid == null)
+                if (validationResponse == null || !validationResponse.IsValid)
                 {
                     return Unauthorized(validationResponse);
                 }
 
-                if ((bool)!validationResponse.IsValid)
+                if (!validationResponse.IsValid)
                 {
                     return Unauthorized(validationResponse);
                 }
@@ -44,6 +44,29 @@ namespace LoginService.Controllers
             {
                 Console.WriteLine($"An error occurred in the controller when logging in. Error message: \"{ex.Message}\"");
                 return StatusCode(500, "An error occurred when logging in.");
+            }
+        }
+
+        [HttpPost("logout/{token}")]
+        public async Task<IActionResult> Logout(string token)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(token))
+                {
+                    return Unauthorized(new { Message = "Missing or invalid token." });
+                }
+
+                var response = await _loginService.LogoutAsync(token);
+                if (response.IsLogoutSuccessful)
+                {
+                    return Ok(response);
+                }
+                return BadRequest(response);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { ex.Message, IsConnectedToService = false });
             }
         }
     }

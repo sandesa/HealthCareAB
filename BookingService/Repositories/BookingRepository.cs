@@ -69,9 +69,11 @@ namespace BookingService.Repositories
         public async Task<BookingDTO?> CreateBookingAsync(BookingCreation bookingCreation)
         {
             var booking = _mapper.CreationToBooking(bookingCreation);
-            booking.Created = DateTime.Now;
-            _context.Bookings.Add(booking);
+            booking.Created = DateTime.UtcNow;
+
+            await _context.Bookings.AddAsync(booking);
             await _context.SaveChangesAsync();
+
             var bookingDTO = _mapper.BookingToDto(booking);
             return bookingDTO;
         }
@@ -90,9 +92,9 @@ namespace BookingService.Repositories
             if (cancel)
             {
                 booking.IsCancelled = true;
-                booking.CancelDate = DateTime.Now;
+                booking.CancelDate = DateTime.UtcNow;
             }
-            booking.Updated = DateTime.Now;
+            booking.Updated = DateTime.UtcNow;
             _context.Bookings.Update(booking);
             await _context.SaveChangesAsync();
             var bookingDTO = _mapper.BookingToDto(booking);

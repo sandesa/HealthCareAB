@@ -1,5 +1,6 @@
 ﻿using LoginService.Interfaces;
 using LoginService.Models;
+using LoginService.Services;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -10,14 +11,16 @@ namespace LoginService.Repositores
     {
         private readonly HttpClient _httpClientUser;
         private readonly HttpClient _httpClientSession;
+        private readonly JwtService _jwtService;
 
-        public LoginRepository(IHttpClientFactory factory)
+        public LoginRepository(IHttpClientFactory factory, JwtService jwtService)
         {
             _httpClientUser = factory.CreateClient("UserService");
             _httpClientSession = factory.CreateClient("SessionService");
+            _jwtService = jwtService;
         }
 
-        public async Task<ValidationResponse> ValidateUserAsync(LoginRequest request)
+        public async Task<ValidationResponse?> ValidateUserAsync(LoginRequest request)
         {
             var jsonContent = new StringContent(JsonSerializer.Serialize(request),
                 Encoding.UTF8,
@@ -30,12 +33,7 @@ namespace LoginService.Repositores
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    return new ValidationResponse
-                    {
-                        Message = "Invalid credentials",
-                        IsValid = false,
-                        IsConnectedToService = true
-                    };
+                    return null;
                 }
 
                 var jsonResponse = await response.Content.ReadFromJsonAsync<JsonElement>();
@@ -49,36 +47,25 @@ namespace LoginService.Repositores
                     }
                 });
 
-                if (validationResponse == null || validationResponse.Email == null || validationResponse.AccessToken == null)
+                if (validationResponse == null || validationResponse.Email == null || validationResponse.UserAccountType == null)
                 {
-                    return new ValidationResponse
-                    {
-                        Message = "Invalid credentials",
-                        IsValid = false,
-                        IsConnectedToService = true
-                    };
+                    return null;
                 }
 
                 return new ValidationResponse
                 {
-                    Email = validationResponse.Email.ToString(),
-                    AccessToken = validationResponse.AccessToken.ToString(),
-                    ExpiresIn = int.Parse(validationResponse.ExpiresIn.ToString()),
-                    Message = "User validated successfully",
-                    IsValid = true,
-                    IsConnectedToService = true,
+                    UserId = validationResponse.UserId,
+                    UserAccountType = validationResponse.UserAccountType,
+                    Email = validationResponse.Email,
+                    UserType = validationResponse.UserType,
+                    IsValid = validationResponse.IsValid
                 };
             }
 
             catch (HttpRequestException ex)
             {
                 Console.WriteLine($"Error in LoginRepository. Error message: \"{ex.Message}\"");
-                return new ValidationResponse
-                {
-                    IsConnectedToService = false,
-                    IsValid = false,
-                    Message = ex.Message
-                };
+                return null;
             }
         }
 
@@ -86,31 +73,23 @@ namespace LoginService.Repositores
         {
             try
             {
-                if (validationResponse.IsValid == null)
+                if (validationResponse == null || !validationResponse.IsValid)
                 {
                     return new LoginResponse
                     {
-                        Message = "Invalid credentials",
+                        Message = "Login failed.",
                         IsLoginSuccessful = false,
                         IsConnectedToService = true
                     };
                 }
 
-                if ((bool)!validationResponse.IsValid)
-                {
-                    return new LoginResponse
-                    {
-                        Message = validationResponse.Message,
-                        IsLoginSuccessful = false,
-                        IsConnectedToService = true
-                    };
-                }
+                var token = _jwtService.GenerateToken(validationResponse);
 
                 var sessionRequest = new SessionRequest
                 {
                     Email = validationResponse.Email,
-                    AccessToken = validationResponse.AccessToken,
-                    ExpiresIn = validationResponse.ExpiresIn
+                    AccessToken = token,
+                    Expires = DateTime.UtcNow.AddMinutes(60),
                 };
 
                 var jsonContent = new StringContent(JsonSerializer.Serialize(sessionRequest),
@@ -132,9 +111,9 @@ namespace LoginService.Repositores
 
                 return new LoginResponse
                 {
-                    Email = validationResponse.Email,
-                    AccessToken = validationResponse.AccessToken,
-                    ExpiresIn = validationResponse.ExpiresIn,
+                    Email = sessionRequest.Email,
+                    AccessToken = sessionRequest.AccessToken,
+                    Expires = sessionRequest.Expires,
                     Message = "User logged in successfully",
                     IsLoginSuccessful = true,
                     IsConnectedToService = true
@@ -151,5 +130,38 @@ namespace LoginService.Repositores
             }
         }
 
+        public async Task<LogoutResponse> LogoutAsync(string token)
+        {
+            try
+            {
+                var sessionResponse = await _httpClientSession.PutAsync($"logout/{token}", null);
+                if (!sessionResponse.IsSuccessStatusCode)
+                {
+                    return new LogoutResponse
+                    {
+                        Message = "Failed to logout",
+                        IsLogoutSuccessful = false,
+                        IsConnectedToService = true
+                    };
+                }
+
+                return new LogoutResponse
+                {
+                    Message = "User logged out successfully",
+                    IsLogoutSuccessful = true,
+                    IsConnectedToService = true
+                };
+            }
+            catch (Exception ex)
+            {
+                return new LogoutResponse
+                {
+                    Message = ex.Message,
+                    IsLogoutSuccessful = false,
+                    IsConnectedToService = false
+                };
+            }
+
+        }
     }
 }
