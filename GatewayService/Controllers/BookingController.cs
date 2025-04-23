@@ -17,7 +17,7 @@ namespace GatewayService.Controllers
             _bookingClient = httpClientFactory.CreateClient("BookingService");
         }
 
-        [HttpGet("booking/dev")]
+        [HttpGet("dev")]
         public async Task<IActionResult> GetBookingsDevAsync()
         {
             try
@@ -41,7 +41,7 @@ namespace GatewayService.Controllers
             }
         }
 
-        [HttpGet("booking/caregiver/{caregiverId}")]
+        [HttpGet("caregiver/{caregiverId}")]
         public async Task<IActionResult> GetBookingsByCaregiverIdAsync(int caregiverId)
         {
             try
@@ -65,7 +65,7 @@ namespace GatewayService.Controllers
             }
         }
 
-        [HttpGet("booking/user/{patientId}")]
+        [HttpGet("user/{patientId}")]
         public async Task<IActionResult> GetBookingsByPatientIdAsync(int patientId)
         {
             try
@@ -89,7 +89,7 @@ namespace GatewayService.Controllers
             }
         }
 
-        [HttpGet("booking/{id}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetBookingByIdAsync(int id)
         {
             try
@@ -110,7 +110,7 @@ namespace GatewayService.Controllers
             }
         }
 
-        [HttpPost("booking/create")]
+        [HttpPost("create")]
         public async Task<IActionResult> CreateBookingAsync([FromBody] BookingCreation bookingCreation)
         {
             try
@@ -142,7 +142,7 @@ namespace GatewayService.Controllers
             }
         }
 
-        [HttpPut("booking/update/{id}")]
+        [HttpPut("update/{id}")]
         public async Task<IActionResult> UpdateBookingAsync(int id, [FromBody] BookingUpdate bookingUpdate)
         {
             try
@@ -174,7 +174,7 @@ namespace GatewayService.Controllers
             }
         }
 
-        [HttpPut("booking/cancel/{id}")]
+        [HttpPut("cancel/{id}")]
         public async Task<IActionResult> CancelBookingAsync(int id)
         {
             try
@@ -198,7 +198,7 @@ namespace GatewayService.Controllers
             }
         }
 
-        [HttpDelete("booking/delete/{id}")]
+        [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteBookingAsync(int id)
         {
             try

@@ -17,7 +17,7 @@ namespace GatewayService.Controllers
             _feedbackClient = httpClientFactory.CreateClient("FeedbackService");
         }
 
-        [HttpGet("feedback/dev")]
+        [HttpGet("dev")]
         public async Task<IActionResult> GetFeedbacksDevAsync()
         {
             try
@@ -41,7 +41,7 @@ namespace GatewayService.Controllers
             }
         }
 
-        [HttpGet("feedback/{id}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetFeedbackByIdAsync(int id)
         {
             try
@@ -65,8 +65,8 @@ namespace GatewayService.Controllers
             }
         }
 
-        [HttpGet("feedback/booking/{bookingId}")]
-        public IActionResult GetFeedbackAsync(int id)
+        [HttpGet("booking/{bookingId}")]
+        public IActionResult GetFeedbackAsync(int bookingId)
         {
             try
             {
@@ -75,7 +75,7 @@ namespace GatewayService.Controllers
                     return Unauthorized(new { Message = "Missing or invalid token." });
                 }
 
-                HttpRequestMessage requestMessage = new(HttpMethod.Get, $"booking/{id}");
+                HttpRequestMessage requestMessage = new(HttpMethod.Get, $"booking/{bookingId}");
                 requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
                 var response = _feedbackClient.SendAsync(requestMessage);
@@ -89,7 +89,7 @@ namespace GatewayService.Controllers
             }
         }
 
-        [HttpPost("feedback/create")]
+        [HttpPost("create")]
         public async Task<IActionResult> CreateFeedbackAsync([FromBody] FeedbackCreation feedbackCreation)
         {
             try
@@ -121,7 +121,7 @@ namespace GatewayService.Controllers
             }
         }
 
-        [HttpPut("feedback/update/{id}")]
+        [HttpPut("update/{id}")]
         public async Task<IActionResult> UpdateFeedbackAsync(int id, [FromBody] FeedbackUpdate feedbackUpdate)
         {
             try
@@ -153,7 +153,7 @@ namespace GatewayService.Controllers
             }
         }
 
-        [HttpDelete("feedback/delete/{id}")]
+        [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteFeedbackAsync(int id)
         {
             try

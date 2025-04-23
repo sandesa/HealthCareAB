@@ -74,13 +74,12 @@ namespace SessionService.Controllers
             }
         }
 
-        [Authorize]
-        [HttpPut("logout/{id}")]
-        public async Task<IActionResult> UpdateSessionLogout(int id)
+        [HttpPut("logout/{token}")]
+        public async Task<IActionResult> UpdateSessionLogout(string token)
         {
             try
             {
-                var response = await _sessionService.UpdateSessionAsync(id, null, true);
+                var response = await _sessionService.UpdateSessionAsync(token, null, null);
                 if (response.IsSuccess)
                 {
                     return Ok(response);
@@ -100,7 +99,7 @@ namespace SessionService.Controllers
         {
             try
             {
-                var response = await _sessionService.UpdateSessionAsync(id, sessionUpdate, false);
+                var response = await _sessionService.UpdateSessionAsync(null, id, sessionUpdate);
                 if (response.IsSuccess)
                 {
                     return Ok(response);

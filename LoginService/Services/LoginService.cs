@@ -43,5 +43,12 @@ namespace LoginService.Services
             }
             return loginResponse;
         }
+
+        public async Task<LogoutResponse> LogoutAsync(string token)
+        {
+            var response = await _loginRepository.LogoutAsync(token);
+
+            return response;
+        }
     }
 }
