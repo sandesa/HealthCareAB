@@ -24,6 +24,8 @@ namespace GatewayService
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors("AllowFrontendApp");
+
             app.UseAuthorization();
 
             app.MapControllers();
