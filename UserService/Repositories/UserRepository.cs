@@ -34,6 +34,17 @@ namespace UserService.Repositories
             return userDtos;
         }
 
+        public async Task<UserDTO?> GetUserByIdAsync(int id)
+        {
+            var user = await _context.Users.FindAsync(id);
+            if (user == null)
+            {
+                return null;
+            }
+            var userDTO = _mapper.UserToDto(user);
+            return userDTO;
+        }
+
         public async Task<UserDTO?> CreateUserAsync(UserCreation userCreation)
         {
             if (userCreation.PasswordHash == null)

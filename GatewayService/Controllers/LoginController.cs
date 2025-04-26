@@ -33,7 +33,6 @@ namespace GatewayService.Controllers
 
                 var jsonResponse = await response.Content.ReadFromJsonAsync<JsonElement>();
                 var token = jsonResponse.GetProperty("accessToken").ToString();
-                var email = jsonResponse.GetProperty("email").ToString();
 
                 var cookieOptions = new CookieOptions
                 {

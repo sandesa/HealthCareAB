@@ -10,6 +10,7 @@ function Navbar() {
                     <li><a href="#services">Calendar</a></li>
                     <li><a href="#contact">Contact</a></li>
                     <li><a href="/login.html">Login</a></li>
+                    <li><a href="/account.html">Account</a></li>
                 </ul>
             </div>
         </nav>

@@ -4,7 +4,7 @@ import api from './api';
 import './loginForm.css';
 
 interface LoginResponse {
-    email?: string;
+    userId?: number;
     accessToken?: string;
     expires?: string;
     message?: string;
@@ -30,6 +30,7 @@ const LoginForm: React.FC = () => {
             const response = await api.post<LoginResponse>('api/login', { email, password });
             if (response.data.isLoginSuccessful) {
                 Cookies.set('auth_token', response.data.accessToken, { expires: 1 });
+                Cookies.set('user_id', response.data.userId, { expires: 1 });
                 setMessage(response.data.message);
                 setLoginData(response.data);
                 

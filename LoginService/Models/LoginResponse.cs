@@ -2,7 +2,7 @@
 {
     public class LoginResponse
     {
-        public string? Email { get; set; }
+        public int? UserId { get; set; }
         public string? AccessToken { get; set; }
         public DateTime? Expires { get; set; }
         public string? Message { get; set; }

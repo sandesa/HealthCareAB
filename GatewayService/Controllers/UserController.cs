@@ -67,6 +67,35 @@ namespace GatewayService.Controllers
             }
         }
 
+        [HttpGet("get/{id}")]
+        public async Task<IActionResult> GetUserByIdAsync(int id, [FromQuery] string? token)
+        {
+            try
+            {
+                if (!Request.Cookies.TryGetValue("auth_token", out var cookieToken) || string.IsNullOrWhiteSpace(cookieToken))
+                {
+                    if(token == null)
+                    {
+                        return Unauthorized(new { Message = "Missing or invalid token." });
+                    }
+                }
+
+                var authToken = token ?? cookieToken;
+
+                HttpRequestMessage requestMessage = new(HttpMethod.Get, $"get/{id}");
+                requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token ?? cookieToken);
+
+                var response = await _userClient.SendAsync(requestMessage);
+                var jsonResponse = await response.Content.ReadFromJsonAsync<JsonElement>();
+
+                return StatusCode((int)response.StatusCode, jsonResponse);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { ex.Message, IsConnectedToService = false });
+            }
+        }
+
         [HttpPost("create")]
         public async Task<IActionResult> CreateUserAsync([FromBody] UserCreation userCreation)
         {
