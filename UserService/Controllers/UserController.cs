@@ -55,6 +55,26 @@ namespace UserService.Controllers
             }
         }
 
+        [Authorize]
+        [HttpGet("get/{id}")]
+        public async Task<IActionResult> GetUserById(int id)
+        {
+            try
+            {
+                var response = await _userService.GetUserByIdAsync(id);
+                if (response.IsSuccess)
+                {
+                    return Ok(response);
+                }
+                return NotFound(response);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred when getting User data. Error message: \"{ex.Message}\"");
+                return StatusCode(500, "An error occurred when getting User data.");
+            }
+        }
+
         [AllowAnonymous]
         [HttpPost("create")]
         public async Task<IActionResult> CreateUser([FromBody] UserCreation userCreation)

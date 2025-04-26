@@ -20,35 +20,35 @@ namespace SessionService.Data
                 await context.Sessions.AddRangeAsync(
                     new Session
                     {
-                        Email = "test1.testsson@gmail.com",
+                        UserId = 1,
                         AccessToken = "test1Token",
                         Expires = DateTime.UtcNow.AddMinutes(60),
                         Login = DateTime.UtcNow,
                     },
                     new Session
                     {
-                        Email = "test2.testsson@gmail.com",
+                        UserId = 2,
                         AccessToken = "test2Token",
                         Expires = DateTime.UtcNow.AddMinutes(60),
                         Login = DateTime.UtcNow,
                     },
                     new Session
                     {
-                        Email = "test3.testsson@gmail.com",
+                        UserId = 3,
                         AccessToken = "test3Token",
                         Expires = DateTime.UtcNow.AddMinutes(60),
                         Login = DateTime.UtcNow,
                     },
                     new Session
                     {
-                        Email = "test4.testsson@gmail.com",
+                        UserId = 4,
                         AccessToken = "test4Token",
                         Expires = DateTime.UtcNow.AddMinutes(60),
                         Login = DateTime.UtcNow,
                     },
                     new Session
                     {
-                        Email = "test5.testsson@gmail.com",
+                        UserId = 5,
                         AccessToken = "test5Token",
                         Expires = DateTime.UtcNow.AddMinutes(60),
                         Login = DateTime.UtcNow,

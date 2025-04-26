@@ -74,6 +74,35 @@ namespace UserService.Services
             }
         }
 
+        public async Task<ResponseDTO<UserDTO>> GetUserByIdAsync(int id)
+        {
+            try
+            {
+                var userDto = await _userRepository.GetUserByIdAsync(id);
+                if (userDto == null)
+                {
+                    return new ResponseDTO<UserDTO>
+                    {
+                        Message = "User not found.",
+                    };
+                }
+                return new ResponseDTO<UserDTO>
+                {
+                    Data = userDto,
+                    Message = "User retrieved successfully.",
+                    IsSuccess = true
+                };
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred when getting User data. Error message: \"{ex.Message}\"");
+                return new ResponseDTO<UserDTO>
+                {
+                    Message = "An error occurred when getting User data.",
+                };
+            }
+        }
+
         public async Task<ResponseDTO<UserDTO>> CreateUserAsync(UserCreation userCreation)
         {
             try

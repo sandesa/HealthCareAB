@@ -48,7 +48,7 @@ namespace XUnit.ServiceControllers.Tests
         {
             SessionCreate sessionCreate = new()
             {
-                Email = "testEmail",
+                UserId = 5,
                 AccessToken = "testToken",
                 Expires = DateTime.UtcNow.AddMinutes(60),
             };
@@ -57,7 +57,7 @@ namespace XUnit.ServiceControllers.Tests
             response.EnsureSuccessStatusCode();
             var jsonResponse = await response.Content.ReadFromJsonAsync<JsonElement>();
             var session = jsonResponse.GetProperty("data");
-            Assert.Equal(sessionCreate.Email, session.GetProperty("email").GetString());
+            Assert.Equal(sessionCreate.UserId, session.GetProperty("userId").GetInt16());
             Assert.Equal(sessionCreate.AccessToken, session.GetProperty("accessToken").GetString());
         }
 
@@ -80,7 +80,7 @@ namespace XUnit.ServiceControllers.Tests
             int sessionId = 1;
             SessionUpdate sessionUpdate = new()
             {
-                Email = "NewTestEmail",
+                UserId = 3,
                 AccessToken = "NewTestToken"
             };
 
@@ -89,7 +89,7 @@ namespace XUnit.ServiceControllers.Tests
             var jsonResponse = await response.Content.ReadFromJsonAsync<JsonElement>();
             var session = jsonResponse.GetProperty("data");
             Assert.Equal(sessionId, session.GetProperty("id").GetInt32());
-            Assert.Equal(sessionUpdate.Email, session.GetProperty("email").GetString());
+            Assert.Equal(sessionUpdate.UserId, session.GetProperty("userId").GetInt16());
             Assert.Equal(sessionUpdate.AccessToken, session.GetProperty("accessToken").GetString());
         }
 
