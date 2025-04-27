@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Cookies from 'js-cookie';
-import api from './api';
+import api from '../api';
 import './loginForm.css';
 
 interface LoginResponse {
@@ -29,13 +29,13 @@ const LoginForm: React.FC = () => {
         try {
             const response = await api.post<LoginResponse>('api/login', { email, password });
             if (response.data.isLoginSuccessful) {
-                Cookies.set('auth_token', response.data.accessToken, { expires: 1 });
-                Cookies.set('user_id', response.data.userId, { expires: 1 });
-                setMessage(response.data.message);
+                Cookies.set('auth_token', response.data.accessToken!.toString(), { expires: 1 });
+                Cookies.set('user_id', response.data.userId!.toString(), { expires: 1 });
+                setMessage(response.data.message!);
                 setLoginData(response.data);
                 
             } else {
-                setError(response.data.message);
+                setError(response.data.message!);
             }
         } catch (error: any) {
             setError('Failed to login. Please check your credentials or try again later.');

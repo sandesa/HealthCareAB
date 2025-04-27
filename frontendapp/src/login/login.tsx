@@ -1,8 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import './login.css'
-import './index.css'
-import Navbar from './navbar.tsx'
+import '../index.css'
+import Navbar from '../navbar/navbar.tsx'
 import LoginForm from './loginForm.tsx'
 
 createRoot(document.getElementById('navbar')!).render(
