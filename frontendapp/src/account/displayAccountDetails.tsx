@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import api from './api';
-import './account.css';
+import api from '../api';
+import './displayAccountDetails.css';
 import Cookies from 'js-cookie';
 
 interface Response {
@@ -18,8 +18,8 @@ interface User {
     dateOfBirth: Date;
     userType?: string;
     userAccountType?: string;
-    createdAt: Date;
-    updatedAt: Date;
+    createdAt?: Date | null;
+    updatedAt?: Date | null;
 }
 
 const AccountInformation: React.FC = () => {
@@ -29,22 +29,11 @@ const AccountInformation: React.FC = () => {
     const [message, setMessage] = useState<string | null>(null);
 
     useEffect(() => {
-        const loadUserData = async () => {
+        const loadUserBookingData = async () => {
             try {
                 const id = Cookies.get('user_id');
-                const token = Cookies.get('auth_token');
 
-                if (!id || !token) {
-                    setError('User is not logged in or session expired.');
-                    setLoading(false);
-                    return;
-                }
-
-                const response = await api.get<Response>(`api/user/get/${id}?token=${token}`, {
-                    headers: {
-                        Authorization: `Bearer ${ token }`
-                    }
-                });
+                const response = await api.get<Response>(`api/user/get/${id}`);
 
                 if (response.status === 200) {
                     setMessage(response.data.message);
@@ -60,7 +49,7 @@ const AccountInformation: React.FC = () => {
             }
         };
 
-        loadUserData();
+        loadUserBookingData();
     }, []);
 
     return (
@@ -78,10 +67,11 @@ const AccountInformation: React.FC = () => {
                     <p><strong>First Name:</strong> {userData.firstName}</p>
                     <p><strong>Last Name:</strong> {userData.lastName}</p>
                     <p><strong>Email:</strong> {userData.email}</p>
-                    <p><strong>Phone Number:</strong> {userData.phoneNumber}</p>
+                    <p><strong>Phone Number:</strong> {userData.phoneNumber ?? "No data"}</p>
                     <p><strong>Date of Birth:</strong> {userData.dateOfBirth.toString().slice(0, 10)}</p>
-                    <p><strong>User Type:</strong> {userData.userType}</p>
-                    <p><strong>Account Type:</strong> {userData.userAccountType}</p>
+                    <p><strong>User Type:</strong> {userData.userType ?? "No data"}</p>
+                    <p><strong>Account Type:</strong> {userData.userAccountType ?? "No data"}</p>
+                    <p><strong>Created:</strong> {userData.createdAt?.toString().slice(0, 10) ?? "No data"}</p>
                 </div>
             )}
         </div>

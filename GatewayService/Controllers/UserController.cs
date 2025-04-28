@@ -68,22 +68,17 @@ namespace GatewayService.Controllers
         }
 
         [HttpGet("get/{id}")]
-        public async Task<IActionResult> GetUserByIdAsync(int id, [FromQuery] string? token)
+        public async Task<IActionResult> GetUserByIdAsync(int id)
         {
             try
             {
-                if (!Request.Cookies.TryGetValue("auth_token", out var cookieToken) || string.IsNullOrWhiteSpace(cookieToken))
+                if (!Request.Cookies.TryGetValue("auth_token", out var token) || string.IsNullOrWhiteSpace(token))
                 {
-                    if(token == null)
-                    {
-                        return Unauthorized(new { Message = "Missing or invalid token." });
-                    }
+                    return Unauthorized(new { Message = "Missing or invalid token." });
                 }
 
-                var authToken = token ?? cookieToken;
-
                 HttpRequestMessage requestMessage = new(HttpMethod.Get, $"get/{id}");
-                requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token ?? cookieToken);
+                requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
                 var response = await _userClient.SendAsync(requestMessage);
                 var jsonResponse = await response.Content.ReadFromJsonAsync<JsonElement>();

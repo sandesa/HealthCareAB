@@ -65,6 +65,22 @@ namespace AvailabilityService.Controllers
         }
 
         [Authorize]
+        [HttpGet("get/from/{startDate}")]
+        public async Task<IActionResult> GetAvailabilitiesOneMonthFromNow(string startDate)
+        {
+            var result = await _availabilityService.GetAvailabilitiesOneMonthFromNow(startDate);
+            if (result.Message.Contains("error"))
+            {
+                return StatusCode(500, result);
+            }
+            if (result.IsSuccess)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [Authorize]
         [HttpGet("id/{id}")]
         public async Task<IActionResult> GetAvailabilityById(int id)
         {

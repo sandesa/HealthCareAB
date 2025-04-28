@@ -42,6 +42,22 @@ namespace AvailabilityService.Repositories
             return availDtos;
         }
 
+        public async Task<IEnumerable<AvailabilityDTO>> GetAvailabilitiesOneMonthFromNow(string startDate)
+        {
+            var parsedDate = DateTime.Parse(startDate);
+            var monthBreakPoint = parsedDate;
+
+            while (monthBreakPoint.Month == parsedDate.Month && monthBreakPoint.AddDays(1).Month == parsedDate.Month)
+            {
+                monthBreakPoint = monthBreakPoint.AddDays(1);
+            }
+
+            var avails = await _context.Availabilities.Where(a => a.StartTime <= monthBreakPoint && a.StartTime >= parsedDate).ToListAsync();
+            avails.Sort((a, b) => a.StartTime.CompareTo(b.StartTime));
+            var availDtos = avails.Select(a => _mapper.AvailToDto(a));
+            return availDtos;
+        }
+
         public async Task<AvailabilityDTO?> GetAvailabilityByIdAsync(int id)
         {
             var avail = await _context.Availabilities.FindAsync(id);
