@@ -100,6 +100,35 @@ namespace AvailabilityService.Services
             }
         }
 
+        public async Task<ResponseDTO<IEnumerable<AvailabilityDTO>>> GetAvailabilitiesOneMonthFromNow(string startDate)
+        {
+            try
+            {
+                var availabilities = await _availabilityRepository.GetAvailabilitiesOneMonthFromNow(startDate);
+                if (!availabilities.Any())
+                {
+                    return new ResponseDTO<IEnumerable<AvailabilityDTO>>
+                    {
+                        Message = "No availabilities found for the next month.",
+                        IsSuccess = true
+                    };
+                }
+                return new ResponseDTO<IEnumerable<AvailabilityDTO>>
+                {
+                    Data = availabilities,
+                    Message = "Availabilities retrieved successfully.",
+                    IsSuccess = true
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDTO<IEnumerable<AvailabilityDTO>>
+                {
+                    Message = $"An error occurred while retrieving availabilities: {ex.Message}",
+                };
+            }
+        }
+
         public async Task<ResponseDTO<AvailabilityDTO>> GetAvailabilityByIdAsync(int id)
         {
             try

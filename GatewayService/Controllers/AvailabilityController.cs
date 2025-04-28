@@ -89,6 +89,30 @@ namespace GatewayService.Controllers
             }
         }
 
+        [HttpGet("get/from/{startDate}")]
+        public async Task<IActionResult> GetAvailabilitiesOneMonthFromNowAsync(string startDate)
+        {
+            try
+            {
+                if (!Request.Cookies.TryGetValue("auth_token", out var token) || string.IsNullOrWhiteSpace(token))
+                {
+                    return Unauthorized(new { Message = "Missing or invalid token." });
+                }
+
+                HttpRequestMessage requestMessage = new(HttpMethod.Get, $"get/from/{startDate}");
+                requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                var response = await _availabilityClient.SendAsync(requestMessage);
+                var jsonResponse = await response.Content.ReadFromJsonAsync<JsonElement>();
+
+                return StatusCode((int)response.StatusCode, jsonResponse);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { ex.Message, IsConnectedToService = false });
+            }
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAvailabilityByIdAsync(int id)
         {

@@ -9,6 +9,7 @@ namespace AvailabilityService.Services
         {
             return new AvailabilityDTO
             {
+                Id = availability.Id,
                 CaregiverId = availability.CaregiverId,
                 StartTime = availability.StartTime,
                 EndTime = availability.EndTime,
