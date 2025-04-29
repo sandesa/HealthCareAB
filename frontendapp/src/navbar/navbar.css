@@ -36,3 +36,7 @@ li {
 .nav-links {
     display: flex;
 }
+
+.logout-button {
+    cursor: pointer;
+}
