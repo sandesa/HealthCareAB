@@ -30,7 +30,6 @@ const LoginForm: React.FC = () => {
             const response = await api.post<LoginResponse>('api/login', { email, password });
             if (response.data.isLoginSuccessful) {
                 Cookies.set('auth_token', response.data.accessToken!.toString(), { expires: 1/24 });
-                Cookies.set('user_id', response.data.userId!.toString(), { expires: 1/24 });
                 Cookies.set('logged_in', 'true', { expires: 1/24 });
                 setMessage(response.data.message!);
                 setLoginData(response.data);

@@ -67,8 +67,8 @@ namespace GatewayService.Controllers
             }
         }
 
-        [HttpGet("get/{id}")]
-        public async Task<IActionResult> GetUserByIdAsync(int id)
+        [HttpGet("get")]
+        public async Task<IActionResult> GetUserByIdAsync()
         {
             try
             {
@@ -77,7 +77,7 @@ namespace GatewayService.Controllers
                     return Unauthorized(new { Message = "Missing or invalid token." });
                 }
 
-                HttpRequestMessage requestMessage = new(HttpMethod.Get, $"get/{id}");
+                HttpRequestMessage requestMessage = new(HttpMethod.Get, "get");
                 requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
                 var response = await _userClient.SendAsync(requestMessage);
@@ -113,8 +113,8 @@ namespace GatewayService.Controllers
             }
         }
 
-        [HttpPut("update/{id}")]
-        public async Task<IActionResult> UpdateUserAsync(int id, [FromBody] UserUpdate userUpdate)
+        [HttpPut("update")]
+        public async Task<IActionResult> UpdateUserAsync([FromBody] UserUpdate userUpdate)
         {
             try
             {
@@ -128,7 +128,7 @@ namespace GatewayService.Controllers
                     "application/json"
                 );
 
-                HttpRequestMessage requestMessage = new(HttpMethod.Put, $"update/{id}")
+                HttpRequestMessage requestMessage = new(HttpMethod.Put, $"update")
                 {
                     Content = jsonContent
                 };
@@ -147,8 +147,8 @@ namespace GatewayService.Controllers
             }
         }
 
-        [HttpDelete("delete/{id}")]
-        public async Task<IActionResult> DeleteUserAsync(int id)
+        [HttpDelete("delete")]
+        public async Task<IActionResult> DeleteUserAsync()
         {
             try
             {
@@ -157,7 +157,7 @@ namespace GatewayService.Controllers
                     return Unauthorized(new { Message = "Missing or invalid token." });
                 }
 
-                HttpRequestMessage requestMessage = new(HttpMethod.Delete, $"delete/{id}");
+                HttpRequestMessage requestMessage = new(HttpMethod.Delete, $"delete");
                 requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
                 var response = await _userClient.SendAsync(requestMessage);
