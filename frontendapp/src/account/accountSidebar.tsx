@@ -8,7 +8,6 @@ function AccountSidebar() {
                 <li><a href="#personal-info">Personal Information</a></li>
                 <li><a href="#previous-appointments">Previous Appointments</a></li>
                 <li><a href="#update-info">Update Information</a></li>
-                <li><a href="#logout">Logout</a></li>
             </ul>
         </div>
     );
