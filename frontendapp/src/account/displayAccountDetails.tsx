@@ -31,9 +31,7 @@ const AccountInformation: React.FC = () => {
     useEffect(() => {
         const loadUserBookingData = async () => {
             try {
-                const id = Cookies.get('user_id');
-
-                const response = await api.get<Response>(`api/user/get/${id}`);
+                const response = await api.get<Response>(`api/user/get`);
 
                 if (response.status === 200) {
                     setMessage(response.data.message);

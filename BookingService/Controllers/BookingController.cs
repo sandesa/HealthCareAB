@@ -1,6 +1,7 @@
 ﻿using BookingService.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace BookingService.Controllers
 {
@@ -28,10 +29,17 @@ namespace BookingService.Controllers
         }
 
         [Authorize]
-        [HttpGet("caregiver/{caregiverId}")]
-        public async Task<IActionResult> GetBookingsByCaregiverId(int caregiverId)
+        [HttpGet("caregiver")]
+        public async Task<IActionResult> GetBookingsByCaregiverId()
         {
-            var response = await _bookingService.GetBookingsByUserIdAsync(caregiverId: caregiverId, patientId: null);
+            var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            if (string.IsNullOrEmpty(userId))
+            {
+                return BadRequest("User ID not found.");
+            }
+
+            var response = await _bookingService.GetBookingsByUserIdAsync(caregiverId: int.Parse(userId), patientId: null);
             if (response.IsSuccess)
             {
                 return Ok(response);
@@ -40,10 +48,17 @@ namespace BookingService.Controllers
         }
 
         [Authorize]
-        [HttpGet("user/{patientId}")]
-        public async Task<IActionResult> GetBookingsByPatientId(int patientId)
+        [HttpGet("user")]
+        public async Task<IActionResult> GetBookingsByPatientId()
         {
-            var response = await _bookingService.GetBookingsByUserIdAsync(caregiverId: null, patientId: patientId);
+            var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            if (string.IsNullOrEmpty(userId))
+            {
+                return BadRequest("User ID not found.");
+            }
+
+            var response = await _bookingService.GetBookingsByUserIdAsync(caregiverId: null, patientId: int.Parse(userId));
             if (response.IsSuccess)
             {
                 return Ok(response);

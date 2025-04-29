@@ -31,9 +31,7 @@ const PreviousAppointment: React.FC = () => {
     useEffect(() => {
         const loadAppointmentData = async () => {
             try {
-                const id = Cookies.get('user_id');
-
-                const response = await api.get<Response>(`api/booking/user/${id}`);
+                const response = await api.get<Response>(`api/booking/user`);
 
                 if (response.status === 200) {
                     setMessage(response.data.message);

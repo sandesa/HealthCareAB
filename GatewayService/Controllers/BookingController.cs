@@ -41,8 +41,8 @@ namespace GatewayService.Controllers
             }
         }
 
-        [HttpGet("caregiver/{caregiverId}")]
-        public async Task<IActionResult> GetBookingsByCaregiverIdAsync(int caregiverId)
+        [HttpGet("caregiver")]
+        public async Task<IActionResult> GetBookingsByCaregiverIdAsync()
         {
             try
             {
@@ -51,7 +51,7 @@ namespace GatewayService.Controllers
                     return Unauthorized(new { Message = "Missing or invalid token." });
                 }
 
-                HttpRequestMessage requestMessage = new(HttpMethod.Get, $"caregiver/{caregiverId}");
+                HttpRequestMessage requestMessage = new(HttpMethod.Get, $"caregiver");
                 requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
                 var response = await _bookingClient.SendAsync(requestMessage);
@@ -65,8 +65,8 @@ namespace GatewayService.Controllers
             }
         }
 
-        [HttpGet("user/{patientId}")]
-        public async Task<IActionResult> GetBookingsByPatientIdAsync(int patientId)
+        [HttpGet("user")]
+        public async Task<IActionResult> GetBookingsByPatientIdAsync()
         {
             try
             {
@@ -75,7 +75,7 @@ namespace GatewayService.Controllers
                     return Unauthorized(new { Message = "Missing or invalid token." });
                 }
 
-                HttpRequestMessage requestMessage = new(HttpMethod.Get, $"user/{patientId}");
+                HttpRequestMessage requestMessage = new(HttpMethod.Get, $"user");
                 requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
                 var response = await _bookingClient.SendAsync(requestMessage);

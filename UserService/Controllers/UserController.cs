@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using UserService.Models;
 
 namespace UserService.Controllers
@@ -56,12 +57,19 @@ namespace UserService.Controllers
         }
 
         [Authorize]
-        [HttpGet("get/{id}")]
-        public async Task<IActionResult> GetUserById(int id)
+        [HttpGet("get")]
+        public async Task<IActionResult> GetUserById()
         {
             try
             {
-                var response = await _userService.GetUserByIdAsync(id);
+                var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+                if (string.IsNullOrEmpty(userId))
+                {
+                    return BadRequest("User ID not found.");
+                }
+
+                var response = await _userService.GetUserByIdAsync(int.Parse(userId));
                 if (response.IsSuccess)
                 {
                     return Ok(response);
@@ -96,12 +104,19 @@ namespace UserService.Controllers
         }
 
         [Authorize]
-        [HttpPut("update/{id}")]
-        public async Task<IActionResult> UpdateUser(int id, [FromBody] UserUpdate userUpdate)
+        [HttpPut("update")]
+        public async Task<IActionResult> UpdateUser([FromBody] UserUpdate userUpdate)
         {
             try
             {
-                var response = await _userService.UpdateUserAsync(id, userUpdate);
+                var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+                if (string.IsNullOrEmpty(userId))
+                {
+                    return BadRequest("User ID not found.");
+                }
+
+                var response = await _userService.UpdateUserAsync(int.Parse(userId), userUpdate);
                 if (response.IsSuccess)
                 {
                     return Ok(response);
@@ -116,12 +131,19 @@ namespace UserService.Controllers
         }
 
         [Authorize]
-        [HttpDelete("delete/{id}")]
-        public async Task<IActionResult> DeleteUser(int id)
+        [HttpDelete("delete")]
+        public async Task<IActionResult> DeleteUser()
         {
             try
             {
-                var response = await _userService.DeleteUserAsync(id);
+                var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+                if (string.IsNullOrEmpty(userId))
+                {
+                    return BadRequest("User ID not found.");
+                }
+
+                var response = await _userService.DeleteUserAsync(int.Parse(userId));
                 if (response.IsSuccess)
                 {
                     return Ok(response);
