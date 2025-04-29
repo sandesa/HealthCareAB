@@ -22,33 +22,61 @@ const Navbar: React.FC = () => {
         }
     }
 
+    const handleLogin = () => {
+        window.location.href = '/login.html';
+    }
+
+    const handleAccount = () => {
+        window.location.href = '/accountHome.html';
+    }
+
     return (
         <nav className="navbar">
             <div className="navbar-container">
-                <div className="navbar-logo"><a href="/">HealthCareAB</a></div>
-                <ul className="nav-links">
-                    {isLoggedIn ? (
-                        <li><a href="/appointmentNew.html">Book appointment</a></li>
-                    ) : (
-                        <li><a href="/login.html">Book appointment</a></li>
-                    )}
-                    {isLoggedIn ? (
-                        <li><a href="#services">Calendar</a></li>
-                    ) : (
-                        <li><a href="/login.html">Calendar</a></li>
-                    )}
-                    {isLoggedIn &&
-                        <li><a href="#contact">Contact</a></li>
-                    }
-                    {isLoggedIn &&
-                    <li><a href="/accountHome.html">Account</a></li>
-                    }
-                    {!isLoggedIn ? (
-                        <li><a href="/login.html">Login</a></li>
-                    ) : (
-                        <li><a onClick={handleLogout} className="logout-button">Logout</a></li>
-                    )}
-                </ul>
+                {/*<div className="navbar-special-links-container">*/}
+                {/*    <a href="#employees" className="navbar-employees-link">Employees</a>*/}
+                {/*</div>*/}
+                <div className="navbar-top-container">
+                    <div className="navbar-logo"><a href="/">HealthCareAB</a></div>
+                    <div className="navbar-account-btns">
+                        {!isLoggedIn ? (
+                            <button className="sign-up-btn">Sign up</button>
+                        ) : (
+                            <button className="sign-up-btn" onClick={handleAccount} >My account</button>
+                        ) }
+
+                        {!isLoggedIn ? (
+                            <button onClick={handleLogin} className="sign-in-btn">Sign in</button>
+                        ) : (
+                            <button onClick={handleLogout} className="sign-in-btn">Sign out</button>
+                        )}
+                    </div>
+                </div>
+                <div className="navbar-bottom-container">
+                    <ul className="nav-links">
+                        {isLoggedIn ? (
+                            <li><a href="/appointmentNew.html">Book appointment</a></li>
+                        ) : (
+                            <li><a href="/login.html">Book appointment</a></li>
+                        )}
+                        {isLoggedIn ? (
+                            <li><a href="#services">Calendar</a></li>
+                        ) : (
+                            <li><a href="/login.html">Calendar</a></li>
+                        )}
+                        {isLoggedIn &&
+                            <li><a href="#contact">Contact</a></li>
+                        }
+                    </ul>
+                    <div className="search-bar-container">
+                        <input
+                            type="text"
+                            className="search-input"
+                            placeholder="Explore topics and care"
+                        />
+                        <button className="search-button">Search</button>
+                    </div>
+                </div>
             </div>
         </nav>
     );
