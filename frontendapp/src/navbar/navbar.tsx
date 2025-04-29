@@ -27,9 +27,19 @@ const Navbar: React.FC = () => {
             <div className="navbar-container">
                 <div className="navbar-logo"><a href="/">HealthCareAB</a></div>
                 <ul className="nav-links">
-                    <li><a href="/appointmentNew.html">Book appointment</a></li>
-                    <li><a href="#services">Calendar</a></li>
-                    <li><a href="#contact">Contact</a></li>
+                    {isLoggedIn ? (
+                        <li><a href="/appointmentNew.html">Book appointment</a></li>
+                    ) : (
+                        <li><a href="/login.html">Book appointment</a></li>
+                    )}
+                    {isLoggedIn ? (
+                        <li><a href="#services">Calendar</a></li>
+                    ) : (
+                        <li><a href="/login.html">Calendar</a></li>
+                    )}
+                    {isLoggedIn &&
+                        <li><a href="#contact">Contact</a></li>
+                    }
                     {isLoggedIn &&
                     <li><a href="/accountHome.html">Account</a></li>
                     }
