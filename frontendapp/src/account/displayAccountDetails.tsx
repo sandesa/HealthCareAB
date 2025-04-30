@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import api from '../api';
-import './displayAccountDetails.css';
-import Cookies from 'js-cookie';
 
 interface Response {
     data: User;
@@ -57,8 +55,6 @@ const AccountInformation: React.FC = () => {
             {loading && <p>Loading your information...</p>}
 
             {error && <p className="error">{error}</p>}
-
-            {message && <p className="message">{message}</p>}
 
             {userData && (
                 <div className="user-info">

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import api from '../api';
-import './previousAppointment.css';
 import Cookies from 'js-cookie';
 
 interface Response {
@@ -11,7 +10,7 @@ interface Response {
 
 interface Appointment {
     id: number;
-    careGiverId: number;
+    caregiverId: number;
     patientId: number;
     meetingDate?: Date | null;
     meetingType?: string;
@@ -31,13 +30,27 @@ const PreviousAppointment: React.FC = () => {
     useEffect(() => {
         const loadAppointmentData = async () => {
             try {
-                const response = await api.get<Response>(`api/booking/user`);
+                const userType = Cookies.get('user_type');
 
-                if (response.status === 200) {
-                    setMessage(response.data.message);
-                    setAppointmentData(response.data.data);
+                if (userType === 'Caregiver') {
+                    const response = await api.get<Response>(`api/booking/caregiver`);
+
+                    if (response.status === 200) {
+                        setMessage(response.data.message);
+                        setAppointmentData(response.data.data);
+                    } else {
+                        setError(response.data.message);
+                    }
                 } else {
-                    setError(response.data.message);
+
+                    const response = await api.get<Response>(`api/booking/user`);
+
+                    if (response.status === 200) {
+                        setMessage(response.data.message);
+                        setAppointmentData(response.data.data);
+                    } else {
+                        setError(response.data.message);
+                    }
                 }
             } catch (error: any) {
                 console.error('Error fetching appointment data:', error);
@@ -57,19 +70,19 @@ const PreviousAppointment: React.FC = () => {
 
             {error && <p className="error">{error}</p>}
 
-            {message && <p className="message">{message}</p>}
-
             {!appointmentData && <p>No previous appointments found.</p>}
 
             {appointmentData && appointmentData.map((appointment) => (
                 <div key={appointment.id} className="appointment-card">
-                    <p>Caregiver ID: {appointment.careGiverId}</p>
+                    <p>Caregiver ID: {appointment.caregiverId}</p>
                     <p>Patient ID: {appointment.patientId}</p>
                     <p>Meeting Date: {appointment.meetingDate ? new Date(appointment.meetingDate).toLocaleString() : 'N/A'}</p>
                     <p>Meeting Type: {appointment.meetingType || 'N/A'}</p>
                     <p>Clinic: {appointment.clinic || 'N/A'}</p>
                     <p>Address: {appointment.address || 'N/A'}</p>
-                    <p>Status: {appointment.isCancelled ? 'Cancelled' : 'Active'}</p>
+                    {(appointment.isCancelled &&
+                        <p>Status: Cancelled</p>
+                    )}
                 </div>
             ))}
         </div>

@@ -21,7 +21,6 @@ namespace AvailabilityService.Services
         {
             return new Availability
             {
-                CaregiverId = availabilityCreate.CaregiverId,
                 StartTime = availabilityCreate.StartTime,
                 EndTime = availabilityCreate.EndTime,
                 Notes = availabilityCreate.Notes,

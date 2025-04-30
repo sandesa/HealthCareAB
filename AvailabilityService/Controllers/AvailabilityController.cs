@@ -1,6 +1,7 @@
 ﻿using AvailabilityService.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace AvailabilityService.Controllers
 {
@@ -33,10 +34,17 @@ namespace AvailabilityService.Controllers
         }
 
         [Authorize]
-        [HttpGet("caregiver/{caregiverId}")]
-        public async Task<IActionResult> GetAvailabilitiesByCaregiverId(int caregiverId)
+        [HttpGet("caregiver")]
+        public async Task<IActionResult> GetAvailabilitiesByCaregiverId()
         {
-            var result = await _availabilityService.GetAvailabilitiesByCaregiverIdAsync(caregiverId);
+            var caregiverId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            if (string.IsNullOrEmpty(caregiverId))
+            {
+                return BadRequest("Caregiver ID not found.");
+            }
+
+            var result = await _availabilityService.GetAvailabilitiesByCaregiverIdAsync(int.Parse(caregiverId));
             if (result.Message.Contains("error"))
             {
                 return StatusCode(500, result);
@@ -100,7 +108,14 @@ namespace AvailabilityService.Controllers
         [HttpPost("create")]
         public async Task<IActionResult> CreateAvailability([FromBody] AvailabilityCreate newAvailability)
         {
-            var result = await _availabilityService.CreateAvailabilityAsync(newAvailability);
+            var caregiverId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            if (string.IsNullOrEmpty(caregiverId))
+            {
+                return BadRequest("Caregiver ID not found.");
+            }
+
+            var result = await _availabilityService.CreateAvailabilityAsync(newAvailability, int.Parse(caregiverId));
             if (result.Message.Contains("error"))
             {
                 return StatusCode(500, result);

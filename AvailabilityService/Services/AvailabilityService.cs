@@ -157,11 +157,11 @@ namespace AvailabilityService.Services
             }
         }
 
-        public async Task<ResponseDTO<AvailabilityDTO>> CreateAvailabilityAsync(AvailabilityCreate newAvailability)
+        public async Task<ResponseDTO<AvailabilityDTO>> CreateAvailabilityAsync(AvailabilityCreate newAvailability, int caregiverId)
         {
             try
             {
-                var availability = await _availabilityRepository.CreateAvailabilityAsync(newAvailability);
+                var availability = await _availabilityRepository.CreateAvailabilityAsync(newAvailability, caregiverId);
                 if (availability == null)
                 {
                     return new ResponseDTO<AvailabilityDTO>

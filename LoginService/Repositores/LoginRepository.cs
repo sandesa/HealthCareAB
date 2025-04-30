@@ -112,6 +112,7 @@ namespace LoginService.Repositores
                 return new LoginResponse
                 {
                     UserId = sessionRequest.UserId,
+                    UserAccountType = validationResponse.UserAccountType,
                     AccessToken = sessionRequest.AccessToken,
                     Expires = sessionRequest.Expires,
                     Message = "User logged in successfully",

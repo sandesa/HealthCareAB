@@ -27,7 +27,7 @@ const Navbar: React.FC = () => {
     }
 
     const handleAccount = () => {
-        window.location.href = '/accountHome.html';
+        window.location.href = '/accountInfo.html';
     }
 
     return (
