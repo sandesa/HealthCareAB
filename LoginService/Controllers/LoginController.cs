@@ -14,6 +14,8 @@ namespace LoginService.Controllers
             _loginService = loginService;
         }
 
+        [EndpointSummary("POST LOGIN")]
+        [EndpointDescription("Login user\n\nNo role required\n\nUser must NOT be logged in")]
         [HttpPost]
         public async Task<ActionResult<LoginResponse>> Login([FromBody] LoginRequest request)
         {
@@ -47,6 +49,8 @@ namespace LoginService.Controllers
             }
         }
 
+        [EndpointSummary("POST LOGOUT")]
+        [EndpointDescription("Logout user\n\nNo role required\n\nUser must be logged in (have a valid active token)")]
         [HttpPost("logout/{token}")]
         public async Task<IActionResult> Logout(string token)
         {

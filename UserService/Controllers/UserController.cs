@@ -16,6 +16,8 @@ namespace UserService.Controllers
             _userService = userService;
         }
 
+        [EndpointSummary("GET DEV")]
+        [EndpointDescription("Get FULL information about all users (for developing purposes) \n\nRequired role: \"Developer\"\n\nUser must be logged in (have a valid active token)")]
         [Authorize(Roles = "Developer")]
         [HttpGet("dev")]
         public async Task<IActionResult> GetUsersDev()
@@ -36,6 +38,8 @@ namespace UserService.Controllers
             }
         }
 
+        [EndpointSummary("GET ALL")]
+        [EndpointDescription("Get information about all users\n\nRequired roles \"Developer, Admin, Caregiver\"\n\nUser must be logged in (have a valid active token)")]
         [Authorize(Roles = "Developer,Admin,Caregiver")]
         [HttpGet("get-all")]
         public async Task<IActionResult> GetUsers()
@@ -56,6 +60,8 @@ namespace UserService.Controllers
             }
         }
 
+        [EndpointSummary("GET USER BY ID ")]
+        [EndpointDescription("Get information about user by ID\n\nNo role required\n\nUser must be logged in (have a valid active token)")]
         [Authorize]
         [HttpGet("get")]
         public async Task<IActionResult> GetUserById()
@@ -83,6 +89,8 @@ namespace UserService.Controllers
             }
         }
 
+        [EndpointSummary("POST USER")]
+        [EndpointDescription("Create new user\n\nNo role required\n\nUser must NOT be logged in")]
         [AllowAnonymous]
         [HttpPost("create")]
         public async Task<IActionResult> CreateUser([FromBody] UserCreation userCreation)
@@ -103,6 +111,8 @@ namespace UserService.Controllers
             }
         }
 
+        [EndpointSummary("PUT USER")]
+        [EndpointDescription("Update user data\n\nNo role required\n\nUser must be logged in (have a valid active token)")]
         [Authorize]
         [HttpPut("update")]
         public async Task<IActionResult> UpdateUser([FromBody] UserUpdate userUpdate)
@@ -130,6 +140,8 @@ namespace UserService.Controllers
             }
         }
 
+        [EndpointSummary("DELETE USER")]
+        [EndpointDescription("Delete user\n\nNo role required\n\nUser must be logged in (have a valid active token)")]
         [Authorize]
         [HttpDelete("delete")]
         public async Task<IActionResult> DeleteUser()
@@ -157,6 +169,8 @@ namespace UserService.Controllers
             }
         }
 
+        [EndpointSummary("POST VALIDATE USER")]
+        [EndpointDescription("Validate user credentials\n\nNo role required\n\nUser must NOT be logged in")]
         [AllowAnonymous]
         [HttpPost("validate")]
         public async Task<IActionResult> ValidateUser([FromBody] ValidationRequest validationRequest)

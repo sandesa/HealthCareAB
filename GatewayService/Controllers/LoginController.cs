@@ -16,6 +16,8 @@ namespace GatewayService.Controllers
             _loginClient = factory.CreateClient("LoginService");
         }
 
+        [EndpointSummary("POST Login")]
+        [EndpointDescription("Login user\n\nNo role required\n\nUser must NOT be logged in")]
         [HttpPost]
         public async Task<IActionResult> LoginAsync([FromBody] LoginRequest request)
         {

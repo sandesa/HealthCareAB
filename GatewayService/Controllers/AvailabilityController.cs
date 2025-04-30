@@ -17,6 +17,8 @@ namespace GatewayService.Controllers
             _availabilityClient = httpClientFactory.CreateClient("AvailabilityService");
         }
 
+        [EndpointSummary("GET dev")]
+        [EndpointDescription("Get FULL information about all availabilities (for developing purposes) \n\nRequired role: \"Developer\"\n\nUser must be logged in (have a valid active token)")]
         [HttpGet("dev")]
         public async Task<IActionResult> GetAvailabilitiesDevAsync()
         {
@@ -41,6 +43,8 @@ namespace GatewayService.Controllers
             }
         }
 
+        [EndpointSummary("GET by caregiver ID")]
+        [EndpointDescription("Get information about all availabilities\n\nRequired roles: \"Caregiver, Admin, Developer\"\n\nUser must be logged in (have a valid active token)")]
         [HttpGet("caregiver")]
         public async Task<IActionResult> GetAvailabilitiesByCaregiverIdAsync()
         {
@@ -65,6 +69,8 @@ namespace GatewayService.Controllers
             }
         }
 
+        [EndpointSummary("GET by date")]
+        [EndpointDescription("Get information about all availabilities by date\n\nNo required roles\n\nUser must be logged in (have a valid active token)")]
         [HttpGet("date/{date}")]
         public async Task<IActionResult> GetAvailabilitiesByDateAsync(string date)
         {
@@ -89,6 +95,8 @@ namespace GatewayService.Controllers
             }
         }
 
+        [EndpointSummary("GET by date range")]
+        [EndpointDescription("Get information about all availabilities by date range (from startdate to last day of month)\n\nNo required roles\n\nUser must be logged in (have a valid active token)")]
         [HttpGet("get/from/{startDate}")]
         public async Task<IActionResult> GetAvailabilitiesOneMonthFromNowAsync(string startDate)
         {
@@ -113,6 +121,8 @@ namespace GatewayService.Controllers
             }
         }
 
+        [EndpointSummary("GET by ID")]
+        [EndpointDescription("Get information about availability by ID\n\nNo required roles\n\nUser must be logged in (have a valid active token)")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAvailabilityByIdAsync(int id)
         {
@@ -137,6 +147,8 @@ namespace GatewayService.Controllers
             }
         }
 
+        [EndpointSummary("POST new Availability")]
+        [EndpointDescription("Create new availability\n\nRequired roles: \"Caregiver, Admin, Developer\"\n\nUser must be logged in (have a valid active token)")]
         [HttpPost("create")]
         public async Task<IActionResult> CreateAvailabilityAsync([FromBody] AvailabilityCreation availabilityCreation)
         {
@@ -169,6 +181,8 @@ namespace GatewayService.Controllers
             }
         }
 
+        [EndpointSummary("UPDATE Availability")]
+        [EndpointDescription("Update availability\n\nRequired roles: \"Caregiver, Admin, Developer\"\n\nUser must be logged in (have a valid active token)")]
         [HttpPut("update/{id}")]
         public async Task<IActionResult> UpdateAvailabilityAsync(int id, [FromBody] AvailabilityUpdate availabilityUpdate)
         {
@@ -201,6 +215,8 @@ namespace GatewayService.Controllers
             }
         }
 
+        [EndpointSummary("DELETE Availability")]
+        [EndpointDescription("Delete availability\n\nRequired roles: \"Caregiver, Admin, Developer\"\n\nUser must be logged in (have a valid active token)")]
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteAvailabilityAsync(int id)
         {

@@ -17,6 +17,8 @@ namespace GatewayService.Controllers
             _userClient = httpClientFactory.CreateClient("UserService");
         }
 
+        [EndpointSummary("GET dev")]
+        [EndpointDescription("Get FULL information about all users (for developing purposes) \n\nRequired role: \"Developer\"\n\nUser must be logged in (have a valid active token)")]
         [HttpGet("dev")]
         public async Task<IActionResult> GetUsersDevAsync()
         {
@@ -42,6 +44,8 @@ namespace GatewayService.Controllers
             }
         }
 
+        [EndpointSummary("GET all")]
+        [EndpointDescription("Get information about all users\n\nRequired roles \"Developer, Admin, Caregiver\"\n\nUser must be logged in (have a valid active token)")]
         [HttpGet("get-users")]
         public async Task<IActionResult> GetUsersAsync()
         {
@@ -67,6 +71,8 @@ namespace GatewayService.Controllers
             }
         }
 
+        [EndpointSummary("GET user by ID")]
+        [EndpointDescription("Get information about user by ID\n\nNo role required\n\nUser must be logged in (have a valid active token)")]
         [HttpGet("get")]
         public async Task<IActionResult> GetUserByIdAsync()
         {
@@ -91,6 +97,8 @@ namespace GatewayService.Controllers
             }
         }
 
+        [EndpointSummary("POST new User")]
+        [EndpointDescription("Create new user\n\nNo role required\n\nUser must NOT be logged in")]
         [HttpPost("create")]
         public async Task<IActionResult> CreateUserAsync([FromBody] UserCreation userCreation)
         {
@@ -113,6 +121,8 @@ namespace GatewayService.Controllers
             }
         }
 
+        [EndpointSummary("PUT User")]
+        [EndpointDescription("Update user data\n\nNo role required\n\nUser must be logged in (have a valid active token)")]
         [HttpPut("update")]
         public async Task<IActionResult> UpdateUserAsync([FromBody] UserUpdate userUpdate)
         {
@@ -147,6 +157,8 @@ namespace GatewayService.Controllers
             }
         }
 
+        [EndpointSummary("DELETE User")]
+        [EndpointDescription("Delete user\n\nNo role required\n\nUser must be logged in (have a valid active token)")]
         [HttpDelete("delete")]
         public async Task<IActionResult> DeleteUserAsync()
         {

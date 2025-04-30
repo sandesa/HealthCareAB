@@ -17,6 +17,8 @@ namespace GatewayService.Controllers
             _journalClient = httpClientFactory.CreateClient("JournalService");
         }
 
+        [EndpointSummary("GET dev")]
+        [EndpointDescription("Get FULL information about all journals (for developing purposes) \n\nRequired role: \"Developer\"\n\nUser must be logged in (have a valid active token)")]
         [HttpGet("dev")]
         public IActionResult GetJournalsDevAsync(int id)
         {
@@ -41,6 +43,8 @@ namespace GatewayService.Controllers
             }
         }
 
+        [EndpointSummary("GET by patient ID")]
+        [EndpointDescription("Get all journals for user with ID  \n\nNo required roles\n\nUser must be logged in (have a valid active token)")]
         [HttpGet("user/{patientId}")]
         public async Task<IActionResult> GetJournalsByUserIdAsync(int patientId)
         {
@@ -64,6 +68,8 @@ namespace GatewayService.Controllers
             }
         }
 
+        [EndpointSummary("GET by caregiver ID")]
+        [EndpointDescription("Get all journals written by caregiver with ID  \n\nNo required roles\n\nUser must be logged in (have a valid active token)")]
         [HttpGet("caregiver/{caregiverId}")]
         public async Task<IActionResult> GetJournalsByCaregiverIdAsync(int caregiverId)
         {
@@ -87,6 +93,8 @@ namespace GatewayService.Controllers
             }
         }
 
+        [EndpointSummary("GET by ID")]
+        [EndpointDescription("Get information about journal by ID\n\nNo required roles\n\nUser must be logged in (have a valid active token)")]
         [HttpPost("{id}")]
         public async Task<IActionResult> GetJournalByIdAsync(int id)
         {
@@ -111,6 +119,8 @@ namespace GatewayService.Controllers
             }
         }
 
+        [EndpointSummary("POST new Journal")]
+        [EndpointDescription("Create journal\n\nRequired roles \"Developer, Admin, Caregiver\"\n\nUser must be logged in (have a valid active token)")]
         [HttpPost("create")]
         public async Task<IActionResult> CreateJournalAsync([FromBody] JournalCreation journalCreation)
         {
@@ -143,6 +153,8 @@ namespace GatewayService.Controllers
             }
         }
 
+        [EndpointSummary("PUT Journal")]
+        [EndpointDescription("Update journal\n\nRequired roles \"Developer, Admin, Caregiver\"\n\nUser must be logged in (have a valid active token)")]
         [HttpPut("update/{id}")]
         public async Task<IActionResult> UpdateJournalAsync(int id, [FromBody] JournalUpdate journalUpdate)
         {
@@ -175,6 +187,8 @@ namespace GatewayService.Controllers
             }
         }
 
+        [EndpointSummary("DELETE Journal")]
+        [EndpointDescription("Delete journal\n\nRequired roles \"Developer, Admin\"\n\nUser must be logged in (have a valid active token)")]
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteJournalAsync(int id)
         {
