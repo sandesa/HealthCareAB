@@ -3,6 +3,7 @@
     public class LoginResponse
     {
         public int? UserId { get; set; }
+        public string? UserAccountType { get; set; }
         public string? AccessToken { get; set; }
         public DateTime? Expires { get; set; }
         public string? Message { get; set; }

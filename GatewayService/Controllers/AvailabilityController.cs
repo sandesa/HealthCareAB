@@ -41,8 +41,8 @@ namespace GatewayService.Controllers
             }
         }
 
-        [HttpGet("caregiver/{caregiverId}")]
-        public async Task<IActionResult> GetAvailabilitiesByCaregiverIdAsync(int caregiverId)
+        [HttpGet("caregiver")]
+        public async Task<IActionResult> GetAvailabilitiesByCaregiverIdAsync()
         {
             try
             {
@@ -51,7 +51,7 @@ namespace GatewayService.Controllers
                     return Unauthorized(new { Message = "Missing or invalid token." });
                 }
 
-                HttpRequestMessage requestMessage = new(HttpMethod.Get, $"caregiver/{caregiverId}");
+                HttpRequestMessage requestMessage = new(HttpMethod.Get, $"caregiver");
                 requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
                 var response = await _availabilityClient.SendAsync(requestMessage);

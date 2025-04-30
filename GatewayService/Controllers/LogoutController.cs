@@ -35,7 +35,7 @@ namespace GatewayService.Controllers
                 if (response.IsSuccessStatusCode)
                 {
                     Response.Cookies.Delete("auth_token");
-                    Response.Cookies.Delete("user_id");
+                    Response.Cookies.Delete("user_type");
                     Response.Cookies.Delete("logged_in");
                 }
 

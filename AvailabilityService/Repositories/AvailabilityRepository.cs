@@ -69,13 +69,14 @@ namespace AvailabilityService.Repositories
             return availDto;
         }
 
-        public async Task<AvailabilityDTO?> CreateAvailabilityAsync(AvailabilityCreate newAvailability)
+        public async Task<AvailabilityDTO?> CreateAvailabilityAsync(AvailabilityCreate newAvailability, int caregiverId)
         {
             if (newAvailability == null || newAvailability.StartTime > newAvailability.EndTime)
             {
                 return null;
             }
             var avail = _mapper.CreateToAvail(newAvailability);
+            avail.CaregiverId = caregiverId;
             avail.CreatedAt = DateTime.UtcNow;
 
             await _context.Availabilities.AddAsync(avail);
