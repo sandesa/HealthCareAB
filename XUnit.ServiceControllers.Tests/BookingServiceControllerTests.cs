@@ -42,10 +42,9 @@ namespace XUnit.ServiceControllers.Tests
         [Fact]
         public async Task GetBookingsByCaregiverId_ReturnsOk_WhenIsSuccess()
         {
-            int caregiverId = 1;
             int numberOfBookings = 5;
 
-            var response = await _client.GetAsync($"/api/booking/caregiver/{caregiverId}");
+            var response = await _client.GetAsync($"/api/booking/caregiver");
 
             response.EnsureSuccessStatusCode();
 
@@ -59,10 +58,9 @@ namespace XUnit.ServiceControllers.Tests
         [Fact]
         public async Task GetBookingsByPatientId_ReturnsOk_WhenIsSuccess()
         {
-            int patientId = 1;
             int numberOfBookings = 2;
 
-            var response = await _client.GetAsync($"/api/booking/user/{patientId}");
+            var response = await _client.GetAsync($"/api/booking/user");
 
             response.EnsureSuccessStatusCode();
 

@@ -28,7 +28,7 @@ namespace BookingService.Controllers
             return BadRequest(response);
         }
 
-        [Authorize(Roles = "Caregiver")]
+        [Authorize(Roles = "Caregiver, Developer")]
         [HttpGet("caregiver")]
         public async Task<IActionResult> GetBookingsByCaregiverId()
         {
