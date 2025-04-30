@@ -41,6 +41,24 @@ const ViewAvails: React.FC = () => {
         loadAvailsData();
     }, []);
 
+    const handleDelete = async (id: number) => {
+        setLoading(true);
+        try {
+            const response = await api.delete<Response>(`api/availability/delete/${id}`);
+            if (response.status === 200) {
+                setMessage(response.data.message);
+                setAvailsData((prevData) => prevData.filter((avail) => avail.id !== id));
+            } else {
+                setError(response.data.message);
+            }
+        } catch (error: any) {
+            console.error('Error deleting availability:', error);
+            setError('Failed to delete availability. Please try again later.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <div className="avails-container">
             <h2>Your availabilites:</h2>
@@ -57,6 +75,7 @@ const ViewAvails: React.FC = () => {
                     {avails.startTime && <p>Start: {new Date(avails.startTime).toISOString()}</p>}
                     {avails.endTime && <p>End: {new Date(avails.endTime).toISOString()}</p>}
                     <p>Notes: {avails.notes}</p>
+                    <button className="avails-delete-btn" onClick={() => handleDelete(avails.id)}>Delete</button>
                 </div>
             ))}
         </div>

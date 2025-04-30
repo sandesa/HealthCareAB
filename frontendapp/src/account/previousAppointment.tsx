@@ -62,29 +62,57 @@ const PreviousAppointment: React.FC = () => {
         loadAppointmentData();
     }, []);
 
+
+    const now = new Date();
+
+    const upcomingAppointments = appointmentData?.filter((appointment) =>
+        new Date(appointment.meetingDate!) > now
+    ) || [];
+
+    const pastAppointments = appointmentData?.filter((appointment) =>
+        new Date(appointment.meetingDate!) <= now
+    ) || [];
+
     return (
-        <div className="pre-appiontment-container">
-            <h2>Previous appointments:</h2>
+        <div className="appointments-container">
+            <div className="upcoming-appointments">
+                <h2>Upcoming appointments:</h2>
 
-            {loading && <p>Loading previous appointments...</p>}
+                {loading && <p>Loading appointments...</p>}
+                {error && <p className="error">{error}</p>}
 
-            {error && <p className="error">{error}</p>}
+                {upcomingAppointments.length === 0 && <p>No upcoming appointments found.</p>}
 
-            {!appointmentData && <p>No previous appointments found.</p>}
+                {upcomingAppointments.map((appointment) => (
+                    <div key={appointment.id} className="appointment-card">
+                        <p>Caregiver ID: {appointment.caregiverId}</p>
+                        <p>Patient ID: {appointment.patientId}</p>
+                        <p>Meeting Date: {new Date(appointment.meetingDate!).toLocaleString()}</p>
+                        <p>Meeting Type: {appointment.meetingType || 'N/A'}</p>
+                        <p>Clinic: {appointment.clinic || 'N/A'}</p>
+                        <p>Address: {appointment.address || 'N/A'}</p>
+                        {appointment.isCancelled && <p>Status: Cancelled</p>}
+                    </div>
+                ))}
+            </div>
 
-            {appointmentData && appointmentData.map((appointment) => (
-                <div key={appointment.id} className="appointment-card">
-                    <p>Caregiver ID: {appointment.caregiverId}</p>
-                    <p>Patient ID: {appointment.patientId}</p>
-                    <p>Meeting Date: {appointment.meetingDate ? new Date(appointment.meetingDate).toLocaleString() : 'N/A'}</p>
-                    <p>Meeting Type: {appointment.meetingType || 'N/A'}</p>
-                    <p>Clinic: {appointment.clinic || 'N/A'}</p>
-                    <p>Address: {appointment.address || 'N/A'}</p>
-                    {(appointment.isCancelled &&
-                        <p>Status: Cancelled</p>
-                    )}
-                </div>
-            ))}
+            <div className="previous-appointments">
+                <h2>Previous appointments:</h2>
+
+                {pastAppointments.length === 0 && <p>No previous appointments found.</p>}
+
+                {pastAppointments.map((appointment) => (
+                    <div key={appointment.id} className="appointment-card">
+                        <p>Caregiver ID: {appointment.caregiverId}</p>
+                        <p>Patient ID: {appointment.patientId}</p>
+                        <p>Meeting Date: {new Date(appointment.meetingDate!).toLocaleString()}</p>
+                        <p>Meeting Type: {appointment.meetingType || 'N/A'}</p>
+                        <p>Clinic: {appointment.clinic || 'N/A'}</p>
+                        <p>Address: {appointment.address || 'N/A'}</p>
+                        {appointment.isCancelled && <p>Status: Cancelled</p>}
+                    </div>
+                ))}
+            </div>
         </div>
     );
 }

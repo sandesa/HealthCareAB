@@ -16,8 +16,8 @@ const AccountSidebar: React.FC = () => {
         <div className="account-sidebar">
             <ul>
                 <li><a href="/accountInfo.html">Account Information</a></li>
-                <li><a href="/accountPreAppointment.html">Previous Appointments</a></li>
                 <li><a href="#update-info">Update Information</a></li>
+                <li><a href="/accountPreAppointment.html">Appointments</a></li>
                 {(userType === 'Developer' || userType === 'Admin' || userType === 'Caregiver') && (
                     <>
                         <li><a href="/accountViewAvails.html">View your availabilities</a></li>

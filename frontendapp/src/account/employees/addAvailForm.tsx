@@ -8,8 +8,8 @@ interface Response {
 }
 
 interface AvailabilityCreate {
-    startDate: Date;
-    endDate: Date;
+    startTime: string;
+    endTime: string;
     notes?: string;
 }
 
@@ -22,6 +22,9 @@ interface Availability {
 }
 
 const AddAvailForm: React.FC = () => {
+    const [startTime, setStartDate] = useState<string>('');
+    const [endTime, setEndDate] = useState<string>('');
+    const [notes, setNotes] = useState<string>('');
     const [availsData, setAvailsData] = useState<Availability | null>(null);
     const [error, setError] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(false);
@@ -30,15 +33,9 @@ const AddAvailForm: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        const form = e.currentTarget as HTMLFormElement;
-        const formData = new FormData(form);
-        const startDate = formData.get('startDate') as string;
-        const endDate = formData.get('endDate') as string;
-        const notes = formData.get('notes') as string;
-
         const availability: AvailabilityCreate = {
-            startDate: new Date(startDate),
-            endDate: new Date(endDate),
+            startTime,
+            endTime,
             notes,
         };
 
@@ -76,6 +73,8 @@ const AddAvailForm: React.FC = () => {
                         type="datetime-local"
                         id="startDate"
                         name="startDate"
+                        value={startTime}
+                        onChange={(e) => setStartDate(e.target.value)}
                         required
                     />
                 </div>
@@ -86,6 +85,8 @@ const AddAvailForm: React.FC = () => {
                         type="datetime-local"
                         id="endDate"
                         name="endDate"
+                        value={endTime}
+                        onChange={(e) => setEndDate(e.target.value)}
                         required
                     />
                 </div>
@@ -96,20 +97,13 @@ const AddAvailForm: React.FC = () => {
                         id="notes"
                         name="notes"
                         placeholder="Add any notes"
+                        value={notes}
+                        onChange={(e) => setNotes(e.target.value)}
                     />
                 </div>
 
                 <button type="submit">Submit</button>
             </form>
-
-            {availsData && (
-                <div className="submitted-data">
-                    <h3>Availability Created</h3>
-                    <p><strong>Start Time:</strong> {new Date(availsData.startTime).toLocaleString()}</p>
-                    <p><strong>End Time:</strong> {new Date(availsData.endTime).toLocaleString()}</p>
-                    <p><strong>Notes:</strong> {availsData.notes}</p>
-                </div>
-            )}
         </div>
     );
 };

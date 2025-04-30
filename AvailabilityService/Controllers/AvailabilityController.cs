@@ -33,7 +33,7 @@ namespace AvailabilityService.Controllers
             return BadRequest(result);
         }
 
-        [Authorize]
+        [Authorize(Roles = "Caregiver, Admin, Developer")]
         [HttpGet("caregiver")]
         public async Task<IActionResult> GetAvailabilitiesByCaregiverId()
         {
@@ -104,7 +104,7 @@ namespace AvailabilityService.Controllers
             return NotFound(result);
         }
 
-        [Authorize]
+        [Authorize(Roles = "Caregiver, Admin, Developer")]
         [HttpPost("create")]
         public async Task<IActionResult> CreateAvailability([FromBody] AvailabilityCreate newAvailability)
         {
@@ -127,7 +127,7 @@ namespace AvailabilityService.Controllers
             return BadRequest(result);
         }
 
-        [Authorize]
+        [Authorize(Roles = "Caregiver, Admin, Developer")]
         [HttpPut("update/{id}")]
         public async Task<IActionResult> UpdateAvailability(int id, [FromBody] AvailabilityUpdate availabilityUpdate)
         {
@@ -143,7 +143,7 @@ namespace AvailabilityService.Controllers
             return BadRequest(result);
         }
 
-        [Authorize]
+        [Authorize(Roles = "Caregiver, Admin, Developer")]
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteAvailability(int id)
         {
