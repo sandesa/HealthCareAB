@@ -41,7 +41,7 @@ namespace XUnit.ServiceControllers.Tests
         {
             int caregiverId = 1;
 
-            var response = await _client.GetAsync($"/api/availability/caregiver/{caregiverId}");
+            var response = await _client.GetAsync($"/api/availability/caregiver");
 
             response.EnsureSuccessStatusCode();
 
@@ -90,7 +90,6 @@ namespace XUnit.ServiceControllers.Tests
         {
             AvailabilityCreate newAvailability = new()
             {
-                CaregiverId = 9,
                 StartTime = DateTime.Now.AddDays(5),
                 EndTime = DateTime.Now.AddDays(5).AddHours(8),
                 Notes = "Test",
@@ -103,7 +102,6 @@ namespace XUnit.ServiceControllers.Tests
             var jsonResponse = await response.Content.ReadFromJsonAsync<JsonElement>();
             var createdAvailability = jsonResponse.GetProperty("data");
 
-            Assert.Equal(9, createdAvailability.GetProperty("caregiverId").GetInt32());
             Assert.Equal(DateTime.Now.AddDays(5).ToShortDateString(), createdAvailability.GetProperty("startTime").GetDateTime().ToShortDateString());
             Assert.Equal(DateTime.Now.AddDays(5).AddHours(8).ToShortDateString(), createdAvailability.GetProperty("endTime").GetDateTime().ToShortDateString());
             Assert.Equal("Test", createdAvailability.GetProperty("notes").GetString());

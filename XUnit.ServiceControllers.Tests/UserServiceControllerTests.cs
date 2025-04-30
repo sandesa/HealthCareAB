@@ -101,7 +101,7 @@ namespace XUnit.ServiceControllers.Tests
                 UserAccountType = UserAccountType.Developer.ToString()
             };
 
-            var response = await _client.PutAsJsonAsync($"/api/user/update/{id}", updatedUser);
+            var response = await _client.PutAsJsonAsync($"/api/user/update", updatedUser);
 
             response.EnsureSuccessStatusCode();
             var jsonResponse = await response.Content.ReadFromJsonAsync<JsonElement>();
@@ -123,7 +123,7 @@ namespace XUnit.ServiceControllers.Tests
         {
             int id = 1;
 
-            var response = await _client.DeleteAsync($"/api/user/delete/{id}");
+            var response = await _client.DeleteAsync($"/api/user/delete");
 
             response.EnsureSuccessStatusCode();
             var jsonResponse = await response.Content.ReadFromJsonAsync<JsonElement>();
