@@ -17,6 +17,8 @@ namespace GatewayService.Controllers
             _sessionClient = httpClientFactory.CreateClient("SessionService");
         }
 
+        [EndpointSummary("GET dev")]
+        [EndpointDescription("Get FULL information about all sessions (for developing purposes) \n\nRequired role: \"Developer\"\n\nUser must be logged in (have a valid active token)")]
         [HttpGet("dev")]
         public async Task<IActionResult> GetSessionsDevAsync()
         {
@@ -41,6 +43,8 @@ namespace GatewayService.Controllers
             }
         }
 
+        [EndpointSummary("GET by ID")]
+        [EndpointDescription("Get information about session by ID\n\nRequired roles \"Developer, Admin, Caregiver\"\n\nUser must be logged in (have a valid active token)")]
         [HttpGet("get/{id}")]
         public async Task<IActionResult> GetSessionByIdAsync(int id)
         {
@@ -65,6 +69,8 @@ namespace GatewayService.Controllers
             }
         }
 
+        [EndpointSummary("POST new Session")]
+        [EndpointDescription("Create new session\n\nNo required roles\n\nUser must NOT be logged in")]
         [HttpPost("create")]
         public async Task<IActionResult> CreateLoginSessionAsync([FromBody] SessionCreate sessionCreate)
         {
@@ -95,6 +101,8 @@ namespace GatewayService.Controllers
             }
         }
 
+        [EndpointSummary("POST Logout")]
+        [EndpointDescription("Update session (logout)\n\nNo required roles\n\nUser must NOT be logged in but must provide a valid token")]
         [HttpPut("logout")]
         public async Task<IActionResult> LogoutSessionAsync()
         {
@@ -119,6 +127,8 @@ namespace GatewayService.Controllers
             }
         }
 
+        [EndpointSummary("PUT Session")]
+        [EndpointDescription("Update session (login)\n\nRequired roles \"Developer, Admin\"\n\nUser must be logged in (have a valid active token)")]
         [HttpPut("update/{id}")]
         public async Task<IActionResult> UpdateSessionAsync(int id, [FromBody] SessionUpdate sessionUpdate)
         {
@@ -150,6 +160,8 @@ namespace GatewayService.Controllers
             }
         }
 
+        [EndpointSummary("DELETE Session")]
+        [EndpointDescription("Delete session\n\nRequired roles \"Developer, Admin\"\n\nUser must be logged in (have a valid active token)")]
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteSessionAsync(int id)
         {

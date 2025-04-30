@@ -17,6 +17,8 @@ namespace GatewayService.Controllers
             _feedbackClient = httpClientFactory.CreateClient("FeedbackService");
         }
 
+        [EndpointSummary("GET dev")]
+        [EndpointDescription("Get FULL information about all feedbacks (for developing purposes) \n\nRequired role: \"Developer\"\n\nUser must be logged in (have a valid active token)")]
         [HttpGet("dev")]
         public async Task<IActionResult> GetFeedbacksDevAsync()
         {
@@ -41,6 +43,8 @@ namespace GatewayService.Controllers
             }
         }
 
+        [EndpointSummary("GET all")]
+        [EndpointDescription("Get information about all feedbacks\n\nNo required roles\n\nUser must be logged in (have a valid active token)")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetFeedbackByIdAsync(int id)
         {
@@ -65,6 +69,8 @@ namespace GatewayService.Controllers
             }
         }
 
+        [EndpointSummary("GET by booking ID")]
+        [EndpointDescription("Get information about feedback by booking ID\n\nNo required roles\n\nUser must be logged in (have a valid active token)")]
         [HttpGet("booking/{bookingId}")]
         public IActionResult GetFeedbackAsync(int bookingId)
         {
@@ -89,6 +95,8 @@ namespace GatewayService.Controllers
             }
         }
 
+        [EndpointSummary("POST new Feedback")]
+        [EndpointDescription("Create feedback\n\nNo required roles\n\nUser must be logged in (have a valid active token)")]
         [HttpPost("create")]
         public async Task<IActionResult> CreateFeedbackAsync([FromBody] FeedbackCreation feedbackCreation)
         {
@@ -121,6 +129,8 @@ namespace GatewayService.Controllers
             }
         }
 
+        [EndpointSummary("PUT Feedback")]
+        [EndpointDescription("Update feedback\n\nNo required roles\n\nUser must be logged in (have a valid active token)")]
         [HttpPut("update/{id}")]
         public async Task<IActionResult> UpdateFeedbackAsync(int id, [FromBody] FeedbackUpdate feedbackUpdate)
         {
@@ -153,6 +163,8 @@ namespace GatewayService.Controllers
             }
         }
 
+        [EndpointSummary("DELETE Feedback")]
+        [EndpointDescription("Delete feedback\n\nRequired roles: \"Developer, Admin\"\n\nUser must be logged in (have a valid active token)")]
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteFeedbackAsync(int id)
         {

@@ -15,6 +15,8 @@ namespace GatewayService.Controllers
             _logoutClient = factory.CreateClient("LoginService");
         }
 
+        [EndpointSummary("POST Logout")]
+        [EndpointDescription("Logout user\n\nNo role required\n\nUser must be logged in (have a valid active token)")]
         [HttpPost]
         public async Task<IActionResult> Logout()
         {

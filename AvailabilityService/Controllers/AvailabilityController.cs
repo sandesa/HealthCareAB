@@ -16,6 +16,8 @@ namespace AvailabilityService.Controllers
             _availabilityService = availabilityService;
         }
 
+        [EndpointSummary("GET DEV")]
+        [EndpointDescription("Get FULL information about all availabilities (for developing purposes) \n\nRequired role: \"Developer\"\n\nUser must be logged in (have a valid active token)")]
         [Authorize(Roles = "Developer")]
         [HttpGet("dev")]
         public async Task<IActionResult> GetDevAvailability()
@@ -33,6 +35,8 @@ namespace AvailabilityService.Controllers
             return BadRequest(result);
         }
 
+        [EndpointSummary("GET BY CAREGIVER ID")]
+        [EndpointDescription("Get information about all availabilities\n\nRequired roles: \"Caregiver, Admin, Developer\"\n\nUser must be logged in (have a valid active token)")]
         [Authorize(Roles = "Caregiver, Admin, Developer")]
         [HttpGet("caregiver")]
         public async Task<IActionResult> GetAvailabilitiesByCaregiverId()
@@ -56,6 +60,8 @@ namespace AvailabilityService.Controllers
             return BadRequest(result);
         }
 
+        [EndpointSummary("GET BY DATE")]
+        [EndpointDescription("Get information about all availabilities by date\n\nNo required roles\n\nUser must be logged in (have a valid active token)")]
         [Authorize]
         [HttpGet("date/{date}")]
         public async Task<IActionResult> GetAvailabilitiesByDate(string date)
@@ -72,6 +78,8 @@ namespace AvailabilityService.Controllers
             return BadRequest(result);
         }
 
+        [EndpointSummary("GET BY DATE RANGE")]
+        [EndpointDescription("Get information about all availabilities by date range. From startdate to \n\nNo required roles\n\nUser must be logged in (have a valid active token)")]
         [Authorize]
         [HttpGet("get/from/{startDate}")]
         public async Task<IActionResult> GetAvailabilitiesOneMonthFromNow(string startDate)
@@ -88,6 +96,8 @@ namespace AvailabilityService.Controllers
             return BadRequest(result);
         }
 
+        [EndpointSummary("GET BY ID")]
+        [EndpointDescription("Get information about availability by ID\n\nNo required roles\n\nUser must be logged in (have a valid active token)")]
         [Authorize]
         [HttpGet("id/{id}")]
         public async Task<IActionResult> GetAvailabilityById(int id)
@@ -104,6 +114,8 @@ namespace AvailabilityService.Controllers
             return NotFound(result);
         }
 
+        [EndpointSummary("POST AVAILABILITY")]
+        [EndpointDescription("Create new availability\n\nRequired roles: \"Caregiver, Admin, Developer\"\n\nUser must be logged in (have a valid active token)")]
         [Authorize(Roles = "Caregiver, Admin, Developer")]
         [HttpPost("create")]
         public async Task<IActionResult> CreateAvailability([FromBody] AvailabilityCreate newAvailability)
@@ -127,6 +139,8 @@ namespace AvailabilityService.Controllers
             return BadRequest(result);
         }
 
+        [EndpointSummary("UPDATE AVAILABILITY")]
+        [EndpointDescription("Update availability\n\nRequired roles: \"Caregiver, Admin, Developer\"\n\nUser must be logged in (have a valid active token)")]
         [Authorize(Roles = "Caregiver, Admin, Developer")]
         [HttpPut("update/{id}")]
         public async Task<IActionResult> UpdateAvailability(int id, [FromBody] AvailabilityUpdate availabilityUpdate)
@@ -143,6 +157,8 @@ namespace AvailabilityService.Controllers
             return BadRequest(result);
         }
 
+        [EndpointSummary("DELETE AVAILABILITY")]
+        [EndpointDescription("Delete availability\n\nRequired roles: \"Caregiver, Admin, Developer\"\n\nUser must be logged in (have a valid active token)")]
         [Authorize(Roles = "Caregiver, Admin, Developer")]
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteAvailability(int id)

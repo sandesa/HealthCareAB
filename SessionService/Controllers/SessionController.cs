@@ -15,6 +15,8 @@ namespace SessionService.Controllers
             _sessionService = sessionService;
         }
 
+        [EndpointSummary("GET DEV")]
+        [EndpointDescription("Get FULL information about all sessions (for developing purposes) \n\nRequired role: \"Developer\"\n\nUser must be logged in (have a valid active token)")]
         [Authorize(Roles = "Developer")]
         [HttpGet("dev")]
         public async Task<IActionResult> GetSessionsDev()
@@ -35,6 +37,8 @@ namespace SessionService.Controllers
             }
         }
 
+        [EndpointSummary("GET BY ID")]
+        [EndpointDescription("Get information about session by ID\n\nRequired roles \"Developer, Admin, Caregiver\"\n\nUser must be logged in (have a valid active token)")]
         [Authorize]
         [HttpGet("get/{id}")]
         public async Task<IActionResult> GetSessionById(int id)
@@ -55,6 +59,8 @@ namespace SessionService.Controllers
             }
         }
 
+        [EndpointSummary("POST SESSION")]
+        [EndpointDescription("Create new session\n\nNo required roles\n\nUser must NOT be logged in")]
         [HttpPost("create")]
         public async Task<IActionResult> CreateLoginSession([FromBody] SessionCreate sessionCreate)
         {
@@ -74,6 +80,8 @@ namespace SessionService.Controllers
             }
         }
 
+        [EndpointSummary("POST LOGOUT")]
+        [EndpointDescription("Update session (logout)\n\nNo required roles\n\nUser must NOT be logged in but must provide a valid token")]
         [HttpPut("logout/{token}")]
         public async Task<IActionResult> UpdateSessionLogout(string token)
         {
@@ -93,6 +101,8 @@ namespace SessionService.Controllers
             }
         }
 
+        [EndpointSummary("PUT SESSION")]
+        [EndpointDescription("Update session (login)\n\nRequired roles \"Developer, Admin\"\n\nUser must be logged in (have a valid active token)")]
         [Authorize(Roles = "Developer,Admin")]
         [HttpPut("update/{id}")]
         public async Task<IActionResult> UpdateSession(int id, [FromBody] SessionUpdate sessionUpdate)
@@ -113,6 +123,8 @@ namespace SessionService.Controllers
             }
         }
 
+        [EndpointSummary("DELETE SESSION")]
+        [EndpointDescription("Delete session\n\nRequired roles \"Developer, Admin\"\n\nUser must be logged in (have a valid active token)")]
         [Authorize(Roles = "Developer,Admin")]
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteSession(int id)
