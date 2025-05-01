@@ -92,7 +92,9 @@ namespace BookingService.Controllers
         [HttpPost("create")]
         public async Task<IActionResult> CreateBooking([FromBody] BookingCreation bookingCreation)
         {
-            var response = await _bookingService.CreateBookingAsync(bookingCreation);
+            var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            var response = await _bookingService.CreateBookingAsync(bookingCreation, int.Parse(userId));
             if (response.IsSuccess)
             {
                 return CreatedAtAction(null, null, response);

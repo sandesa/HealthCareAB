@@ -10,7 +10,7 @@ namespace BookingService.Interfaces
         Task<IEnumerable<BookingDTO>> GetBookingsByCaregiverIdAsync(int caregiverId);
         Task<IEnumerable<BookingDTO>> GetBookingsByPatientIdAsync(int patientId);
         Task<BookingDTO?> GetBookingByIdAsync(int id);
-        Task<BookingDTO?> CreateBookingAsync(BookingCreation bookingCreation);
+        Task<BookingDTO?> CreateBookingAsync(BookingCreation bookingCreation, int patientId);
         Task<BookingDTO?> UpdateBookingAsync(int id, BookingUpdate? bookingUpdate, bool cancel);
         Task<BookingDTO?> DeleteBookingAsync(int id);
     }

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import api from '../api';
 import './newAppointment.css';
-import Cookies from 'js-cookie';
 
 interface Response {
     data: any;
@@ -11,8 +10,7 @@ interface Response {
 
 interface Appointment {
     careGiverId: number;
-    patientId: number;
-    meetingDate?: Date | null;
+    meetingDate?: string;
     meetingType?: string;
     clinic?: string;
     address?: string;
@@ -21,18 +19,17 @@ interface Appointment {
 interface Availability {
     id: number;
     caregiverId: number;
-    startTime: Date | null;
-    endTime: Date | null;
+    startTime: string;
+    endTime: string;
     notes: string;
 }
 
 const AppointmentForm: React.FC = () => {
     const [caregiverId, setCaregiverId] = useState(0);
-    const [patientId, setPatientId] = useState(0);
     const [meetingDate, setMeetingDate] = useState<string>('');
-    const [meetingType, setMeetingType] = useState<string>('');
-    const [clinic, setClinic] = useState<string>('');
-    const [address, setAddress] = useState<string>('');
+    const [meetingType, setMeetingType] = useState<string>('In person');
+    const [clinic, setClinic] = useState<string>('TestClinic');
+    const [address, setAddress] = useState<string>('Testgatan 1');
     const [appointmentData, setAppointmentData] = useState<Appointment>();
     const [error, setError] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(true);
@@ -81,10 +78,8 @@ const AppointmentForm: React.FC = () => {
         setError('');
 
         try {
-            setPatientId(parseInt(Cookies.get('user_id')!));
             const response = await api.post<Response>('api/booking/create', {
                 caregiverId,
-                patientId,
                 meetingDate,
                 meetingType,
                 clinic,
@@ -104,16 +99,11 @@ const AppointmentForm: React.FC = () => {
         }
     };
 
-    function getDates(startDate: Date) {
-        let date = new Date(startDate);
-        let dates: Date[] = [];
-        let endMonth = startDate.getMonth() + 1;
-        while (date.getMonth() !== endMonth) {
-            dates.push(new Date(date));
-            date.setDate(date.getDate() + 1);
-        }
-        return dates;
-    }
+    const handleSelectedSlot = (slot: Availability) => {
+        setSelectedSlot(slot);
+        setCaregiverId(slot.caregiverId);
+        setMeetingDate(slot.startTime?.slice(0, 16) || '');
+    };
 
     return (
         <div className="appointment-container">
@@ -161,8 +151,8 @@ const AppointmentForm: React.FC = () => {
             </div>
 
             <div className="calendar-view">
-                <h2>Available Caregivers from {selectedDate.toDateString()}</h2>
                 <div className="calendar">
+                <h2>Available Caregivers from {selectedDate.toDateString()}</h2>
                     {loading ? (
                         <p>Loading available caregivers...</p>
                     ) : (
@@ -171,7 +161,7 @@ const AppointmentForm: React.FC = () => {
                                 <div
                                     key={slot.id}
                                     className="caregiver-slot"
-                                    onClick={() => setSelectedSlot(slot)}
+                                    onClick={() => handleSelectedSlot(slot)}
                                 >
                                     <p>{new Date(slot.startTime!).toLocaleString()}</p>
                                     <p>{slot.notes}</p>
@@ -196,9 +186,6 @@ const AppointmentForm: React.FC = () => {
                             Time: {new Date(selectedSlot.startTime!).toLocaleString()} -{' '}
                             {new Date(selectedSlot.endTime!).toLocaleString()}
                         </p>
-                        <button onClick={() => setCaregiverId(selectedSlot.caregiverId)}>
-                            Select This Slot
-                        </button>
                     </div>
                 )}
             </div>
