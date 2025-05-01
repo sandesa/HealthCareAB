@@ -58,7 +58,7 @@ namespace XUnit.ServiceControllers.Tests
         [Fact]
         public async Task GetBookingsByPatientId_ReturnsOk_WhenIsSuccess()
         {
-            int numberOfBookings = 2;
+            int numberOfBookings = 3;
 
             var response = await _client.GetAsync($"/api/booking/user");
 
