@@ -73,6 +73,24 @@ const PreviousAppointment: React.FC = () => {
         new Date(appointment.meetingDate!) <= now
     ) || [];
 
+    const handleCancel = async (id: number) => {
+        setLoading(true);
+        try {
+            const response = await api.put<Response>(`api/booking/cancel/${id}`);
+            if (response.status === 200) {
+                setMessage(response.data.message);
+                window.location.reload();
+            } else {
+                setError(response.data.message);
+            }
+        } catch (error: any) {
+            console.error('Error canceling appointment:', error);
+            setError('Failed to cancel appointment. Please try again later.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <div className="appointments-container">
             <div className="upcoming-appointments">
@@ -84,14 +102,19 @@ const PreviousAppointment: React.FC = () => {
                 {upcomingAppointments.length === 0 && <p>No upcoming appointments found.</p>}
 
                 {upcomingAppointments.map((appointment) => (
-                    <div key={appointment.id} className="appointment-card">
-                        <p>Caregiver ID: {appointment.caregiverId}</p>
-                        <p>Patient ID: {appointment.patientId}</p>
-                        <p>Meeting Date: {new Date(appointment.meetingDate!).toLocaleString()}</p>
-                        <p>Meeting Type: {appointment.meetingType || 'N/A'}</p>
-                        <p>Clinic: {appointment.clinic || 'N/A'}</p>
-                        <p>Address: {appointment.address || 'N/A'}</p>
-                        {appointment.isCancelled && <p>Status: Cancelled</p>}
+                    <div key={appointment.id} className="appointment-card-container">
+                        <div className="appointment-card">
+                            <p>Caregiver ID: {appointment.caregiverId}</p>
+                            <p>Patient ID: {appointment.patientId}</p>
+                            <p>Meeting Date: {new Date(appointment.meetingDate!).toLocaleString()}</p>
+                            <p>Meeting Type: {appointment.meetingType || 'N/A'}</p>
+                            <p>Clinic: {appointment.clinic || 'N/A'}</p>
+                            <p>Address: {appointment.address || 'N/A'}</p>
+                            {appointment.isCancelled && <p>Status: Cancelled</p>}
+                        </div>
+                        {Cookies.get('user_type') === 'User' || Cookies.get('user_type') === 'Developer' && 
+                            <button className="avails-delete-btn" onClick={() => handleCancel(appointment.id)}>Cancel</button>
+                         }
                     </div>
                 ))}
             </div>
@@ -102,14 +125,16 @@ const PreviousAppointment: React.FC = () => {
                 {pastAppointments.length === 0 && <p>No previous appointments found.</p>}
 
                 {pastAppointments.map((appointment) => (
-                    <div key={appointment.id} className="appointment-card">
-                        <p>Caregiver ID: {appointment.caregiverId}</p>
-                        <p>Patient ID: {appointment.patientId}</p>
-                        <p>Meeting Date: {new Date(appointment.meetingDate!).toLocaleString()}</p>
-                        <p>Meeting Type: {appointment.meetingType || 'N/A'}</p>
-                        <p>Clinic: {appointment.clinic || 'N/A'}</p>
-                        <p>Address: {appointment.address || 'N/A'}</p>
-                        {appointment.isCancelled && <p>Status: Cancelled</p>}
+                    <div key={appointment.id} className="appointment-card-container">
+                        <div className="appointment-card">
+                            <p>Caregiver ID: {appointment.caregiverId}</p>
+                            <p>Patient ID: {appointment.patientId}</p>
+                            <p>Meeting Date: {new Date(appointment.meetingDate!).toLocaleString()}</p>
+                            <p>Meeting Type: {appointment.meetingType || 'N/A'}</p>
+                            <p>Clinic: {appointment.clinic || 'N/A'}</p>
+                            <p>Address: {appointment.address || 'N/A'}</p>
+                            {appointment.isCancelled && <p>Status: Cancelled</p>}
+                        </div>
                     </div>
                 ))}
             </div>

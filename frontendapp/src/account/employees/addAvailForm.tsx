@@ -56,6 +56,21 @@ const AddAvailForm: React.FC = () => {
         }
     };
 
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        if (name === 'startDate') {
+            setStartDate(value);
+            const newEndDate = new Date(value);
+            newEndDate.setHours(newEndDate.getHours() + 3); // Why +3 and not +1? I don't know. JavaScript I guess.
+
+            const formatted = newEndDate.toISOString().slice(0, 16);
+            setEndDate(formatted);
+
+        } else if (name === 'endDate') {
+            setEndDate(value);
+        }
+    }
+
     return (
         <div className="add-avail-form">
             <h2>Add Availability</h2>
@@ -74,7 +89,7 @@ const AddAvailForm: React.FC = () => {
                         id="startDate"
                         name="startDate"
                         value={startTime}
-                        onChange={(e) => setStartDate(e.target.value)}
+                        onChange={(e) => handleChange(e)}
                         required
                     />
                 </div>
@@ -86,7 +101,7 @@ const AddAvailForm: React.FC = () => {
                         id="endDate"
                         name="endDate"
                         value={endTime}
-                        onChange={(e) => setEndDate(e.target.value)}
+                        onChange={(e) => handleChange(e)}
                         required
                     />
                 </div>
