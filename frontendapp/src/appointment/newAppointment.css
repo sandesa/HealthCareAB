@@ -1,0 +1,62 @@
+.caregiver-slot {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    padding: 10px;
+    width: fit-content;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+    color: black;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.caregiver-slot:hover {
+    background-color: #e0e0e0;
+}
+
+.selected-slot {
+    background-color: #e0e0e0;
+    color: black;
+    width: fit-content;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    background-color: #f0f0f0;
+    color: black;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+form label {
+    margin-right: 20px;
+    font-size: 18px;
+}
+
+form input {
+    font-size: 18px;
+}
+
+.calendar-view {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    background-color: rgb(158, 158, 158);
+    color: black;
+    border-radius: 10px;
+    padding: 20px;
+    width: fit-content;
+}
+
+
