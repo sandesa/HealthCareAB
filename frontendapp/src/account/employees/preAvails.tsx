@@ -70,11 +70,13 @@ const ViewAvails: React.FC = () => {
             {!availsData && <p>No avails found.</p>}
 
             {availsData && availsData.length > 0 && availsData.map((avails) => (
-                <div key={avails.id} className="avails-card">
-                    <p>Caregiver ID: {avails.caregiverId}</p>
-                    {avails.startTime && <p>Start: {new Date(avails.startTime).toISOString()}</p>}
-                    {avails.endTime && <p>End: {new Date(avails.endTime).toISOString()}</p>}
-                    <p>Notes: {avails.notes}</p>
+                <div key={avails.id} className="avails-card-container">
+                    <div className="avail-card">
+                        <p>Caregiver ID: {avails.caregiverId}</p>
+                        {avails.startTime && <p>Start: {new Date(avails.startTime).toISOString()}</p>}
+                        {avails.endTime && <p>End: {new Date(avails.endTime).toISOString()}</p>}
+                        <p>Notes: {avails.notes}</p>
+                    </div>
                     <button className="avails-delete-btn" onClick={() => handleDelete(avails.id)}>Delete</button>
                 </div>
             ))}

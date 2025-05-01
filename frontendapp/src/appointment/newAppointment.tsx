@@ -27,7 +27,7 @@ interface Availability {
 const AppointmentForm: React.FC = () => {
     const [caregiverId, setCaregiverId] = useState(0);
     const [meetingDate, setMeetingDate] = useState<string>('');
-    const [meetingType, setMeetingType] = useState<string>('In person');
+    const [meetingType, setMeetingType] = useState<string>('InPerson');
     const [clinic, setClinic] = useState<string>('TestClinic');
     const [address, setAddress] = useState<string>('Testgatan 1');
     const [appointmentData, setAppointmentData] = useState<Appointment>();
@@ -58,7 +58,6 @@ const AppointmentForm: React.FC = () => {
                     setAvailableCaregivers(response.data.data);
                 }
 
-                setMessage(response.data.message);
             } catch (error: any) {
                 console.error('Error fetching available caregivers:', error);
                 setError('Failed to load available caregivers. Please try again later.');
@@ -96,6 +95,7 @@ const AppointmentForm: React.FC = () => {
             setError('Failed to create appointment. Please try again later.');
         } finally {
             setLoading(false);
+            setMeetingDate('');
         }
     };
 

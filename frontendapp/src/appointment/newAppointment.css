@@ -1,3 +1,7 @@
+.appointment-container {
+    margin-top: 20px;
+}
+
 .caregiver-slot {
     display: flex;
     flex-direction: column;
@@ -44,6 +48,9 @@ form label {
 
 form input {
     font-size: 18px;
+    margin-left: 10px;
+    padding: 5px;
+    border-radius: 7px;
 }
 
 .calendar-view {
@@ -57,6 +64,22 @@ form input {
     border-radius: 10px;
     padding: 20px;
     width: fit-content;
+}
+
+.message {
+    background: green;
+    width: fit-content;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.error {
+    background: red;
+    width: fit-content;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
 }
 
 
