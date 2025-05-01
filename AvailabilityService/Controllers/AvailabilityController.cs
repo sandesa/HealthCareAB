@@ -1,6 +1,7 @@
 ﻿using AvailabilityService.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace AvailabilityService.Controllers
 {
@@ -15,6 +16,8 @@ namespace AvailabilityService.Controllers
             _availabilityService = availabilityService;
         }
 
+        [EndpointSummary("GET DEV")]
+        [EndpointDescription("Get FULL information about all availabilities (for developing purposes) \n\nRequired role: \"Developer\"\n\nUser must be logged in (have a valid active token)")]
         [Authorize(Roles = "Developer")]
         [HttpGet("dev")]
         public async Task<IActionResult> GetDevAvailability()
@@ -32,11 +35,20 @@ namespace AvailabilityService.Controllers
             return BadRequest(result);
         }
 
-        [Authorize]
-        [HttpGet("caregiver/{caregiverId}")]
-        public async Task<IActionResult> GetAvailabilitiesByCaregiverId(int caregiverId)
+        [EndpointSummary("GET BY CAREGIVER ID")]
+        [EndpointDescription("Get information about all availabilities\n\nRequired roles: \"Caregiver, Admin, Developer\"\n\nUser must be logged in (have a valid active token)")]
+        [Authorize(Roles = "Caregiver, Admin, Developer")]
+        [HttpGet("caregiver")]
+        public async Task<IActionResult> GetAvailabilitiesByCaregiverId()
         {
-            var result = await _availabilityService.GetAvailabilitiesByCaregiverIdAsync(caregiverId);
+            var caregiverId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            if (string.IsNullOrEmpty(caregiverId))
+            {
+                return BadRequest("Caregiver ID not found.");
+            }
+
+            var result = await _availabilityService.GetAvailabilitiesByCaregiverIdAsync(int.Parse(caregiverId));
             if (result.Message.Contains("error"))
             {
                 return StatusCode(500, result);
@@ -48,6 +60,8 @@ namespace AvailabilityService.Controllers
             return BadRequest(result);
         }
 
+        [EndpointSummary("GET BY DATE")]
+        [EndpointDescription("Get information about all availabilities by date\n\nNo required roles\n\nUser must be logged in (have a valid active token)")]
         [Authorize]
         [HttpGet("date/{date}")]
         public async Task<IActionResult> GetAvailabilitiesByDate(string date)
@@ -64,6 +78,26 @@ namespace AvailabilityService.Controllers
             return BadRequest(result);
         }
 
+        [EndpointSummary("GET BY DATE RANGE")]
+        [EndpointDescription("Get information about all availabilities by date range. From startdate to \n\nNo required roles\n\nUser must be logged in (have a valid active token)")]
+        [Authorize]
+        [HttpGet("get/from/{startDate}")]
+        public async Task<IActionResult> GetAvailabilitiesOneMonthFromNow(string startDate)
+        {
+            var result = await _availabilityService.GetAvailabilitiesOneMonthFromNow(startDate);
+            if (result.Message.Contains("error"))
+            {
+                return StatusCode(500, result);
+            }
+            if (result.IsSuccess)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [EndpointSummary("GET BY ID")]
+        [EndpointDescription("Get information about availability by ID\n\nNo required roles\n\nUser must be logged in (have a valid active token)")]
         [Authorize]
         [HttpGet("id/{id}")]
         public async Task<IActionResult> GetAvailabilityById(int id)
@@ -80,11 +114,20 @@ namespace AvailabilityService.Controllers
             return NotFound(result);
         }
 
-        [Authorize]
+        [EndpointSummary("POST AVAILABILITY")]
+        [EndpointDescription("Create new availability\n\nRequired roles: \"Caregiver, Admin, Developer\"\n\nUser must be logged in (have a valid active token)")]
+        [Authorize(Roles = "Caregiver, Admin, Developer")]
         [HttpPost("create")]
         public async Task<IActionResult> CreateAvailability([FromBody] AvailabilityCreate newAvailability)
         {
-            var result = await _availabilityService.CreateAvailabilityAsync(newAvailability);
+            var caregiverId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            if (string.IsNullOrEmpty(caregiverId))
+            {
+                return BadRequest("Caregiver ID not found.");
+            }
+
+            var result = await _availabilityService.CreateAvailabilityAsync(newAvailability, int.Parse(caregiverId));
             if (result.Message.Contains("error"))
             {
                 return StatusCode(500, result);
@@ -96,7 +139,9 @@ namespace AvailabilityService.Controllers
             return BadRequest(result);
         }
 
-        [Authorize]
+        [EndpointSummary("UPDATE AVAILABILITY")]
+        [EndpointDescription("Update availability\n\nRequired roles: \"Caregiver, Admin, Developer\"\n\nUser must be logged in (have a valid active token)")]
+        [Authorize(Roles = "Caregiver, Admin, Developer")]
         [HttpPut("update/{id}")]
         public async Task<IActionResult> UpdateAvailability(int id, [FromBody] AvailabilityUpdate availabilityUpdate)
         {
@@ -112,7 +157,9 @@ namespace AvailabilityService.Controllers
             return BadRequest(result);
         }
 
-        [Authorize]
+        [EndpointSummary("DELETE AVAILABILITY")]
+        [EndpointDescription("Delete availability\n\nRequired roles: \"Caregiver, Admin, Developer\"\n\nUser must be logged in (have a valid active token)")]
+        [Authorize(Roles = "Caregiver, Admin, Developer")]
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteAvailability(int id)
         {

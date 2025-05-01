@@ -1,0 +1,19 @@
+.appointment-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    background: rgb(197, 197, 197);
+    border-radius: 10px;
+    margin-bottom: 5px;
+    color: black;
+    margin-bottom: 5px;
+}
+
+.appointment-card-container {
+    margin-bottom: 20px;
+}
+
+h2 {
+    margin-bottom: 10px;
+}

@@ -1,0 +1,87 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+    padding: 20px 25px;
+}
+
+li {
+    list-style: none;
+    margin: 20px 0px;
+}
+
+.navbar {
+    display: flex;
+    justify-content: center;
+    width: 100vw;
+    background: rgb(51, 51, 51);
+}
+
+.navbar-container {
+    width: 70vw;
+    background: rgb(34, 34, 34);
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+.navbar-logo {
+    align-content: center;
+    font-size: 2em;
+}
+
+.navbar-logo a {
+    color: white;
+}
+
+.navbar-top-container {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navbar-special-links-container {
+    display: flex;
+    justify-content: flex-end; 
+}
+
+.navbar-special-links-container a {
+    padding: 10px 0px 10px 0px;
+}
+
+.sign-in-btn {
+    margin-left: 20px;
+}
+
+.nav-links {
+    display: flex;
+}
+
+.navbar-bottom-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.search-bar-container {
+    display: flex;
+    align-items: center;
+}
+
+.search-button {
+    margin-left: 20px;
+    padding: 5px 10px;
+}
+
+.search-input {
+    width: 300px;
+    padding: 8px 10px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    font-size: 1em;
+}

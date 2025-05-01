@@ -16,6 +16,8 @@ namespace GatewayService.Controllers
             _loginClient = factory.CreateClient("LoginService");
         }
 
+        [EndpointSummary("POST Login")]
+        [EndpointDescription("Login user\n\nNo role required\n\nUser must NOT be logged in")]
         [HttpPost]
         public async Task<IActionResult> LoginAsync([FromBody] LoginRequest request)
         {
@@ -33,7 +35,6 @@ namespace GatewayService.Controllers
 
                 var jsonResponse = await response.Content.ReadFromJsonAsync<JsonElement>();
                 var token = jsonResponse.GetProperty("accessToken").ToString();
-                var email = jsonResponse.GetProperty("email").ToString();
 
                 var cookieOptions = new CookieOptions
                 {

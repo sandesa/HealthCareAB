@@ -46,6 +46,18 @@
                 client.DefaultRequestHeaders.Add("Accept", "application/json");
             });
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowFrontendApp",
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:3000")
+                            .AllowAnyHeader()
+                            .AllowAnyMethod()
+                            .AllowCredentials();
+                    });
+            });
+
             builder.Services.AddControllers();
 
             builder.Services.AddOpenApiServices();

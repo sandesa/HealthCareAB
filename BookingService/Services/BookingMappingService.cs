@@ -43,7 +43,6 @@ namespace BookingService.Services
             return new Booking
             {
                 CaregiverId = bookingCreation.CaregiverId,
-                PatientId = bookingCreation.PatientId,
                 MeetingDate = bookingCreation.MeetingDate,
                 MeetingType = bookingCreation.MeetingType,
                 Clinic = bookingCreation.Clinic,

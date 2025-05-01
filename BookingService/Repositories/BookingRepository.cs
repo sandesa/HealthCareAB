@@ -66,9 +66,10 @@ namespace BookingService.Repositories
             return bookingDTO;
         }
 
-        public async Task<BookingDTO?> CreateBookingAsync(BookingCreation bookingCreation)
+        public async Task<BookingDTO?> CreateBookingAsync(BookingCreation bookingCreation, int patientId)
         {
             var booking = _mapper.CreationToBooking(bookingCreation);
+            booking.PatientId = patientId;
             booking.Created = DateTime.UtcNow;
 
             await _context.Bookings.AddAsync(booking);

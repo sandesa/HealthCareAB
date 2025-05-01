@@ -1,0 +1,13 @@
+#account-sidebar {
+    margin-right: 20%;
+}
+
+#root {
+    display: flex;
+    width: 70vw;
+    margin-top: 50px
+}
+
+#info-container {
+    margin-top: 10px;
+}

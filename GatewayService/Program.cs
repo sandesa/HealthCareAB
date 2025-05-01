@@ -15,12 +15,16 @@ namespace GatewayService
 
             app.UseOpenApi();
 
-            if (app.Environment.IsDevelopment())
+            if (!app.Environment.IsDevelopment())
+            {
+                app.UseHttpsRedirection();
+            }
+            else
             {
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+            app.UseCors("AllowFrontendApp");
 
             app.UseAuthorization();
 

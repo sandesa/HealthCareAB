@@ -17,6 +17,8 @@ namespace GatewayService.Controllers
             _userClient = httpClientFactory.CreateClient("UserService");
         }
 
+        [EndpointSummary("GET dev")]
+        [EndpointDescription("Get FULL information about all users (for developing purposes) \n\nRequired role: \"Developer\"\n\nUser must be logged in (have a valid active token)")]
         [HttpGet("dev")]
         public async Task<IActionResult> GetUsersDevAsync()
         {
@@ -42,6 +44,8 @@ namespace GatewayService.Controllers
             }
         }
 
+        [EndpointSummary("GET all")]
+        [EndpointDescription("Get information about all users\n\nRequired roles \"Developer, Admin, Caregiver\"\n\nUser must be logged in (have a valid active token)")]
         [HttpGet("get-users")]
         public async Task<IActionResult> GetUsersAsync()
         {
@@ -67,6 +71,34 @@ namespace GatewayService.Controllers
             }
         }
 
+        [EndpointSummary("GET user by ID")]
+        [EndpointDescription("Get information about user by ID\n\nNo role required\n\nUser must be logged in (have a valid active token)")]
+        [HttpGet("get")]
+        public async Task<IActionResult> GetUserByIdAsync()
+        {
+            try
+            {
+                if (!Request.Cookies.TryGetValue("auth_token", out var token) || string.IsNullOrWhiteSpace(token))
+                {
+                    return Unauthorized(new { Message = "Missing or invalid token." });
+                }
+
+                HttpRequestMessage requestMessage = new(HttpMethod.Get, "get");
+                requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                var response = await _userClient.SendAsync(requestMessage);
+                var jsonResponse = await response.Content.ReadFromJsonAsync<JsonElement>();
+
+                return StatusCode((int)response.StatusCode, jsonResponse);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { ex.Message, IsConnectedToService = false });
+            }
+        }
+
+        [EndpointSummary("POST new User")]
+        [EndpointDescription("Create new user\n\nNo role required\n\nUser must NOT be logged in")]
         [HttpPost("create")]
         public async Task<IActionResult> CreateUserAsync([FromBody] UserCreation userCreation)
         {
@@ -89,8 +121,10 @@ namespace GatewayService.Controllers
             }
         }
 
-        [HttpPut("update/{id}")]
-        public async Task<IActionResult> UpdateUserAsync(int id, [FromBody] UserUpdate userUpdate)
+        [EndpointSummary("PUT User")]
+        [EndpointDescription("Update user data\n\nNo role required\n\nUser must be logged in (have a valid active token)")]
+        [HttpPut("update")]
+        public async Task<IActionResult> UpdateUserAsync([FromBody] UserUpdate userUpdate)
         {
             try
             {
@@ -104,7 +138,7 @@ namespace GatewayService.Controllers
                     "application/json"
                 );
 
-                HttpRequestMessage requestMessage = new(HttpMethod.Put, $"update/{id}")
+                HttpRequestMessage requestMessage = new(HttpMethod.Put, $"update")
                 {
                     Content = jsonContent
                 };
@@ -123,8 +157,10 @@ namespace GatewayService.Controllers
             }
         }
 
-        [HttpDelete("delete/{id}")]
-        public async Task<IActionResult> DeleteUserAsync(int id)
+        [EndpointSummary("DELETE User")]
+        [EndpointDescription("Delete user\n\nNo role required\n\nUser must be logged in (have a valid active token)")]
+        [HttpDelete("delete")]
+        public async Task<IActionResult> DeleteUserAsync()
         {
             try
             {
@@ -133,7 +169,7 @@ namespace GatewayService.Controllers
                     return Unauthorized(new { Message = "Missing or invalid token." });
                 }
 
-                HttpRequestMessage requestMessage = new(HttpMethod.Delete, $"delete/{id}");
+                HttpRequestMessage requestMessage = new(HttpMethod.Delete, $"delete");
                 requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
                 var response = await _userClient.SendAsync(requestMessage);

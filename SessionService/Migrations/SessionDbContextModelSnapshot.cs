@@ -33,9 +33,6 @@ namespace SessionService.Migrations
                     b.Property<string>("AccessToken")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime?>("Expires")
                         .HasColumnType("datetime2");
 
@@ -44,6 +41,9 @@ namespace SessionService.Migrations
 
                     b.Property<DateTime?>("Logout")
                         .HasColumnType("datetime2");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

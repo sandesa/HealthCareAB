@@ -17,6 +17,8 @@ namespace GatewayService.Controllers
             _bookingClient = httpClientFactory.CreateClient("BookingService");
         }
 
+        [EndpointSummary("GET dev")]
+        [EndpointDescription("Get FULL information about all bookings (for developing purposes) \n\nRequired role: \"Developer\"\n\nUser must be logged in (have a valid active token)")]
         [HttpGet("dev")]
         public async Task<IActionResult> GetBookingsDevAsync()
         {
@@ -41,8 +43,10 @@ namespace GatewayService.Controllers
             }
         }
 
-        [HttpGet("caregiver/{caregiverId}")]
-        public async Task<IActionResult> GetBookingsByCaregiverIdAsync(int caregiverId)
+        [EndpointSummary("GET by caregiver ID")]
+        [EndpointDescription("Get information about all bookings with caregiver ID\n\nRequired roles: \"Developer, Caregiver\"\n\nUser must be logged in (have a valid active token)")]
+        [HttpGet("caregiver")]
+        public async Task<IActionResult> GetBookingsByCaregiverIdAsync()
         {
             try
             {
@@ -51,7 +55,7 @@ namespace GatewayService.Controllers
                     return Unauthorized(new { Message = "Missing or invalid token." });
                 }
 
-                HttpRequestMessage requestMessage = new(HttpMethod.Get, $"caregiver/{caregiverId}");
+                HttpRequestMessage requestMessage = new(HttpMethod.Get, $"caregiver");
                 requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
                 var response = await _bookingClient.SendAsync(requestMessage);
@@ -65,8 +69,10 @@ namespace GatewayService.Controllers
             }
         }
 
-        [HttpGet("user/{patientId}")]
-        public async Task<IActionResult> GetBookingsByPatientIdAsync(int patientId)
+        [EndpointSummary("GET by user ID")]
+        [EndpointDescription("Get all bookings for patient with ID\n\nRequired roles: \"User, Developer, Admin\"\n\nUser must be logged in (have a valid active token)")]
+        [HttpGet("user")]
+        public async Task<IActionResult> GetBookingsByPatientIdAsync()
         {
             try
             {
@@ -75,7 +81,7 @@ namespace GatewayService.Controllers
                     return Unauthorized(new { Message = "Missing or invalid token." });
                 }
 
-                HttpRequestMessage requestMessage = new(HttpMethod.Get, $"user/{patientId}");
+                HttpRequestMessage requestMessage = new(HttpMethod.Get, $"user");
                 requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
                 var response = await _bookingClient.SendAsync(requestMessage);
@@ -89,6 +95,8 @@ namespace GatewayService.Controllers
             }
         }
 
+        [EndpointSummary("GET by ID")]
+        [EndpointDescription("Get information about booking by ID\n\nNo required roles\n\nUser must be logged in (have a valid active token)")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetBookingByIdAsync(int id)
         {
@@ -110,6 +118,8 @@ namespace GatewayService.Controllers
             }
         }
 
+        [EndpointSummary("POST new Booking")]
+        [EndpointDescription("Create new booking\n\nNo required roles\n\nUser must be logged in (have a valid active token)")]
         [HttpPost("create")]
         public async Task<IActionResult> CreateBookingAsync([FromBody] BookingCreation bookingCreation)
         {
@@ -142,6 +152,8 @@ namespace GatewayService.Controllers
             }
         }
 
+        [EndpointSummary("PUT Booking")]
+        [EndpointDescription("Update booking\n\nNo required roles\n\nUser must be logged in (have a valid active token)")]
         [HttpPut("update/{id}")]
         public async Task<IActionResult> UpdateBookingAsync(int id, [FromBody] BookingUpdate bookingUpdate)
         {
@@ -174,6 +186,8 @@ namespace GatewayService.Controllers
             }
         }
 
+        [EndpointSummary("PUT cancel Booking")]
+        [EndpointDescription("Cancel booking\n\nNo required roles\n\nUser must be logged in (have a valid active token)")]
         [HttpPut("cancel/{id}")]
         public async Task<IActionResult> CancelBookingAsync(int id)
         {
@@ -198,6 +212,8 @@ namespace GatewayService.Controllers
             }
         }
 
+        [EndpointSummary("DELETE Booking")]
+        [EndpointDescription("Delete booking\n\nNo required roles\n\nUser must be logged in (have a valid active token)")]
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteBookingAsync(int id)
         {

@@ -42,10 +42,9 @@ namespace XUnit.ServiceControllers.Tests
         [Fact]
         public async Task GetBookingsByCaregiverId_ReturnsOk_WhenIsSuccess()
         {
-            int caregiverId = 1;
             int numberOfBookings = 5;
 
-            var response = await _client.GetAsync($"/api/booking/caregiver/{caregiverId}");
+            var response = await _client.GetAsync($"/api/booking/caregiver");
 
             response.EnsureSuccessStatusCode();
 
@@ -59,10 +58,9 @@ namespace XUnit.ServiceControllers.Tests
         [Fact]
         public async Task GetBookingsByPatientId_ReturnsOk_WhenIsSuccess()
         {
-            int patientId = 1;
-            int numberOfBookings = 2;
+            int numberOfBookings = 3;
 
-            var response = await _client.GetAsync($"/api/booking/user/{patientId}");
+            var response = await _client.GetAsync($"/api/booking/user");
 
             response.EnsureSuccessStatusCode();
 
@@ -109,7 +107,6 @@ namespace XUnit.ServiceControllers.Tests
             BookingCreation newBooking = new()
             {
                 CaregiverId = 1,
-                PatientId = 2,
                 MeetingDate = new DateTime(2025, 04, 27),
                 MeetingType = MeetingType.InitialConsultation.ToString(),
                 Clinic = "Main Clinic",
@@ -124,7 +121,6 @@ namespace XUnit.ServiceControllers.Tests
             var createdBooking = jsonResponse.GetProperty("data");
 
             Assert.Equal(1, createdBooking.GetProperty("caregiverId").GetInt32());
-            Assert.Equal(2, createdBooking.GetProperty("patientId").GetInt32());
             Assert.Equal("2025-04-27T00:00:00", createdBooking.GetProperty("meetingDate").GetString());
             Assert.Equal(MeetingType.InitialConsultation.ToString(), createdBooking.GetProperty("meetingType").GetString());
             Assert.Equal("Main Clinic", createdBooking.GetProperty("clinic").GetString());

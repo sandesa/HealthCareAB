@@ -3,7 +3,7 @@
     public class Session
     {
         public int Id { get; set; }
-        public string? Email { get; set; }
+        public int? UserId { get; set; }
         public string? AccessToken { get; set; }
         public DateTime? Expires { get; set; }
         public DateTime? Login { get; set; }

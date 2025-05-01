@@ -87,7 +87,7 @@ namespace LoginService.Repositores
 
                 var sessionRequest = new SessionRequest
                 {
-                    Email = validationResponse.Email,
+                    UserId = validationResponse.UserId,
                     AccessToken = token,
                     Expires = DateTime.UtcNow.AddMinutes(60),
                 };
@@ -111,7 +111,8 @@ namespace LoginService.Repositores
 
                 return new LoginResponse
                 {
-                    Email = sessionRequest.Email,
+                    UserId = sessionRequest.UserId,
+                    UserAccountType = validationResponse.UserAccountType,
                     AccessToken = sessionRequest.AccessToken,
                     Expires = sessionRequest.Expires,
                     Message = "User logged in successfully",

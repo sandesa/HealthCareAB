@@ -113,11 +113,11 @@ namespace BookingService.Services
             }
         }
 
-        public async Task<ResponseDTO<BookingDTO?>> CreateBookingAsync(BookingCreation bookingCreation)
+        public async Task<ResponseDTO<BookingDTO?>> CreateBookingAsync(BookingCreation bookingCreation, int patientId)
         {
             try
             {
-                var bookingDto = await _bookingRepository.CreateBookingAsync(bookingCreation);
+                var bookingDto = await _bookingRepository.CreateBookingAsync(bookingCreation, patientId);
                 if (bookingDto == null)
                 {
                     return new ResponseDTO<BookingDTO?>

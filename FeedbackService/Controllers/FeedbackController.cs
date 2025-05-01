@@ -15,6 +15,8 @@ namespace FeedbackService.Controllers
             _feedbackService = feedbackService;
         }
 
+        [EndpointSummary("GET DEV")]
+        [EndpointDescription("Get FULL information about all feedbacks (for developing purposes) \n\nRequired role: \"Developer\"\n\nUser must be logged in (have a valid active token)")]
         [Authorize(Roles = "Developer")]
         [HttpGet("dev")]
         public async Task<IActionResult> GetFeedbacksDevAsync()
@@ -33,6 +35,8 @@ namespace FeedbackService.Controllers
             return BadRequest(response);
         }
 
+        [EndpointSummary("GET ALL")]
+        [EndpointDescription("Get information about all feedbacks\n\nNo required roles\n\nUser must be logged in (have a valid active token)")]
         [Authorize]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetFeedbackByIdAsync(int id)
@@ -51,6 +55,8 @@ namespace FeedbackService.Controllers
             return NotFound(response);
         }
 
+        [EndpointSummary("GET BY BOOKING ID")]
+        [EndpointDescription("Get information about feedback by booking ID\n\nNo required roles\n\nUser must be logged in (have a valid active token)")]
         [Authorize]
         [HttpGet("booking/{bookingId}")]
         public async Task<IActionResult> GetFeedbackByBookingIdAsync(int bookingId)
@@ -69,6 +75,8 @@ namespace FeedbackService.Controllers
             return NotFound(response);
         }
 
+        [EndpointSummary("POST FEEDBACK")]
+        [EndpointDescription("Create feedback\n\nNo required roles\n\nUser must be logged in (have a valid active token)")]
         [Authorize]
         [HttpPost("create")]
         public async Task<IActionResult> CreateFeedbackAsync([FromBody] FeedbackCreate feedback)
@@ -91,6 +99,8 @@ namespace FeedbackService.Controllers
             return BadRequest(response);
         }
 
+        [EndpointSummary("PUT FEEDBACK")]
+        [EndpointDescription("Update feedback\n\nNo required roles\n\nUser must be logged in (have a valid active token)")]
         [Authorize]
         [HttpPut("update/{id}")]
         public async Task<IActionResult> UpdateFeedbackAsync(int id, [FromBody] FeedbackUpdate feedback)
@@ -113,7 +123,9 @@ namespace FeedbackService.Controllers
             return NotFound(response);
         }
 
-        [Authorize]
+        [EndpointSummary("DELETE FEEDBACK")]
+        [EndpointDescription("Delete feedback\n\nRequired roles: \"Developer, Admin\"\n\nUser must be logged in (have a valid active token)")]
+        [Authorize(Roles = "Admin,Developer")]
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteFeedbackAsync(int id)
         {

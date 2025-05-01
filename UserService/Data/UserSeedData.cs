@@ -29,7 +29,8 @@ namespace UserService.Data
                         LastName = "Testsson",
                         DateOfBirth = new DateTime(1990, 1, 1),
                         UserType = UserType.Other.ToString(),
-                        UserAccountType = UserAccountType.Developer.ToString()
+                        UserAccountType = UserAccountType.Developer.ToString(),
+                        CreatedAt = DateTime.UtcNow
                     },
                     new User
                     {

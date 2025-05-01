@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Net.Http.Headers;
 using System.Text.Json;
 
 namespace GatewayService.Controllers
@@ -14,6 +15,8 @@ namespace GatewayService.Controllers
             _logoutClient = factory.CreateClient("LoginService");
         }
 
+        [EndpointSummary("POST Logout")]
+        [EndpointDescription("Logout user\n\nNo role required\n\nUser must be logged in (have a valid active token)")]
         [HttpPost]
         public async Task<IActionResult> Logout()
         {
@@ -24,13 +27,18 @@ namespace GatewayService.Controllers
                     return Unauthorized(new { Message = "Missing or invalid token." });
                 }
 
-                var response = await _logoutClient.PostAsync($"logout/{token}", null);
+                HttpRequestMessage requestMessage = new(HttpMethod.Post, $"logout/{token}");
+                requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                var response = await _logoutClient.SendAsync(requestMessage);
 
                 var jsonResponse = await response.Content.ReadFromJsonAsync<JsonElement>();
 
                 if (response.IsSuccessStatusCode)
                 {
                     Response.Cookies.Delete("auth_token");
+                    Response.Cookies.Delete("user_type");
+                    Response.Cookies.Delete("logged_in");
                 }
 
                 return StatusCode((int)response.StatusCode, jsonResponse);
