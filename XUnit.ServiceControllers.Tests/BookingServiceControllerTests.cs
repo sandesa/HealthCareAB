@@ -107,7 +107,6 @@ namespace XUnit.ServiceControllers.Tests
             BookingCreation newBooking = new()
             {
                 CaregiverId = 1,
-                PatientId = 2,
                 MeetingDate = new DateTime(2025, 04, 27),
                 MeetingType = MeetingType.InitialConsultation.ToString(),
                 Clinic = "Main Clinic",
@@ -122,7 +121,6 @@ namespace XUnit.ServiceControllers.Tests
             var createdBooking = jsonResponse.GetProperty("data");
 
             Assert.Equal(1, createdBooking.GetProperty("caregiverId").GetInt32());
-            Assert.Equal(2, createdBooking.GetProperty("patientId").GetInt32());
             Assert.Equal("2025-04-27T00:00:00", createdBooking.GetProperty("meetingDate").GetString());
             Assert.Equal(MeetingType.InitialConsultation.ToString(), createdBooking.GetProperty("meetingType").GetString());
             Assert.Equal("Main Clinic", createdBooking.GetProperty("clinic").GetString());
