@@ -25,3 +25,8 @@ A fullstack application for a health care organization.
   - If not, go to the website `nodejs.org` to download node
   - When node is installed open powershell and navigate to the `FrontendApp` directory
   - Type `npm run dev` to run the app and go to `localhost:3000` 
+
+### Step 4:
+- Login with these credentials to test the features:
+  - Email: test1.testsson@gmail.com
+  - Password: 123
